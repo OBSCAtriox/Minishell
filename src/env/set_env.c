@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int    mount_envp(char **envp)
 {
@@ -24,7 +24,7 @@ int    mount_envp(char **envp)
     return (TRUE);
 }
 
-int    add_variable(char *name, char *value)
+int    update_variable(char *name, char *value)
 {
     t_data dt;
     int i;
@@ -65,7 +65,7 @@ int env_set(char *name, char *value)
     }
     else
     {
-        if(!add_variable(name, value))
+        if(!update_variable(name, value))
         {
             print_error("failed to add variable");
             return (0);

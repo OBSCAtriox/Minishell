@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/09/23 17:27:45 by thde-sou          #+#    #+#              #
-#    Updated: 2025/10/12 18:43:14 by thde-sou         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 CC = cc
 FLAGS = -Wall -Werror -Wextra
 
@@ -17,26 +5,25 @@ NAME = minishell
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
+LIBS = -lreadline -lhistory
 
-SRC = pipeline_from_cli.c main.c \
-src/set_env.c src/utils/utils_env.c src/builtin/cd.c src/builtin/echo.c \
-src/error/error_msg.c src/builtin/pwd.c
+SRC = src/exec/builtin/cd.c src/exec/builtin/echo.c src/exec/builtin/pwd.c \
+src/exec/error/error_msg.c src/exec/pipeline_from_cli.c src/env/set_env.c \
+main.c src/env/utils_env.c src/parse/pipeparse.c src/parse/utils/isspaces.c \
+src/parse/error/error.c src/parse/utils/init.c \
 
 OBJ = $(SRC:.c=.o)
 
 all: $(LIBFT) $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(OBJ) $(LIBFT) $(LIBS) -o $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR) bonus
 
 %.o: %.c
 	$(CC) $(FLAGS) -c $< -o $@
-
-race: $(OBJ)
-	$(CC) $(FLAG_THREAD) $(OBJ) -o $(NAME)
 
 clean:
 	rm -f $(OBJ)

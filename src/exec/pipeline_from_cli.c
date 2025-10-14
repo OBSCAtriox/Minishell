@@ -1,5 +1,4 @@
-#include "includes/minishell.h"
-#include <string.h>
+#include "../../includes/minishell.h"
 
 static int	is_builtin_name(const char *name);
 static t_redir_type redir_type_from_token(const char *token);

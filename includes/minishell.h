@@ -1,14 +1,22 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-#include "exec.h"
 #include "../libft/libft.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include "parsing.h"
+#include "exec.h"
+#include "error.h"
 
 typedef enum e_redir_type { R_IN, R_OUT, R_APP, R_HDOC } 
 t_redir_type;
 
 typedef struct s_env
 {
+    char    **l_var;
     char    **envp;
     char    *oldpwd;
 }           t_env;
@@ -34,6 +42,7 @@ typedef struct s_pipeline {
 
 
 t_env  *te();
+t_pipeline  *ms();
 t_pipeline *pipeline_from_cli(int argc, char **argv);
 
 #endif

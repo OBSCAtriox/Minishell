@@ -6,18 +6,26 @@ t_env  *te()
     return (&env);
 }
 
+t_pipeline  *ms()
+{
+    static t_pipeline ms;
+    return (&ms);
+}
+
 int main(int argc, char **argv, char **envp)
 {
-    pipeline_from_cli(argc, argv);
+    char *line;
+    (void)argv;
+    if (argc != 1)
+        basic_error(ERR_ARG);
     mount_envp(envp);
-    for(int i = 0; te()->envp[i]; i++)
-        printf("%s\n", te()->envp[i]);
-    buitin_cd(argv[2]);
-    printf("\n\n");
-    for(int i = 0; te()->envp[i]; i++)
-        printf("%s\n", te()->envp[i]);
-    printf("oldpwd: %s\n", te()->oldpwd);
-    built_echo(argv[2]);
-    built_pwd();
-    return (0);
+    while(1)
+    {
+        line = readline("T_Shell>");
+        num_pipes(line);
+        pipe_ver_start(line);
+        pipe_ver_end(line);
+        pipe_ver_mid(line);
+        free(line);
+    }   
 }
