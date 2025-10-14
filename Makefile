@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/09/23 17:27:45 by thde-sou          #+#    #+#              #
-#    Updated: 2025/10/12 18:43:14 by thde-sou         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 CC = cc
 FLAGS = -Wall -Werror -Wextra
 
@@ -18,9 +6,10 @@ NAME = minishell
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SRC = pipeline_from_cli.c main.c \
-src/set_env.c src/utils/utils_env.c src/builtin/cd.c src/builtin/echo.c \
-src/error/error_msg.c src/builtin/pwd.c
+SRC = main.c \
+src/env/set_env.c src/env/utils_env_1.c src/exec/builtin/cd.c src/exec/builtin/echo.c \
+src/exec/error/error_msg.c src/exec/builtin/pwd.c src/env/utils_env_2.c src/exec/utils/utils_export.c \
+src/exec/builtin/export.c
 
 OBJ = $(SRC:.c=.o)
 

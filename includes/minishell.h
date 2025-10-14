@@ -9,6 +9,7 @@ t_redir_type;
 
 typedef struct s_env
 {
+    char    **l_var;
     char    **envp;
     char    *oldpwd;
 }           t_env;
@@ -34,6 +35,5 @@ typedef struct s_pipeline {
 
 
 t_env  *te();
-t_pipeline *pipeline_from_cli(int argc, char **argv);
 
 #endif

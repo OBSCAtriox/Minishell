@@ -5,6 +5,8 @@ int size_vetor(char **vetor)
     int i;
 
     i = 0;
+    if(!vetor)
+        return (i);
     while(vetor[i])
         i++;
     return (i);
@@ -25,14 +27,14 @@ void    free_vetor_failed(char **vetor, int i)
     free(vetor);
 }
 
-int find_variable(char *name)
+int find_variable(char *name, char **env)
 {
-    char **env;
     int i;
     int len;
 
-    env = te()->envp;
     i = 0;
+    if(!env)
+        return (-1);
     while(env[i])
     {
         len = ft_strlen(name);
