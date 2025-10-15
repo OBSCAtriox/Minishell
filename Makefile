@@ -10,7 +10,8 @@ LIBS = -lreadline -lhistory
 SRC = src/exec/builtin/cd.c src/exec/builtin/echo.c src/exec/builtin/pwd.c \
 src/exec/error/error_msg.c src/exec/pipeline_from_cli.c src/env/set_env.c \
 main.c src/env/utils_env.c src/parse/pipeparse.c src/parse/utils/isspaces.c \
-src/parse/error/error.c src/parse/utils/init.c \
+src/parse/error/error.c src/parse/utils/init.c src/parse/verifications.c \
+src/parse/mallocs/struct_mallocs.c \
 
 OBJ = $(SRC:.c=.o)
 

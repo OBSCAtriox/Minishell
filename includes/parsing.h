@@ -6,6 +6,7 @@
 
 typedef struct s_line_ver
 {
+    bool    r_line;
     char    quote;
     bool    tf;
 } t_line_ver;
@@ -22,9 +23,11 @@ void     num_pipes(const char *line);
 t_parse     *ps();
 int     ms_isspaces(char c);
 void    ps_error(char *msg);
-void    pipe_ver_end(const char *line);
-void    pipe_ver_start(const char *line);
-void    pipe_ver_mid(const char *line);
+int   pipe_ver_end(const char *line);
+int   pipe_ver_start(const char *line);
+int    pipe_ver_mid(const char *line);
 int    pipe_ver_mid_help(const char *line, int i, int y);
+int    verifications(const char *line);
+int    malloc_struct();
 
 # endif

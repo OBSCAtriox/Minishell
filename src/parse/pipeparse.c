@@ -23,7 +23,7 @@ void     num_pipes(const char *line)
     ps()->n_pipes = n;
 }
 
-void    pipe_ver_start(const char *line)
+int   pipe_ver_start(const char *line)
 {
     int i;
 
@@ -35,13 +35,14 @@ void    pipe_ver_start(const char *line)
         else
         {
             if (line[i] == '|')
-                ps_error(SYNT_ERR);
-            break ;
+                return (0);
+            break;
         }
     }
+    return (1);
 }
 
-void    pipe_ver_end(const char *line)
+int    pipe_ver_end(const char *line)
 {
     size_t lenght;
 
@@ -53,13 +54,14 @@ void    pipe_ver_end(const char *line)
         else
         {
             if (line[lenght] == '|')
-                ps_error(SYNT_ERR);
+                return (0);
             break ;
         }
     }
+    return (1);
 }
 
-void    pipe_ver_mid(const char *line)
+int    pipe_ver_mid(const char *line)
 {
     int i;
     int y;
@@ -70,10 +72,6 @@ void    pipe_ver_mid(const char *line)
     ver = false;
     while (line[i])
     {
-        if (line[i] == '|' && line[i + 1] == '|')
-        {
-            ps_error(SYNT_ERR);
-        }
         if (line[i] == '|' && !ver)
         {
             y = i + 1;
@@ -83,23 +81,22 @@ void    pipe_ver_mid(const char *line)
         if (line[i] == '|')
         {
             if (!pipe_ver_mid_help(line, i, y))
-            {
-                ps_error(SYNT_ERR);
-                ver = false;
-                break ;
-            }
+                return (0);
         }
+        i++;
     }
+    return (1);
 }
 
 int     pipe_ver_mid_help(const char *line, int i, int y)
 {
+    if (i - y == 1)
+        return (0);
     while (y != i)
     {
         if (!ms_isspaces(line[y]))
             return (1);
         y++;
     }
-    printf("TEST");
     return (0);
 }
