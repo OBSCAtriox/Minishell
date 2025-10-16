@@ -12,6 +12,7 @@ typedef struct s_env
     char    **l_var;
     char    **envp;
     char    *oldpwd;
+    int     exit_code;
 }           t_env;
 
 typedef struct s_redir {

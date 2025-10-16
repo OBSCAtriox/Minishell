@@ -15,7 +15,12 @@ void    builtin_export(char *argv)
             env_set(name, "", te()->envp);
         else if(!has_equal(argv) && !value)
             export_variable(name);
+        else
+            if(!env_set(name, value, te()->envp))
+                return (print_error("error exportin variable"));
     }
+    free(name);
+    free(value);
 }
 
 void    print_export(void)
@@ -46,11 +51,28 @@ void    print_export(void)
 
 int is_valid_indentifier(char *arg)
 {
-    if((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] >= 'A' && arg[0] <= 'Z')
-        || arg[0] == '_')
+    int i;
+    int first_character;
+    int other_character;
+    int len;
+
+    first_character = FALSE;
+    other_character = FALSE;
+    len = ft_strlen(arg);
+    if(ft_isalpha(arg[0]) || arg[0] == '_')
+        first_character = TRUE;
+    i = 1;
+    while(arg[i])
+    {
+        if(ft_isdigit(arg[i]) || ft_isalpha(arg[i]) || arg[i] == '_')
+            other_character = TRUE;
+        i++;
+    }
+    if(first_character && other_character && len > 1)
         return (TRUE);
-    else
-        return (FALSE);
+    else if (first_character && len == 1)
+        return (TRUE);
+    return (FALSE);
 }
 
 void    export_variable(char *arg)

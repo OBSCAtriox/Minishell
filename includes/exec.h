@@ -12,17 +12,17 @@ typedef struct s_data
     int     index;
     int     size;
     int     len;
-    int     i;
-    int     j;
     char    *str;
     char    *temp;
     char    **env;
+    int     i;
+    int     j;
 }           t_data;
 
 int size_vetor(char **vetor);
 int    mount_envp(char **envp);
 void    free_vetor_failed(char **vetor, int i);
-int buitin_cd(char *argv);
+int buitin_cd(char **argv);
 int find_variable(char *name, char **env);
 char    *join3(char *s1, char *s2, char *s3);
 void    free_doble_pointer(char **p);
@@ -45,5 +45,17 @@ char    *get_name_var(char *arg);
 char    *get_value_var(char *arg);
 int has_equal(char *arg);
 void    export_variable(char *arg);
+int    re_mount_locar_var(char **envp);
+int    create_new_local_var(char *name, char *value);
+int remove_env_var(int index);
+int builtin_unset(char  *arg);
+int    skip_var_dell(int index, int *i);
+int remove_local_var(int index);
+void builtin_env(void);
+void    builtin_exit(char **arg);
+void    free_all(void);
+int ft_isnumeric(char *str);
+char    *get_target(char **arg);
+void    free_cd(char **new_pwd, char **target, char **old_pwd, int err);
 
 #endif

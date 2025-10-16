@@ -31,8 +31,6 @@ char    *expand_variable(char *name, char **env)
 
 void    create_local_variable(char *name, char *value)
 {
-    //int index;
-
     if(!te()->l_var)
     {
         te()->l_var = malloc(sizeof(char *) + 2);
@@ -40,10 +38,6 @@ void    create_local_variable(char *name, char *value)
             return;
         te()->l_var[0] = join3(name, "=", value);
         te()->l_var[1] = NULL;
-    }
-    else
-    {
-        //index = find_variable(name, te()->l_var);
     }
 }
 

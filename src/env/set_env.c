@@ -71,3 +71,22 @@ int env_set(char *name, char *value, char **env)
     }
     return (1);
 }
+
+void    update_local_var(char *name, char *value)
+{
+    int index;
+
+    if(!te()->l_var)
+        return;
+    index = find_variable(name, te()->l_var);
+    if(index != -1)
+    {
+        free(te()->l_var[index]);
+        te()->l_var[index] = join3(name, "=", value);
+    }
+    else
+    {
+        if(!create_new_local_var(name, value))
+            return (print_error("error creating local variable"));
+    }
+}
