@@ -25,12 +25,13 @@ int	main(int argc, char **argv, char **envp)
 	char	**var;
 	int		size;
 	char *line;
+	char	*expansed_line;
 
 	mount_envp(envp);
 	te()->exit_code = 255;
 	(void)argc;
 	(void)argv;
-	line = "$USER $USER $USERR";
+	line = "$USER cat $PWD $?. cat";
 	exp_find_var(line, &index, &len);
 	var = exp_str_var(line);
 	size = count_len_exp(line);
@@ -40,5 +41,7 @@ int	main(int argc, char **argv, char **envp)
 		printf("var: %s\n", var[i]);
 	printf("\n");
 	printf("size: %d\n", size);
+	expansed_line = expand_line(line);
+	printf("line: %s\n", expansed_line);
 	return (0);
 }

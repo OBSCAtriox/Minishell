@@ -54,6 +54,5 @@ int len_expanded_var(char *line)
     while(dt.i < dt.size)
         dt.result += ft_strlen(dt.var[dt.i++]);
     free_doble_pointer(dt.var);
-    printf("%d..", dt.result);
     return (dt.result);
 }

@@ -21,6 +21,8 @@ typedef struct s_data
     int     *len_p;
     int     i;
     int     j;
+    int     k;
+    int     l;
 }           t_data;
 
 typedef struct s_control
@@ -74,5 +76,6 @@ char    **exp_str_var(char *line);
 int count_len_exp(char *line);
 void    free_str(void *p1);
 int len_expanded_var(char *line);
+char    *expand_line(char *line);
 
 #endif

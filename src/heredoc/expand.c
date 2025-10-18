@@ -1,22 +1,36 @@
 #include "../../includes/minishell.h"
 
-/* char    *expand_line(char *line)
+char    *expand_line(char *line)
 {
-    int i;
-    int count;
+    t_data dt;
     char    **exp;
     char    *line_out;
 
-    i = 0;
-    count = count_var(line);
+    dt.i = 0;
+    dt.j = 0;
+    dt.k = 0;
     exp = exp_str_var(line);
-    if(!exp)
+    dt.len = count_len_exp(line);
+    exp_find_var(line, &dt.index_p, &dt.len_p);
+    line_out = malloc(sizeof(char) * (dt.len + 1));
+    if(!exp || !line_out)
         return (NULL);
-    while(i < count)
+    while(dt.i < dt.len)
     {
-        
+        dt.l = 0;
+        if(line[dt.j] == '$' && (line[dt.j + 1] == '_' || line[dt.j + 1] == '?' || ft_isalnum(line[dt.j + 1])))
+        {
+            while(exp[dt.k][dt.l])
+                line_out[dt.i++] = exp[dt.k][dt.l++];
+            dt.j += dt.len_p[dt.k] + 1;
+            dt.k++;
+        }
+        else
+            line_out[dt.i++] = line[dt.j++];
     }
-} */
+    line_out[dt.len] = '\0';
+    return (line_out);
+}
 
 void    exp_find_var(char *line, int **index, int **len)
 {
@@ -39,7 +53,11 @@ void    exp_find_var(char *line, int **index, int **len)
         {
             (*index)[k] = i + 1;
             while (line[i + j] && (ft_isalnum(line[i + j]) || line[i + j] == '?' || line[i + j] == '_'))
+            {
                 j++;
+                if(line[i + 1] == '?')
+                    break;
+            }
             (*len)[k] = j - 1;
             k++;
         }
