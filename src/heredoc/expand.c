@@ -6,11 +6,7 @@ char    *expand_line(char *line)
     char    **exp;
     char    *line_out;
 
-    dt.i = 0;
-    dt.j = 0;
-    dt.k = 0;
-    exp = exp_str_var(line);
-    dt.len = count_len_exp(line);
+    inits_expand_line(&dt, line, &exp);
     exp_find_var(line, &dt.index_p, &dt.len_p);
     line_out = malloc(sizeof(char) * (dt.len + 1));
     if(!exp || !line_out)
@@ -18,7 +14,7 @@ char    *expand_line(char *line)
     while(dt.i < dt.len)
     {
         dt.l = 0;
-        if(line[dt.j] == '$' && (line[dt.j + 1] == '_' || line[dt.j + 1] == '?' || ft_isalnum(line[dt.j + 1])))
+        if(line[dt.j] == '$' && is_valid_character(line[dt.j + 1]))
         {
             while(exp[dt.k][dt.l])
                 line_out[dt.i++] = exp[dt.k][dt.l++];
@@ -29,39 +25,35 @@ char    *expand_line(char *line)
             line_out[dt.i++] = line[dt.j++];
     }
     line_out[dt.len] = '\0';
+    free_expand_line(&dt, &exp);
     return (line_out);
 }
 
 void    exp_find_var(char *line, int **index, int **len)
 {
-    int i;
-    int k;
-    int j;
-    int count;
+    t_data dt;
 
-    count = count_var(line);
-    *index = malloc(sizeof(int) * count);
-    *len = malloc(sizeof(int) * count);
+    initis_exp_find_var(&dt, line);
+    *index = malloc(sizeof(int) * dt.count);
+    *len = malloc(sizeof(int) * dt.count);
     if(!*index || !*len)
         return;
-    i = 0;
-    k = 0;
-    while(line[i])
+    while(line[dt.i])
     {
-        j = 1;
-        if(line[i] == '$' && (line[i + 1] == '_' || line[i + 1] == '?' || ft_isalnum(line[i + 1])))
+        dt.j = 1;
+        if(line[dt.i] == '$' && is_valid_character(line[dt.i + 1]))
         {
-            (*index)[k] = i + 1;
-            while (line[i + j] && (ft_isalnum(line[i + j]) || line[i + j] == '?' || line[i + j] == '_'))
+            (*index)[dt.k] = dt.i + 1;
+            while (line[dt.i + dt.j] && is_valid_character(line[dt.i + dt.j]))
             {
-                j++;
-                if(line[i + 1] == '?')
+                dt.j++;
+                if(line[dt.i + 1] == '?')
                     break;
             }
-            (*len)[k] = j - 1;
-            k++;
+            (*len)[dt.k] = dt.j - 1;
+            dt.k++;
         }
-        i++;
+        dt.i++;
     }
 }
 
@@ -104,9 +96,9 @@ int count_len_exp(char *line)
     while(line[dt.i])
     {
         dt.j = 1;
-        if(line[dt.i] == '$' && (line[dt.i + 1] == '_' || line[dt.i + 1] == '?' || ft_isalnum(line[dt.i + 1])))
+        if(line[dt.i] == '$' && is_valid_character(line[dt.i + 1]))
         {
-            while(line[dt.i + dt.j] && (ft_isalnum(line[dt.i + dt.j]) || line[dt.i + dt.j] == '?' || line[dt.i + dt.j] == '_'))
+            while(line[dt.i + dt.j] && is_valid_character(line[dt.i + dt.j]))
             {
                 if(line[dt.i + dt.j] == '?')
                 {

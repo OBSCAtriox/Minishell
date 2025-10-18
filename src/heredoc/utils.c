@@ -56,3 +56,19 @@ int len_expanded_var(char *line)
     free_doble_pointer(dt.var);
     return (dt.result);
 }
+
+int is_valid_character(char c)
+{
+    if(c == '_' || c == '?' || ft_isalnum(c))
+        return (TRUE);
+    return (FALSE);
+}
+
+void inits_expand_line(t_data *dt, char *line, char ***exp)
+{
+    dt->i = 0;
+    dt->j = 0;
+    dt->k = 0;
+    dt->len = count_len_exp(line);
+    *exp = exp_str_var(line);
+}

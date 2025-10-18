@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	te()->exit_code = 255;
 	(void)argc;
 	(void)argv;
-	line = "$USER cat $PWD $?. cat";
+	line = "$LOGNAMEthiago thiago";
 	exp_find_var(line, &index, &len);
 	var = exp_str_var(line);
 	size = count_len_exp(line);

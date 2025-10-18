@@ -10,6 +10,7 @@
 typedef struct s_data
 {
     int     result;
+    int     count;
     int     index;
     int     size;
     int     len;
@@ -77,5 +78,9 @@ int count_len_exp(char *line);
 void    free_str(void *p1);
 int len_expanded_var(char *line);
 char    *expand_line(char *line);
+int is_valid_character(char c);
+void inits_expand_line(t_data *dt, char *line, char ***exp);
+void    initis_exp_find_var(t_data *dt, char *line);
+void    free_expand_line(t_data *dt, char ***exp);
 
 #endif
