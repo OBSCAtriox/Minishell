@@ -9,16 +9,27 @@
 
 typedef struct s_data
 {
+    int     result;
     int     index;
     int     size;
     int     len;
     char    *str;
     char    *temp;
     char    **env;
+    char    **var;
+    int     *index_p;
+    int     *len_p;
     int     i;
     int     j;
 }           t_data;
 
+typedef struct s_control
+{
+    int num_cmd;
+    int num_redr;
+}       t_control;
+
+t_control   *tc(void);
 int size_vetor(char **vetor);
 int    mount_envp(char **envp);
 void    free_vetor_failed(char **vetor, int i);
@@ -40,7 +51,7 @@ int ft_strcmp_var(const char *s1, const char *s2);
 void    print_export_line(char *env);
 void    builtin_export(char *argv);
 void    create_local_variable(char *name, char *value);
-int is_valid_indentifier(char *arg);
+int is_valid_identifier(char *arg);
 char    *get_name_var(char *arg);
 char    *get_value_var(char *arg);
 int has_equal(char *arg);
@@ -57,5 +68,11 @@ void    free_all(void);
 int ft_isnumeric(char *str);
 char    *get_target(char **arg);
 void    free_cd(char **new_pwd, char **target, char **old_pwd, int err);
+void    exp_find_var(char *line, int **index, int **len);
+int count_var(char *line);
+char    **exp_str_var(char *line);
+int count_len_exp(char *line);
+void    free_str(void *p1);
+int len_expanded_var(char *line);
 
 #endif

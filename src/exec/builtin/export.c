@@ -7,7 +7,7 @@ void    builtin_export(char *argv)
 
     if(!argv)
         return (print_export());
-    if(is_valid_indentifier(argv))
+    if(is_valid_identifier(argv))
     {
         name = get_name_var(argv);
         value = get_value_var(argv);
@@ -49,7 +49,7 @@ void    print_export(void)
     free(printed);
 }
 
-int is_valid_indentifier(char *arg)
+int is_valid_identifier(char *arg)
 {
     int i;
     int first_character;

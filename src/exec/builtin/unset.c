@@ -4,7 +4,7 @@ int builtin_unset(char  *arg)
 {
     int     index;
 
-    if(!is_valid_indentifier(arg))
+    if(!is_valid_identifier(arg))
         return (FALSE);
     index = find_variable(arg, te()->envp);
     if(index != -1)

@@ -18,11 +18,16 @@ int find_variable(char *name, char **env)
     int len;
 
     i = 0;
-    if(!env)
+    if(!env || !name)
         return (-1);
     while(env[i])
     {
         len = ft_strlen(name);
+        if(env[i][len] != '=')
+        {
+            i++;
+            continue;
+        }
         if(ft_strncmp(env[i], name, len) == 0)
             return (i);
         i++;

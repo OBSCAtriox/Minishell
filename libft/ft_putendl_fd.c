@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 00:55:36 by thde-sou          #+#    #+#             */
-/*   Updated: 2025/05/04 17:00:47 by thde-sou         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:09:24 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,10 @@
 
 void	ft_putendl_fd(char *s, int fd)
 {
-	size_t	a;
-
 	if (fd < 0 || !s)
 		return ;
-	a = 0;
-	while (s[a] != '\0')
-	{
-		if (write(fd, &s[a], 1) == -1)
-			return ;
-		a++;
-	}
-	if (write(fd, "\n", 1) == -1)
-		return ;
+	write(fd, s, ft_strlen(s));
+	write(fd, "\n", 1);
 }
 
 /*int     main(void)
