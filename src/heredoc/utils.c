@@ -1,24 +1,5 @@
 #include "../../includes/minishell.h"
 
-/* void    count_cmd(void)
-{
-    int i;
-
-    i = 0;
-    while(tp()->cmdv[i])
-        i++;
-    tc()->num_cmd = i;
-}
-
-int    count_redir(t_cmd *cmdv)
-{
-    int i;
-
-    i = 0;
-    while(cmdv->redir[i])
-        i++;
-    return (i);
-} */
 int count_var(char *line)
 {
     int i;
@@ -28,7 +9,7 @@ int count_var(char *line)
     count = 0;
     while(line[i])
     {
-        if(line[i] == '$' && (line[i + 1] == '_' || line[i + 1] == '?' || ft_isalpha(line[i + 1])))
+        if(line[i] == '$' && is_valid_character(line[i + 1]))
             count++;
         i++;
     }

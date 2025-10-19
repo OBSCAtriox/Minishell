@@ -3,7 +3,6 @@
 
 #include "exec.h"
 #include "../libft/libft.h"
-#include <signal.h>
 
 typedef enum e_redir_type { R_IN, R_OUT, R_APP, R_HDOC } 
 t_redir_type;

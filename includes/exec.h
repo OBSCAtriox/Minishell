@@ -3,6 +3,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <readline/readline.h>
 
 #define FALSE 0
 #define TRUE 1
@@ -30,6 +35,7 @@ typedef struct s_control
 {
     int num_cmd;
     int num_redr;
+    int signaled_heredoc;
 }       t_control;
 
 t_control   *tc(void);
@@ -82,5 +88,11 @@ int is_valid_character(char c);
 void inits_expand_line(t_data *dt, char *line, char ***exp);
 void    initis_exp_find_var(t_data *dt, char *line);
 void    free_expand_line(t_data *dt, char ***exp);
+void    heredoc(void);
+int    mount_heredoc(int idx_cmd, int idx_rdir);
+void    read_heredoc(int idx_cmd, int idx_rdir, int *fd, char *delim);
+void    write_line(int quoted, char *line, int fd);
+void wait_heredoc(pid_t pid);
+void    close_fd_redir(void);
 
 #endif

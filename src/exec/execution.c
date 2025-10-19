@@ -7,7 +7,7 @@ t_control   *tc(void)
     return(&control);
 }
 
-void    execution(void)
+/* void    execution(void)
 {
     
-}
+} */
