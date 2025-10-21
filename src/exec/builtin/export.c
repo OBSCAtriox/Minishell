@@ -1,26 +1,32 @@
 #include "../../../includes/minishell.h"
 
-void    builtin_export(char *argv)
+void    builtin_export(char **argv)
 {
     char    *name;
     char    *value;
+    int i;
 
-    if(!argv)
+    i = 1;
+    if(!argv || !argv[1])
         return (print_export());
-    if(is_valid_identifier(argv))
+    while(argv[i])
     {
-        name = get_name_var(argv);
-        value = get_value_var(argv);
-        if(has_equal(argv) && !value)
+        if(is_valid_identifier(argv[i]))
+        {
+        name = get_name_var(argv[i]);
+        value = get_value_var(argv[i]);
+        if(has_equal(argv[i]) && !value)
             env_set(name, "", te()->envp);
-        else if(!has_equal(argv) && !value)
+        else if(!has_equal(argv[i]) && !value)
             export_variable(name);
         else
             if(!env_set(name, value, te()->envp))
-                return (print_error("error exportin variable"));
+                return (print_error("export", "error exportin variable"));
+        }
+        free(name);
+        free(value);
+        i++;
     }
-    free(name);
-    free(value);
 }
 
 void    print_export(void)

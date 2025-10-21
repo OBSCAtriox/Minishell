@@ -16,7 +16,7 @@ int    create_new_local_var(char *name, char *value)
             return (free_vetor_failed(dt.env, dt.i), FALSE);
         dt.i++;
     }
-    dt.env[dt.size] = join3(name, "=", value);
+    dt.env[dt.size] = join3(name, EQUAL, value);
     if(!dt.env[dt.size])
         return(free_doble_pointer(dt.env), FALSE);
     dt.env[dt.size + 1] = NULL;

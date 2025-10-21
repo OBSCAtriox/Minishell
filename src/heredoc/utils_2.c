@@ -17,25 +17,29 @@ void    free_expand_line(t_data *dt, char ***exp)
         free_doble_pointer(*exp);
 }
 
-void wait_heredoc(pid_t pid)
+void wait_heredoc(pid_t pid, int *fd)
 {
     int status;
     int sig;
 
     waitpid(pid, &status, 0);
-    if (WIFSIGNALED(status))
+    if (WIFEXITED(status))
     {
-        sig = WTERMSIG(status);
-        if (sig == SIGINT)
+        sig = WEXITSTATUS(status);
+        if (sig == 130)
         {
             printf("\n");
             tc()->signaled_heredoc = 1;
+            if(fd[0] > 0)
+                close(fd[0]);
+            if(fd[1] > 0)
+                close(fd[1]);
             close_fd_redir();
             te()->exit_code = 130;
         }
+        else
+            te()->exit_code = WEXITSTATUS(status);
     }
-    else if (WIFEXITED(status))
-        te()->exit_code = WEXITSTATUS(status);
 }
 
 void    close_fd_redir(void)
@@ -59,4 +63,12 @@ void    close_fd_redir(void)
         }
         dt.i++;
     }
+}
+
+void sigint_hdoc(int sig)
+{
+    (void)sig;
+    if (tc()->hdoc_wfd >= 0)
+        close(tc()->hdoc_wfd);
+    exit(130);
 }

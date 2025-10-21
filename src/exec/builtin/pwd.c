@@ -1,6 +1,6 @@
 #include "../../../includes/minishell.h"
 
-void    built_pwd(void)
+void    builtin_pwd(void)
 {
     char    *pwd;
 

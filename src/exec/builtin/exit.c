@@ -9,12 +9,12 @@ void    builtin_exit(char **arg)
         code = te()->exit_code;
     else if(!ft_isnumeric(arg[1]))
     {
-        print_error("exit: numeric argument required");
+        print_error("exit", "numeric argument required");
         code = 255;
     }
     else if(arg[2])
     {
-        print_error("exit: too many arguments");
+        print_error("exit", "too many arguments");
         return ;
     }
     else

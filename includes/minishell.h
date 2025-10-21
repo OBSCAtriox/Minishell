@@ -36,5 +36,8 @@ typedef struct s_pipeline {
 
 t_env  *te(void);
 t_pipeline *tp(void);
+int    redir(t_cmd *cmdv);
+int apply_redir_in(t_redir *redir);
+int apply_redir_out(t_redir *redir);
 
 #endif

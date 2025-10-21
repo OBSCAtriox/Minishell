@@ -2,6 +2,7 @@
 #define EXEC_H
 
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -11,6 +12,8 @@
 
 #define FALSE 0
 #define TRUE 1
+#define EQUAL "="
+#define _POSIX_C_SOURCE 200809L
 
 typedef struct s_data
 {
@@ -36,29 +39,32 @@ typedef struct s_control
     int num_cmd;
     int num_redr;
     int signaled_heredoc;
+    int hdoc_wfd;
+    int fd_stdout;
+    int fd_stdin;
 }       t_control;
 
 t_control   *tc(void);
 int size_vetor(char **vetor);
 int    mount_envp(char **envp);
 void    free_vetor_failed(char **vetor, int i);
-int buitin_cd(char **argv);
+int builtin_cd(char **argv);
 int find_variable(char *name, char **env);
 char    *join3(char *s1, char *s2, char *s3);
 void    free_doble_pointer(char **p);
 int    update_variable(char *name, char *value, char **env);
 int env_set(char *name, char *value, char **env);
-void    print_error(char *msg);
+void    print_error(char *comand, char *msg);
 void    error_cd(char *arg);
-void    built_echo(char *arg);
-void    built_pwd(void);
+void    builtin_echo(char *arg);
+void    builtin_pwd(void);
 void    error_pwd(void);
 char    *expand_variable(char *name, char **env);
 void    print_export(void);
 int find_next_min(char **env, int *printed);
 int ft_strcmp_var(const char *s1, const char *s2);
 void    print_export_line(char *env);
-void    builtin_export(char *argv);
+void    builtin_export(char **argv);
 void    create_local_variable(char *name, char *value);
 int is_valid_identifier(char *arg);
 char    *get_name_var(char *arg);
@@ -68,7 +74,7 @@ void    export_variable(char *arg);
 int    re_mount_locar_var(char **envp);
 int    create_new_local_var(char *name, char *value);
 int remove_env_var(int index);
-int builtin_unset(char  *arg);
+int builtin_unset(char  **argv);
 int    skip_var_dell(int index, int *i);
 int remove_local_var(int index);
 void builtin_env(void);
@@ -92,7 +98,13 @@ void    heredoc(void);
 int    mount_heredoc(int idx_cmd, int idx_rdir);
 void    read_heredoc(int idx_cmd, int idx_rdir, int *fd, char *delim);
 void    write_line(int quoted, char *line, int fd);
-void wait_heredoc(pid_t pid);
+void wait_heredoc(pid_t pid, int *fd);
 void    close_fd_redir(void);
-
+void sigint_hdoc(int sig);
+void    setup_heredoc_signals(int fd);
+void    count_cmd(void);
+void    execution(void);
+void    call_builtin(char **arg);
+int restore_std(void);
+int clone_std(void);
 #endif

@@ -15,7 +15,7 @@ void    heredoc(void)
         dt.j = 0;
         while (redir && redir[dt.j])
         {
-            if(redir[dt.j]->type == R_HDOC)
+            if(redir[dt.j]->type == R_HDOC && !tc()->signaled_heredoc)
                 mount_heredoc(dt.i, dt.j);
             dt.j++;
         }
@@ -36,7 +36,6 @@ int    mount_heredoc(int idx_cmd, int idx_rdir)
         return (FALSE);
     }
     pid = fork();
-    signal(SIGINT, SIG_IGN);
     if(pid < 0)
     {
         perror("fork");
@@ -46,8 +45,7 @@ int    mount_heredoc(int idx_cmd, int idx_rdir)
         read_heredoc(idx_cmd, idx_rdir, fd, delim);
     close(fd[1]);
     tp()->cmdv[idx_cmd]->redir[idx_rdir]->hdoc_fd = fd[0];
-    wait_heredoc(pid);
-    signal(SIGINT, SIG_DFL);
+    wait_heredoc(pid, fd);
     return (0);
 }
 
@@ -56,9 +54,9 @@ void    read_heredoc(int idx_cmd, int idx_rdir, int *fd, char *delim)
     char    *line;
     int     quoted;
 
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_IGN);
     close(fd[0]);
+    close_fd_redir();
+    setup_heredoc_signals(fd[1]);
     quoted = tp()->cmdv[idx_cmd]->redir[idx_rdir]->quoted;
     while (1)
     {
@@ -96,4 +94,16 @@ void    write_line(int quoted, char *line, int fd)
         ft_putendl_fd(line, fd);
     if(exp)
         free(exp);
+}
+
+void    setup_heredoc_signals(int fd)
+{
+    struct sigaction sa;
+
+    tc()->hdoc_wfd = fd;
+    sa.sa_handler = sigint_hdoc;     // define a função que trata SIGINT
+    sigemptyset(&sa.sa_mask);        // não bloqueia sinais adicionais
+    sa.sa_flags = 0;                 // comportamento padrão
+    sigaction(SIGINT, &sa, NULL);    // aplica o handler
+    signal(SIGQUIT, SIG_IGN);        // ignora Ctrl+\ (como bash)
 }

@@ -1,16 +1,25 @@
 #include "../../../includes/minishell.h"
 
-int builtin_unset(char  *arg)
+int builtin_unset(char  **argv)
 {
     int     index;
+    int     i;
 
-    if(!is_valid_identifier(arg))
+    if(!argv)
         return (FALSE);
-    index = find_variable(arg, te()->envp);
-    if(index != -1)
-        remove_env_var(index);
-    index = find_variable(arg, te()->l_var);
-        remove_local_var(index);
+    i = 1;
+    while(argv[i])
+    {
+        if(!is_valid_identifier(argv[i]))
+            return (FALSE);
+        index = find_variable(argv[i], te()->envp);
+        if(index != -1)
+            remove_env_var(index);
+        index = find_variable(argv[i], te()->l_var);
+        if(index != -1)
+            remove_local_var(index);
+        i++;
+    }
     return (TRUE);
 }
 

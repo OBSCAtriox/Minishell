@@ -1,6 +1,6 @@
 #include "../../../includes/minishell.h"
 
-int buitin_cd(char **arg)
+int builtin_cd(char **arg)
 {
     char    *target;
     char    *old_pwd;
@@ -31,18 +31,18 @@ char    *get_target(char **arg)
 
     target = NULL;
     if (arg[1] && arg[2])
-        return (print_error("cd: too many arguments"), NULL);
+        return (print_error("cd", "too many arguments"), NULL);
     if (arg[1])
     {
         target = ft_strdup(arg[1]);
         if (!target)
-            return (print_error("cd: allocation failed"), NULL);
+            return (print_error("cd", "allocation failed"), NULL);
     }
     else
     {
         target = expand_variable("HOME", te()->envp);
         if (!target)
-            return (print_error("cd: HOME not set"), NULL);
+            return (print_error("cd", "HOME not set"), NULL);
     }
     return (target);
 }

@@ -7,7 +7,30 @@ t_control   *tc(void)
     return(&control);
 }
 
-/* void    execution(void)
+void    count_cmd(void)
 {
-    
-} */
+    int i;
+
+    i = 0;
+    while(tp()->cmdv[i])
+        i++;
+    tc()->num_cmd = i;
+}
+
+void    builtin_in_parent_process(void)
+{
+    if(tc()->num_cmd == 1 && tp()->cmdv[0]->is_builtin)
+    {
+        clone_std();
+        redir(tp()->cmdv[0]);
+        call_builtin(tp()->cmdv[0]->argv);
+        restore_std();
+    }
+}
+
+void    execution(void)
+{
+    count_cmd();
+    heredoc();
+    builtin_in_parent_process();
+}

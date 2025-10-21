@@ -1,6 +1,6 @@
 #include "../../../includes/minishell.h"
 
-void    built_echo(char *arg)
+void    builtin_echo(char *arg)
 {
     int n_flag;
     int i;

@@ -1,8 +1,12 @@
 #include "../../../includes/minishell.h"
 
-void    print_error(char *msg)
+void    print_error(char *comand, char *msg)
 {
-    write(2, "Error\n", 6);
+    if(comand)
+    {
+        write(2, comand, ft_strlen(comand));
+        write(2, ": ", 2);
+    }
     if (msg)
     {
         write(2, msg, ft_strlen(msg));
