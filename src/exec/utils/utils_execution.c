@@ -80,4 +80,12 @@ int restore_std(void)
     return (TRUE);
 }
 
+void    count_cmd(void)
+{
+    int i;
 
+    i = 0;
+    while(tp()->cmdv[i])
+        i++;
+    tc()->num_cmd = i;
+}

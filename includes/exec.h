@@ -13,10 +13,14 @@
 #define FALSE 0
 #define TRUE 1
 #define EQUAL "="
+#define BAR "/"
 #define _POSIX_C_SOURCE 200809L
 
 typedef struct s_data
 {
+    pid_t     pid;
+    int     fd[2];
+    int     temp_fd;
     int     result;
     int     count;
     int     index;
@@ -42,6 +46,7 @@ typedef struct s_control
     int hdoc_wfd;
     int fd_stdout;
     int fd_stdin;
+    char    **paths;
 }       t_control;
 
 t_control   *tc(void);
@@ -107,4 +112,13 @@ void    execution(void);
 void    call_builtin(char **arg);
 int restore_std(void);
 int clone_std(void);
+int splited_path(void);
+char    *find_bin_path(char *arg);
+char    *path_to_binary(char *arg);
+int    builtin_in_parent_process(void);
+void    inits_pipeline(t_data *dt);
+pid_t safe_fork(void);
+void    parent_step(t_data *dt);
+void    close_all(int fd_1, int fd_2, int fd_3, int fd_4);
+void make_dup_pipe(int *fd, int temp_fd, int has_next);
 #endif
