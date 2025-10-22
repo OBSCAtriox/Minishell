@@ -1,7 +1,8 @@
-# include "../../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-t_parse     *ps()
+t_parse	*ps(void)
 {
-    static t_parse ps;
-    return (&ps);
+	static t_parse	ps;
+
+	return (&ps);
 }
