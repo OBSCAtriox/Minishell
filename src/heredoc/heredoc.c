@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void    heredoc(void)
+int    heredoc(void)
 {
     t_data dt;
     t_cmd   **cmdv;
@@ -16,11 +16,15 @@ void    heredoc(void)
         while (redir && redir[dt.j])
         {
             if(redir[dt.j]->type == R_HDOC && !tc()->signaled_heredoc)
-                mount_heredoc(dt.i, dt.j);
+            {
+                if(!mount_heredoc(dt.i, dt.j))
+                    return (FALSE);
+            }
             dt.j++;
         }
         dt.i++;
     }
+    return (TRUE);
 }
 
 int    mount_heredoc(int idx_cmd, int idx_rdir)
@@ -46,7 +50,9 @@ int    mount_heredoc(int idx_cmd, int idx_rdir)
     close(fd[1]);
     tp()->cmdv[idx_cmd]->redir[idx_rdir]->hdoc_fd = fd[0];
     wait_heredoc(pid, fd);
-    return (0);
+    if(te()->exit_code == 130)
+        return (FALSE);
+    return (TRUE);
 }
 
 void    read_heredoc(int idx_cmd, int idx_rdir, int *fd, char *delim)
@@ -105,5 +111,5 @@ void    setup_heredoc_signals(int fd)
     sigemptyset(&sa.sa_mask);        // não bloqueia sinais adicionais
     sa.sa_flags = 0;                 // comportamento padrão
     sigaction(SIGINT, &sa, NULL);    // aplica o handler
-    signal(SIGQUIT, SIG_IGN);        // ignora Ctrl+\ (como bash)
+    signal(SIGQUIT, SIG_IGN);        // ignora Ctrl+
 }

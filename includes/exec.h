@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <signal.h>
 #include <readline/readline.h>
 
@@ -40,6 +41,8 @@ typedef struct s_data
 
 typedef struct s_control
 {
+    int exit_path;
+    pid_t   last_pid;
     int num_cmd;
     int num_redr;
     int signaled_heredoc;
@@ -99,7 +102,7 @@ int is_valid_character(char c);
 void inits_expand_line(t_data *dt, char *line, char ***exp);
 void    initis_exp_find_var(t_data *dt, char *line);
 void    free_expand_line(t_data *dt, char ***exp);
-void    heredoc(void);
+int    heredoc(void);
 int    mount_heredoc(int idx_cmd, int idx_rdir);
 void    read_heredoc(int idx_cmd, int idx_rdir, int *fd, char *delim);
 void    write_line(int quoted, char *line, int fd);
@@ -120,5 +123,9 @@ void    inits_pipeline(t_data *dt);
 pid_t safe_fork(void);
 void    parent_step(t_data *dt);
 void    close_all(int fd_1, int fd_2, int fd_3, int fd_4);
-void make_dup_pipe(int *fd, int temp_fd, int has_next);
+int make_dup_pipe(int *fd, int temp_fd, int has_next);
+void    check_last_comand(t_data dt, int *has_next);
+int is_dir(char *arg);
+int check_path(char *arg);
+void	wait_for_children(pid_t last_pid);
 #endif

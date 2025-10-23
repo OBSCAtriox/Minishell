@@ -13,6 +13,7 @@ void    inits_pipeline(t_data *dt)
     dt->fd[0] = -1;
     dt->fd[1] = -1;
     dt->temp_fd = -1;
+    tc()->last_pid = -1;
 }
 
 pid_t safe_fork(void)
@@ -33,6 +34,8 @@ void    parent_step(t_data *dt)
     dt->temp_fd = dt->fd[0];
     dt->fd[0] = -1;
     dt->fd[1] = -1;
+    if(dt->i == tc()->num_cmd)
+        tc()->last_pid = dt->pid;
 }
 
 void    close_all(int fd_1, int fd_2, int fd_3, int fd_4)

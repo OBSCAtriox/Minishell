@@ -48,12 +48,20 @@ char    *path_to_binary(char *arg)
     if(!splited_path())
         return (print_error(arg, "failed to search enviroment"), NULL);
     if(ft_strchr(arg, '/'))
-        return (arg);
+    {
+        if(!check_path(arg))
+            return (NULL);
+        else
+            return (arg);
+    }
     else
     {
         path = find_bin_path(arg);
         if(!path)
+        {
+            tc()->exit_path = 127;
             return (print_error(arg, "command not found"), NULL);
+        }
     }
     return (path);
 }

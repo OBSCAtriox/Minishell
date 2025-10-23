@@ -24,8 +24,7 @@ int    exec_pipeline(void)
     has_next = 1;
     while(cmdv[dt.i])
     {
-        if(dt.i == tc()->num_cmd - 1)
-            has_next = 0;
+        check_last_comand(dt, &has_next);
         if(dt.i < tc()->num_cmd - 1)
         {
             if(pipe(dt.fd) == -1)
@@ -39,7 +38,7 @@ int    exec_pipeline(void)
     }
     if(dt.temp_fd != -1)
         close(dt.temp_fd);
-    waitpid(-1, NULL, 0);
+    wait_for_children(tc()->last_pid);
     return (TRUE);
 }
 
@@ -49,9 +48,18 @@ void    process_children(t_cmd *cmdv, int *fd, int temp_fd, int has_next)
     char    *path;
 
     envp = te()->envp;
-    path = path_to_binary(cmdv->argv[0]);
-    make_dup_pipe(fd, temp_fd, has_next);
-    redir(cmdv);
+    safe_path(&path, fd, temp_fd, cmdv);
+    if(!make_dup_pipe(fd, temp_fd, has_next))
+    {
+        free(path);
+        exit(1);
+    }
+    if(!redir(cmdv))
+    {
+        close_all(fd[0], fd[1], temp_fd, -1);
+        free(path);
+        exit(1);
+    }
     close_all(fd[0], fd[1], temp_fd, -1);
     execve(path, cmdv->argv, envp);
     perror(cmdv->argv[0]);
@@ -62,7 +70,8 @@ void    process_children(t_cmd *cmdv, int *fd, int temp_fd, int has_next)
 void    execution(void)
 {
     count_cmd();
-    heredoc();
+    if(!heredoc())
+        return ;
     if(builtin_in_parent_process())
         return;
     exec_pipeline();

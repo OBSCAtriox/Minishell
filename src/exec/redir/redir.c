@@ -82,22 +82,25 @@ int apply_redir_out(t_redir *redir)
     return (TRUE);
 }
 
-void make_dup_pipe(int *fd, int temp_fd, int has_next)
+int make_dup_pipe(int *fd, int temp_fd, int has_next)
 {
     if (temp_fd != -1) 
     {
         if (dup2(temp_fd, STDIN_FILENO) < 0) 
         { 
+            close_all(fd[1], fd[0], temp_fd, -1);
             perror("dup2 in"); 
-            exit(EXIT_FAILURE); 
+            return (FALSE); 
         }
     }
-    if (has_next) 
+    if (has_next)
     {
         if (dup2(fd[1], STDOUT_FILENO) < 0) 
         { 
+            close_all(fd[1], fd[0], temp_fd, -1);
             perror("dup2 out"); 
-            exit(EXIT_FAILURE); 
+            return(FALSE);
         }
     }
+    return (TRUE);
 }

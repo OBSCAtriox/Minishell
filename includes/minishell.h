@@ -40,5 +40,6 @@ int    redir(t_cmd *cmdv);
 int apply_redir_in(t_redir *redir);
 int apply_redir_out(t_redir *redir);
 void    process_children(t_cmd *cmdv, int *fd, int temp_fd, int has_next);
+void    safe_path(char **path, int *fd, int temp_fd, t_cmd *cmdv);
 
 #endif
