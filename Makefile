@@ -1,5 +1,5 @@
 CC = cc
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra
 
 NAME = minishell
 

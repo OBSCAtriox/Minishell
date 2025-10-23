@@ -27,6 +27,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("T_Shell>");
+		add_history(line);
 		verifications(line);
         list = token_list(line);
 		if (!list)

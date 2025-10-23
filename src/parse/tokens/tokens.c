@@ -92,13 +92,14 @@ static void	token_help(t_tokens **head, t_tokens **tail, const char *li)
 		}
 		else if ((ft_strchr("><|", li[i])) && !d_quotes && !s_quotes)
 		{
-			buf_i_ver(head, tail, buf, &buf_i, false);
+			buf_i_ver(head, tail, buf, &buf_i, true);
 			handle_symbols(head, tail, li, &i);
 		}
 		else
 			buf[buf_i++] = li[i++];
 	}
-	buf_i_ver(head, tail, buf, &buf_i, true);
+	buf_i_ver(head, tail, buf, &buf_i, false);
+	ft_bzero(buf, ft_strlen(buf));
 }
 
 t_tokens	*token_list(const char *li)
