@@ -2,8 +2,6 @@
 
 void    builtin_export(char **argv)
 {
-    char    *name;
-    char    *value;
     int i;
 
     i = 1;
@@ -13,18 +11,17 @@ void    builtin_export(char **argv)
     {
         if(is_valid_identifier(argv[i]))
         {
-        name = get_name_var(argv[i]);
-        value = get_value_var(argv[i]);
-        if(has_equal(argv[i]) && !value)
-            env_set(name, "", te()->envp);
-        else if(!has_equal(argv[i]) && !value)
-            export_variable(name);
-        else
-            if(!env_set(name, value, te()->envp))
-                return (print_error("export", "error exportin variable"));
+            if(aux_export(argv, i))
+                te()->exit_code = 0;
+            else
+                te()->exit_code = 1;
         }
-        free(name);
-        free(value);
+        else
+        {
+            write(2, "export: ", 8);
+            print_error(argv[1], "not a valid identifier");
+            te()->exit_code = 1;
+        }
         i++;
     }
 }
@@ -96,6 +93,34 @@ void    export_variable(char *arg)
         var = te()->l_var[index];
         name = get_name_var(var);
         value = get_value_var(var);
+        if(!name || !value)
+            return ;
         env_set(name, value, te()->envp);
     }
+}
+
+int aux_export(char **argv, int i)
+{
+    char    *name;
+    char    *value;
+
+    name = get_name_var(argv[i]);
+    value = get_value_var(argv[i]);
+    if(!name || !value)
+        return (FALSE);
+    if(has_equal(argv[i]) && !value)
+    {
+        if(!env_set(name, "", te()->envp))
+            return (FALSE);
+    }
+    else if(!has_equal(argv[i]) && !value)
+        export_variable(name);
+    else
+    {
+        if(!env_set(name, value, te()->envp))
+            return (FALSE);
+    }
+    free(name);
+    free(value);
+    return (TRUE);
 }

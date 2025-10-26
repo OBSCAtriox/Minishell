@@ -8,20 +8,21 @@ int builtin_cd(char **arg)
 
     target = get_target(arg);
     if(!target)
-        return (FALSE);
+        return (failed_cd(NULL, NULL, NULL), FALSE);
     old_pwd = getcwd(NULL, 0);
     if (!old_pwd)
-        return (free_cd(NULL, &target, NULL, 1), FALSE);
+        return (failed_cd(NULL, &target, NULL), FALSE);
     if (chdir(target) == -1)
-        return (free_cd(NULL, &target, &old_pwd, 1), FALSE);
+        return (failed_cd(NULL, &target, &old_pwd), FALSE);
     new_pwd = getcwd(NULL, 0);
     if (!new_pwd)
-        return (free_cd(&new_pwd, &target, &old_pwd, 1), FALSE);
+        return (failed_cd(&new_pwd, &target, &old_pwd), FALSE);
     if (te()->oldpwd)
         free(te()->oldpwd);
     te()->oldpwd = old_pwd;
     env_set("PWD", new_pwd, te()->envp);
     free_cd(&new_pwd, &target, &old_pwd, 0);
+    te()->exit_code = 0;
     return (TRUE);
 }
 
@@ -67,4 +68,10 @@ void    free_cd(char **new_pwd, char **target, char **old_pwd, int err)
             free(*old_pwd);
         *old_pwd = NULL;
     }
+}
+
+void    failed_cd(char **new_pwd, char **target, char **old_pwd)
+{
+    free_cd(new_pwd, target, old_pwd, 1);
+    te()->exit_code = 1;
 }

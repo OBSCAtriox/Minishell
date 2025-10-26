@@ -128,4 +128,7 @@ void    check_last_comand(t_data dt, int *has_next);
 int is_dir(char *arg);
 int check_path(char *arg);
 void	wait_for_children(pid_t last_pid);
+void    failed_cd(char **new_pwd, char **target, char **old_pwd);
+int aux_export(char **argv, int i);
+int aux_unset(char **argv, int i);
 #endif

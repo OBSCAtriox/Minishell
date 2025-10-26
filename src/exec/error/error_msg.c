@@ -22,6 +22,5 @@ void    error_cd(char *arg)
 
 void    error_pwd(void)
 {
-    write(2, "minishell: ", 11);
     perror("PWD");
 }

@@ -2,7 +2,6 @@
 
 int builtin_unset(char  **argv)
 {
-    int     index;
     int     i;
 
     if(!argv)
@@ -10,14 +9,19 @@ int builtin_unset(char  **argv)
     i = 1;
     while(argv[i])
     {
-        if(!is_valid_identifier(argv[i]))
-            return (FALSE);
-        index = find_variable(argv[i], te()->envp);
-        if(index != -1)
-            remove_env_var(index);
-        index = find_variable(argv[i], te()->l_var);
-        if(index != -1)
-            remove_local_var(index);
+        if(is_valid_identifier(argv[i]))
+        {
+            if(aux_unset(argv, i))
+                te()->exit_code = 0;
+            else
+                te()->exit_code = 1;
+        }
+        else
+        {
+            te()->exit_code = 1;
+            write(2, "unset: ", 7);
+            print_error(argv[i], "not a valid identifier");
+        }
         i++;
     }
     return (TRUE);
@@ -87,4 +91,23 @@ int    skip_var_dell(int index, int *i)
         return (TRUE);
     }
     return (FALSE);
+}
+
+int aux_unset(char **argv, int i)
+{
+    int index;
+
+    index = find_variable(argv[i], te()->envp);
+    if(index != -1)
+    {
+        if(!remove_env_var(index))
+            return (FALSE);
+    }
+    index = find_variable(argv[i], te()->l_var);
+    if(index != -1)
+    {
+        if(!remove_local_var(index))
+            return (FALSE);
+    }
+    return (TRUE);
 }

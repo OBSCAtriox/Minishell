@@ -6,8 +6,13 @@ void    builtin_pwd(void)
 
     pwd = getcwd(NULL, 0);
     if(!pwd)
-        return (error_pwd());
+    {
+        te()->exit_code = 1;
+        perror("pwd");
+        return ;
+    }
     write(1, pwd, ft_strlen(pwd));
     write(1, "\n", 1);
     free(pwd);
+    te()->exit_code = 0;
 }

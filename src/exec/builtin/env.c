@@ -24,4 +24,5 @@ void builtin_env(void)
         free(value);
         i++;
     }
+    te()->exit_code = 0;
 }
