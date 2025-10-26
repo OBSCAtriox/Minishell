@@ -28,7 +28,8 @@ pid_t safe_fork(void)
 
 void    parent_step(t_data *dt)
 {
-    close(dt->fd[1]);
+    if(dt->fd[1] != -1)
+        close(dt->fd[1]);
     if(dt->temp_fd != -1)
         close(dt->temp_fd);
     dt->temp_fd = dt->fd[0];

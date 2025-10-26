@@ -75,4 +75,5 @@ void    execution(void)
     if(builtin_in_parent_process())
         return;
     exec_pipeline();
+    free_pipeline();
 }

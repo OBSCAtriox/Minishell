@@ -44,6 +44,7 @@ int apply_redir_in(t_redir *redir)
         fd = dup(redir->hdoc_fd);
         if(fd < 0)
             return (perror("hdoc"), FALSE);
+        close(redir->hdoc_fd);
     }
     if(fd >= 0)
     {

@@ -19,7 +19,7 @@ void    builtin_exit(char **arg)
     }
     else
         code = ft_atoi(arg[1]) % 256;
-    free_all();
+    cleanup();
     exit(code);
 }
 

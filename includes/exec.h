@@ -87,7 +87,7 @@ int    skip_var_dell(int index, int *i);
 int remove_local_var(int index);
 void builtin_env(void);
 void    builtin_exit(char **arg);
-void    free_all(void);
+void    cleanup(void);
 int ft_isnumeric(char *str);
 char    *get_target(char **arg);
 void    free_cd(char **new_pwd, char **target, char **old_pwd, int err);
@@ -131,4 +131,5 @@ void	wait_for_children(pid_t last_pid);
 void    failed_cd(char **new_pwd, char **target, char **old_pwd);
 int aux_export(char **argv, int i);
 int aux_unset(char **argv, int i);
+void    free_pipeline(void);
 #endif

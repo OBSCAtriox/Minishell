@@ -1,13 +1,23 @@
 #include "../../../includes/minishell.h"
 
-void    free_all(void)
+void    cleanup(void)
 {
-    if(te()->envp)
+    if (te()->envp)
+    {
         free_doble_pointer(te()->envp);
-    if(te()->l_var)
+        te()->envp = NULL;
+    }
+    if (te()->l_var)
+    {
         free_doble_pointer(te()->l_var);
-    if(te()->oldpwd)
+        te()->l_var = NULL;
+    }
+    if (te()->oldpwd)
+    {
         free(te()->oldpwd);
+        te()->oldpwd = NULL;
+    }
+    free_pipeline();
 }
 
 void    free_doble_pointer(char **p)
@@ -23,6 +33,7 @@ void    free_doble_pointer(char **p)
         i++;
     }
     free(p);
+    p = NULL;
 }
 
 void    free_vetor_failed(char **vetor, int i)
@@ -38,4 +49,47 @@ void    free_vetor_failed(char **vetor, int i)
         j++;
     }
     free(vetor);
+}
+
+void    clean_redir(t_redir **redir)
+{
+    int i;
+
+    if(!redir)
+        return ;
+    i = 0;
+    while(redir[i])
+    {
+        if(redir[i]->path)
+            free(redir[i]->path);
+        if(redir[i]->hdoc_fd != -1)
+            close(redir[i]->hdoc_fd);
+        free(redir[i]);
+        i++;
+    }
+    free(redir);
+}
+
+void    free_pipeline(void)
+{
+    t_cmd **cmdv;
+    t_redir **redir;
+    int i;
+
+    cmdv = tp()->cmdv;
+    if(!cmdv)
+        return;
+    i = 0;
+    while (cmdv[i])
+    {
+        free_doble_pointer(cmdv[i]->argv);
+        redir = cmdv[i]->redir;
+        if (redir)
+            clean_redir(redir);
+        free(cmdv[i]);
+        i++;
+    }
+    free_doble_pointer(tc()->paths);
+    free(cmdv);
+    tp()->cmdv = NULL;
 }
