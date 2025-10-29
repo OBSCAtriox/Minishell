@@ -78,10 +78,7 @@ static void	token_help(t_tokens **head, t_tokens **tail, const char *li)
 	bool	d_quotes;
 	bool	s_quotes;
 
-	i = 0;
-	buf_i = 0;
-	d_quotes = false;
-	s_quotes = false;
+	init_token(&i, &buf_i, &d_quotes, &s_quotes);
 	while (li[i])
 	{
 		quotes_ver(&d_quotes, &s_quotes, li[i]);
@@ -102,7 +99,7 @@ static void	token_help(t_tokens **head, t_tokens **tail, const char *li)
 	ft_bzero(buf, ft_strlen(buf));
 }
 
-t_tokens	*token_list(const char *li)
+void	token_list(const char *li)
 {
 	t_tokens	*head;
 	t_tokens	*tail;
@@ -110,5 +107,5 @@ t_tokens	*token_list(const char *li)
 	head = NULL;
 	tail = NULL;
 	token_help(&head, &tail, li);
-	return (head);
+	ps()->tok = head;
 }

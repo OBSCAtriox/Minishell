@@ -11,17 +11,11 @@ void	num_pipes(const char *line)
 	quote = false;
 	n = 0;
 	i = 0;
-	ps()->p_pipe = malloc(sizeof(int) * MAX_PIPES);
-	if (!ps()->p_pipe)
-		return (ps_error(MALLOC_FAIL), ps()->p_pipe = NULL, (void)(0));
 	while (line[i])
 	{
-		if (line[i] == '\'' && !d_quote)
-			quote = !quote;
-		else if (line[i] == '"' && !quote)
-			d_quote = !d_quote;
-		else if (line[i] == '|' && quote == false && d_quote == false)
-			ps()->p_pipe[n++] = i;
+		quotes_ver(&d_quote, &quote, line[i]);
+		if (line[i] == '|' && quote == false && d_quote == false)
+			n++;
 		i++;
 	}
 	ps()->n_cmd = n + 1;
@@ -85,7 +79,7 @@ int	pipe_ver_mid(const char *line)
 		}
 		if (line[i] == '|')
 		{
-			if (!pipe_ver_mid_help(line, i, y))
+			if (!ver_mid_help(line, i, y))
 				return (0);
 		}
 		i++;
@@ -93,7 +87,7 @@ int	pipe_ver_mid(const char *line)
 	return (1);
 }
 
-int	pipe_ver_mid_help(const char *line, int i, int y)
+int	ver_mid_help(const char *line, int i, int y)
 {
 	if (i - y == 1)
 		return (0);
