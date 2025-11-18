@@ -49,18 +49,8 @@ int	r_ver(const char *li)
 
 	d_q = false;
 	s_q = false;
-	if (!r_ver_start(li) || !r_ver_end(li) || !r_ver_after(d_q, s_q, li) 
+	if (!r_ver_end(li) || !r_ver_after(d_q, s_q, li) 
 		|| !r_ver_synt(d_q, s_q, li) || !r_ver_bef_aft_pipe(d_q, s_q, li))
-		return(free_all(SYNT_ERR_R), 0);
-	/* if (!r_ver_bef_aft_pipe(d_q, s_q, li))
-		return (free_all("Debug 0\n"), 0);
-	if (!r_ver_start(li))
-		return (free_all("Debug 1\n"), 0);
-	if (!r_ver_end(li))
-		return (free_all("Debug 2\n"), 0);
-	if (!r_ver_after(d_q, s_q, li))
-		return (free_all("Debug 4\n"), 0);
-	if (!r_ver_synt(d_q, s_q, li))
-		return (free_all("Debug 5\n"), 0); */
+		return(free_all(SYNT_ERR_R, 0), 0);
 	return (1);
 }

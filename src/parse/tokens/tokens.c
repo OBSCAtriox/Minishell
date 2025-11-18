@@ -6,13 +6,14 @@ void	create_token(t_tokens **head, t_tokens **tail, char *buffer, int buf_i)
 
 	tok = malloc(sizeof(t_tokens));
 	if (!tok)
-		free_all(MALLOC_FAIL);
+		free_all(MALLOC_FAIL, 1);
 	buffer[buf_i] = '\0';
 	tok->value = ft_strdup(buffer);
 	if (!tok->value)
-		free_all(MALLOC_FAIL);
+		free_all(MALLOC_FAIL, 1);
 	tok->type = WORD;
 	tok->next = NULL;
+	tok->prev = NULL;
 	if (*head == NULL)
 	{
 		*head = tok;
@@ -20,6 +21,7 @@ void	create_token(t_tokens **head, t_tokens **tail, char *buffer, int buf_i)
 	}
 	else
 	{
+		tok->prev = *tail;
 		(*tail)->next = tok;
 		*tail = tok;
 	}
@@ -32,12 +34,13 @@ static void	add_token(t_tokens **head, t_tokens **tail, char *sym,
 
 	new = malloc(sizeof(t_tokens));
 	if (!new)
-		free_all(MALLOC_FAIL);
+		free_all(MALLOC_FAIL, 1);
 	new->value = ft_strdup(sym);
 	if (!new->value)
-		free_all(MALLOC_FAIL);
+		free_all(MALLOC_FAIL, 1);
 	new->type = type;
 	new->next = NULL;
+	new->prev = NULL;
 	if (*head == NULL)
 	{
 		*head = new;
@@ -45,6 +48,7 @@ static void	add_token(t_tokens **head, t_tokens **tail, char *sym,
 	}
 	else
 	{
+		new->prev = *tail;
 		(*tail)->next = new;
 		*tail = new;
 	}

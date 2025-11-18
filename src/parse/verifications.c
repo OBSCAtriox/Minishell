@@ -23,13 +23,14 @@ bool	quotes(const char *line)
 int	verifications(const char *line)
 {
 	if (!quotes(line))
-		return (free_all(UNCLOSED_QUOTES), 0);
+		return (free_all(UNCLOSED_QUOTES, 0), 0);
 	if (!pipe_ver_end(line) || !pipe_ver_start(line) || !pipe_ver_mid(line))
 		return (ps_error(SYNT_ERR_P), 0);
 	if (!r_ver(line))
 		return (0);
 	num_pipes(line);
 	token_list(line);
+	ver_to_expand(ps()->tok);
 	malloc_struct();
 	return (1);
 }

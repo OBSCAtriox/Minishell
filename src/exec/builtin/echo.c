@@ -1,6 +1,6 @@
 #include "../../../includes/minishell.h"
 
-void    built_echo(char *arg)
+void    builtin_echo(char *arg)
 {
     int n_flag;
     int i;
@@ -21,10 +21,8 @@ void    built_echo(char *arg)
     while(arg[i] == 32)
         i++;
     while (arg[i])
-    {
-        write(1, &arg[i], 1);
-        i++;
-    }
+        write(1, &arg[i++], 1);
     if(!n_flag)
         write(1, "\n", 1);
+    te()->exit_code = 0;
 }
