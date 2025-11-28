@@ -14,6 +14,13 @@ int     count_words(t_tokens *t)
     return (count);
 }
 
+int     if_redir(t_token_type type)
+{
+    if (type != WORD && type != PPIPE)
+        return (1);
+    return (0);
+}
+
 void num_redir_alloc(t_tokens *tmp)
 {
     int count;
@@ -33,18 +40,5 @@ void num_redir_alloc(t_tokens *tmp)
         if (count != 0)
             redir_arr_malloc(count, i);
         i++;
-    }
-}
-
-void    add_to_struct(t_tokens *t)
-{
-    t_vars v;
-
-    init_s_var(&v);
-    if (cmd_finder())
-            ms()->cmdv[v.y]->argv[][]
-    while (t)
-    {
-        
     }
 }

@@ -111,5 +111,6 @@ void	token_list(const char *li)
 	head = NULL;
 	tail = NULL;
 	token_help(&head, &tail, li);
+	verify_contain_quote(head);
 	ps()->tok = head;
 }

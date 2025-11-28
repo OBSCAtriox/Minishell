@@ -1,5 +1,20 @@
 #include "../../includes/minishell.h"
 
+static int verify_whitespaces(const char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (ms_isspaces(line[i]))
+			i++;
+		else
+			return (1);
+	}
+	return (0);
+}
+
 bool	quotes(const char *line)
 {
 	int		i;
@@ -22,6 +37,10 @@ bool	quotes(const char *line)
 
 int	verifications(const char *line)
 {
+	if (!line || !*line)
+		return (0);
+	if (!verify_whitespaces(line))
+		return (0);
 	if (!quotes(line))
 		return (free_all(UNCLOSED_QUOTES, 0), 0);
 	if (!pipe_ver_end(line) || !pipe_ver_start(line) || !pipe_ver_mid(line))
@@ -32,5 +51,6 @@ int	verifications(const char *line)
 	token_list(line);
 	ver_to_expand(ps()->tok);
 	malloc_struct();
+	verifications_after_malloc_struct(ps()->tok);
 	return (1);
 }

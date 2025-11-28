@@ -10,7 +10,10 @@ void free_tokens()
 	{
 		tmp = head->next;
 		if (head->value)
+		{
 			free(head->value);
+			head->value = NULL;
+		}
 		free(head);
 		head = tmp;
 	}
@@ -32,6 +35,19 @@ void	free_split_list(t_quote_split **head)
 	*head = NULL;
 }
 
+void	free_double_pchar(char **arr)
+{
+	int i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		arr[i++] = NULL;
+	}
+	free(arr);
+}
+
 void	free_all(char *msg, int i)
 {
 	if (ps()->tok)
@@ -41,7 +57,22 @@ void	free_all(char *msg, int i)
 	/* if (ms()->cmdv)
 	{
 	} */
+	/* if (ps()->line)
+		free(ps()->line); */
+	if (ps()->line)
+	{
+		free(ps()->line);
+		ps()->line = NULL;
+	}
 	ps_error(msg);
 	if (i)
-		exit(0);
+	{
+		if (te()->envp)
+			free_double_pchar(te()->envp);
+		if (te()->l_var)
+			free_doble_pointer(te()->l_var);
+		if (te()->oldpwd)
+			free(te()->oldpwd);
+		return(clear_history(), exit(0), (void)(0));
+	}
 }

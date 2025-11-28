@@ -1,21 +1,5 @@
 #include "../../../includes/minishell.h"
 
-/* char *tok_unquote(const char *str)
-{
-	t_vars			v;
-	t_quote_split	*h;
-	char			*tmp;
-	char			*ex_s;
-	char			*new_v;
-
-	init_s_var(&v);
-	while (str[v.i])
-	{
-		quotes_ver(&v.d_q, &v.s_q, str[v.i]);
-		if (str[v.i] == '"' && v.d_q)
-	}
-} */
-
 static char *ver_expand_h(t_quote_split *h)
 {
     char *tmp;
@@ -36,7 +20,7 @@ static char *ver_expand_h(t_quote_split *h)
     }
     return (new_s);
 }
-
+//adicionar verification para ver se he H DOC ou nao
 void	ver_to_expand(t_tokens *t)
 {
     t_quote_split   *h;
@@ -51,9 +35,12 @@ void	ver_to_expand(t_tokens *t)
         {
             if (h->type != SINGLE)
             {
-                exp_s = expand_line(h->str);
-                free(h->str);
-                h->str = exp_s;
+                if (t->prev && t->prev->type != PR_HDOC)
+                {
+                    exp_s = expand_line(h->str);
+                    free(h->str);
+                    h->str = exp_s;
+                }
             }
             h = h->next;
         }
@@ -63,5 +50,25 @@ void	ver_to_expand(t_tokens *t)
         t->value = new_s;
         t = t->next;
         free_split_list(&ps()->sp);
+    }
+}
+
+void     verify_contain_quote(t_tokens *t)
+{
+    int i;
+    while (t)
+    {
+        t->quote = 0;
+        i = 0;
+        while (t->value[i])
+        {
+            if (t->value[i] == '"' || t->value[i] == '\'')
+            {
+                t->quote = 1;
+                break ;
+            }
+            i++;
+        }
+        t = t->next;
     }
 }

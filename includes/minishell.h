@@ -58,5 +58,6 @@ int apply_redir_out(t_redir *redir);
 void    process_children(t_cmd *cmdv, int *fd, int temp_fd, int has_next);
 void    safe_path(char **path, int *fd, int temp_fd, t_cmd *cmdv);
 void    clean_redir(t_redir **redir);
+int verifications_after_malloc_struct(t_tokens *t);
 
 #endif
