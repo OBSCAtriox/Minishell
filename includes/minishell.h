@@ -1,6 +1,11 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "exec.h"
@@ -8,11 +13,6 @@
 # include "../libft/libft.h"
 # include "colors.h"
 # include "error.h"
-# include <stdbool.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
 
 typedef enum e_redir_type
 {
