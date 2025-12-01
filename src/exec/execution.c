@@ -2,11 +2,11 @@
 
 int    builtin_in_parent_process(void)
 {
-    if(tc()->num_cmd == 1 && tp()->cmdv[0]->is_builtin)
+    if(tc()->num_cmd == 1 && ms()->cmdv[0]->is_builtin)
     {
         clone_std();
-        redir(tp()->cmdv[0]);
-        call_builtin(tp()->cmdv[0]->argv);
+        redir(ms()->cmdv[0]);
+        call_builtin(ms()->cmdv[0]->argv);
         restore_std();
         return (TRUE);
     }
@@ -20,7 +20,7 @@ int    exec_pipeline(void)
     int     has_next;
 
     inits_pipeline(&dt);
-    cmdv = tp()->cmdv;
+    cmdv = ms()->cmdv;
     has_next = 1;
     while(cmdv[dt.i])
     {

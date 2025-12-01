@@ -1,15 +1,10 @@
 #ifndef EXEC_H
 #define EXEC_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <signal.h>
-#include <readline/readline.h>
 
 #define FALSE 0
 #define TRUE 1

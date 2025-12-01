@@ -76,7 +76,7 @@ void    free_pipeline(void)
     t_redir **redir;
     int i;
 
-    cmdv = tp()->cmdv;
+    cmdv = ms()->cmdv;
     if(!cmdv)
         return;
     i = 0;
@@ -91,5 +91,5 @@ void    free_pipeline(void)
     }
     free_doble_pointer(tc()->paths);
     free(cmdv);
-    tp()->cmdv = NULL;
+    ms()->cmdv = NULL;
 }

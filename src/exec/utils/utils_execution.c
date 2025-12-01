@@ -85,7 +85,7 @@ void    count_cmd(void)
     int i;
 
     i = 0;
-    while(tp()->cmdv[i])
+    while(ms()->cmdv[i])
         i++;
     tc()->num_cmd = i;
 }

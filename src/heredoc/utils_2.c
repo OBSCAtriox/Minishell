@@ -49,7 +49,7 @@ void    close_fd_redir(void)
     t_redir **redir;
 
     dt.i = 0;
-    cmdv = tp()->cmdv;
+    cmdv = ms()->cmdv;
     while(cmdv[dt.i])
     {
         redir = cmdv[dt.i]->redir;
@@ -58,7 +58,7 @@ void    close_fd_redir(void)
         {
             if(redir[dt.j]->hdoc_fd > 0)
                 close(redir[dt.j]->hdoc_fd);
-            tp()->cmdv[dt.i]->redir[dt.j]->hdoc_fd = -1;
+            ms()->cmdv[dt.i]->redir[dt.j]->hdoc_fd = -1;
             dt.j++;
         }
         dt.i++;

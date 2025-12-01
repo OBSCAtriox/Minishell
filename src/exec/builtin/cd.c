@@ -8,7 +8,7 @@ int builtin_cd(char **arg)
 
     target = get_target(arg);
     if(!target)
-        return (failed_cd(NULL, NULL, NULL), FALSE);
+        return (FALSE);
     old_pwd = getcwd(NULL, 0);
     if (!old_pwd)
         return (failed_cd(NULL, &target, NULL), FALSE);

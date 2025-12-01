@@ -7,7 +7,7 @@ int    heredoc(void)
     t_redir **redir;
 
     dt.i = 0;
-    cmdv = tp()->cmdv;
+    cmdv = ms()->cmdv;
     tc()->signaled_heredoc = 0;
     while(cmdv[dt.i])
     {
@@ -33,7 +33,7 @@ int    mount_heredoc(int idx_cmd, int idx_rdir)
     pid_t pid;
     char    *delim;
 
-    delim = tp()->cmdv[idx_cmd]->redir[idx_rdir]->path;
+    delim = ms()->cmdv[idx_cmd]->redir[idx_rdir]->path;
     if(pipe(fd) < 0)
     {
         perror("pipe");
@@ -48,7 +48,7 @@ int    mount_heredoc(int idx_cmd, int idx_rdir)
     else if(pid == 0 && !tc()->signaled_heredoc)
         read_heredoc(idx_cmd, idx_rdir, fd, delim);
     close(fd[1]);
-    tp()->cmdv[idx_cmd]->redir[idx_rdir]->hdoc_fd = fd[0];
+    ms()->cmdv[idx_cmd]->redir[idx_rdir]->hdoc_fd = fd[0];
     wait_heredoc(pid, fd);
     if(te()->exit_code == 130)
         return (FALSE);
@@ -63,7 +63,7 @@ void    read_heredoc(int idx_cmd, int idx_rdir, int *fd, char *delim)
     close(fd[0]);
     close_fd_redir();
     setup_heredoc_signals(fd[1]);
-    quoted = tp()->cmdv[idx_cmd]->redir[idx_rdir]->quoted;
+    quoted = ms()->cmdv[idx_cmd]->redir[idx_rdir]->quoted;
     while (1)
     {
         line = readline("> ");
