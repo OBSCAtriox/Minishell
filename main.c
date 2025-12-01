@@ -1,23 +1,61 @@
 #include "includes/minishell.h"
 
-t_env  *te()
+t_env	*te(void)
 {
-    static t_env env;
-    return (&env);
+	static t_env	env;
+
+	return (&env);
 }
 
-int main(int argc, char **argv, char **envp)
+t_pipeline	*ms(void)
 {
-    pipeline_from_cli(argc, argv);
-    mount_envp(envp);
-    for(int i = 0; te()->envp[i]; i++)
-        printf("%s\n", te()->envp[i]);
-    buitin_cd(argv[2]);
-    printf("\n\n");
-    for(int i = 0; te()->envp[i]; i++)
-        printf("%s\n", te()->envp[i]);
-    printf("oldpwd: %s\n", te()->oldpwd);
-    built_echo(argv[2]);
-    built_pwd();
-    return (0);
+	static t_pipeline	ms;
+
+	return (&ms);
+}
+
+/* static void	printf_list_tok(t_per_cmd_tok *tl)
+{
+	t_tokens	*tmp;
+
+	while (tl)
+	{
+		printf("\n//////////////////////\n");
+		tmp = tl->cmdt;
+		while (tmp)
+		{
+			printf("list of tok list : --> %s\n", tmp->value);
+			printf("\n------------------\n");
+			tmp = tmp->next;
+		}
+		tl = tl->next;
+	}
+} */
+
+int	main(int argc, char **argv, char **envp)
+{
+			//int count;
+			//t_per_cmd_tok *tl;
+	//t_tokens	*cur;
+	//int			y;
+
+	// int i;
+	// i = 0;
+	(void)argv;
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	if (argc != 1)
+		basic_error(ERR_ARG);
+	mount_envp(envp);
+	// printf("%s\n", expand_line("Ola $? $9 boas \"$1\""));
+	while (1)
+	{
+		ps()->line = readline("T_Shell> ");
+		add_history(ps()->line);
+		verifications(ps()->line)
+		execution();
+		//print_minishell_structs(1);
+		free_all("Cleaning after command\n", 0);
+		ps()->line = NULL;
+	}
 }
