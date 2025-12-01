@@ -3,7 +3,7 @@
 void    safe_path(char **path, int *fd, int temp_fd, t_cmd *cmdv)
 {
     *path = path_to_binary(cmdv->argv[0]);
-    if(!path)
+    if(!*path)
     {
         close_all(fd[0], fd[1], temp_fd, -1);
         exit(tc()->exit_path);
