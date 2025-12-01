@@ -1,7 +1,5 @@
-
 CC = gcc
 FLAGS = -g -Wall -Werror -Wextra
->>>>>>> refs/remotes/origin/main
 
 NAME = minishell
 
@@ -28,14 +26,12 @@ src/exec/redir/redir.c src/exec/path/find_path.c src/exec/utils/utils_execution_
 src/exec/utils/utils_execution_3.c src/exec/redir/utils.c \
 \
 src/print_minishell_struct.c \
->>>>>>> refs/remotes/origin/main
 
 OBJ = $(SRC:.c=.o)
 
 all: $(LIBFT) $(NAME)
 
 $(NAME): $(OBJ)
-
 	$(CC) $(OBJ) $(LIBFT) $(LIBS) -o $(NAME)
 
 $(LIBFT):
