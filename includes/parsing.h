@@ -3,8 +3,6 @@
 
 # include "minishell.h"
 # include "stdbool.h"
-# include <readline/history.h>
-# include <readline/readline.h>
 
 # define MAX_PIPES 256
 # define BUF_SIZE 100000

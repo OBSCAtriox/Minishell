@@ -1,8 +1,0 @@
-{
-   readline
-   Memcheck:Leak
-   fun:readline
-   fun:rl_initialize
-   fun:_rl_init_terminal_io
-   fun:_nc_setupterm
-}

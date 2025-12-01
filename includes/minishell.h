@@ -1,6 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <readline/history.h>
+# include <readline/readline.h>
 # include "exec.h"
 # include "parsing.h"
 # include "../libft/libft.h"
@@ -51,7 +53,6 @@ typedef struct s_pipeline
 
 t_env				*te(void);
 t_pipeline			*ms(void);
-t_pipeline			*tp(void);
 int    redir(t_cmd *cmdv);
 int apply_redir_in(t_redir *redir);
 int apply_redir_out(t_redir *redir);
