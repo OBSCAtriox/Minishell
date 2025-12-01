@@ -17,6 +17,7 @@ void    cleanup(void)
         free(te()->oldpwd);
         te()->oldpwd = NULL;
     }
+    free_all("", 0);
     free_pipeline();
 }
 

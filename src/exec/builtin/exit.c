@@ -4,7 +4,6 @@ void    builtin_exit(char **arg)
 {
     long    code;
 
-    printf("Exit\n");
     if(!arg[1])
         code = te()->exit_code;
     else if(!ft_isnumeric(arg[1]))
@@ -19,6 +18,7 @@ void    builtin_exit(char **arg)
     }
     else
         code = ft_atoi(arg[1]) % 256;
+    printf("Exit\n");
     cleanup();
     exit(code);
 }

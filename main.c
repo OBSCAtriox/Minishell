@@ -68,7 +68,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 		{
-			print_minishell_structs(1);
+			//print_minishell_structs(1);
 			execution();
 		}
 		free_all("", 0);
