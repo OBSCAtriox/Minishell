@@ -1,0 +1,33 @@
+{
+    readline_set_prompt_reachable
+    Memcheck:Leak
+    match-leak-kinds: reachable
+    fun:malloc
+    fun:xmalloc
+    fun:rl_set_prompt
+    ...
+    fun:readline
+}
+
+{
+    readline_expand_prompt_reachable
+    Memcheck:Leak
+    match-leak-kinds: reachable
+    fun:malloc
+    fun:xmalloc
+    fun:rl_expand_prompt
+    fun:rl_set_prompt
+    ...
+    fun:readline
+}
+
+{
+    readline_terminal_setup_reachable
+    Memcheck:Leak
+    match-leak-kinds: reachable
+    fun:malloc
+    ...
+    fun:_rl_init_terminal_io
+    fun:rl_initialize
+    fun:readline
+}
