@@ -53,8 +53,8 @@ int	main(int argc, char **argv, char **envp)
 		ps()->line = readline("T_Shell> ");
 		add_history(ps()->line);
 		verifications(ps()->line);
-		execution();
 		//print_minishell_structs(1);
+		execution();
 		free_all("Cleaning after command\n", 0);
 		ps()->line = NULL;
 	}

@@ -57,9 +57,9 @@ void	add_redirs(t_tokens *t, t_per_cmd_tok *tl, int i)
 			ms()->cmdv[i]->redir[y]->path = ft_strdup(t->next->value);
 			if (!ms()->cmdv[i]->redir[y]->path)
 				free_all(MALLOC_FAIL, 1);
-			if (t->type == PR_IN || t->type == PR_APP)
+			if (t->type == PR_IN || t->type == PR_HDOC)
 				ms()->cmdv[i]->redir[y]->fd_target = 0;
-			else if (t->type == PR_OUT || t->type == PR_HDOC)
+			else if (t->type == PR_OUT || t->type == PR_APP)
 				ms()->cmdv[i]->redir[y]->fd_target = 1;
 			ver_hdoc_and_quoted(t, i, y);
 			y++;
