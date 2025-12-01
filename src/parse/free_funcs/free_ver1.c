@@ -50,7 +50,7 @@ void	free_double_pchar(char **arr)
 
 void	free_all(char *msg, int i)
 {
-	if (!ft_strcmp(MALLOC_FAIL, msg));
+	if (!ft_strcmp(MALLOC_FAIL, msg))
 		te()->exit_code = 1;
 	if (ps()->tok)
 		free_tokens();

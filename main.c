@@ -51,11 +51,26 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		ps()->line = readline("T_Shell> ");
-		add_history(ps()->line);
-		verifications(ps()->line);
+		if (!ps()->line)
+			break ;
+		if (ps()->line[0] == '\0')
+		{
+			free(ps()->line);
+			continue ;
+		}
+		if (!verify_whitespaces(ps()->line))
+			continue ;
+		if (!verifications(ps()->line))
+		{
+			free_all("", 0);
+			cleanup();
+			exit(1);
+		}
+		else
+			execution();
 		//print_minishell_structs(1);
-		execution();
-		free_all("Cleaning after command\n", 0);
+		free_all("", 0);
 		ps()->line = NULL;
 	}
+	cleanup();
 }

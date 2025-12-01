@@ -90,6 +90,7 @@ int							pipe_ver_end(const char *line);
 int							pipe_ver_start(const char *line);
 int							pipe_ver_mid(const char *line);
 int							ver_mid_help(const char *line, int i, int y);
+int							verify_whitespaces(char *line);
 int							r_ver_midle(bool d_q, bool s_q, const char *li);
 int							verifications(const char *line);
 int							malloc_struct(void);
@@ -124,7 +125,6 @@ int							r_ver_start(const char *li);
 int							r_ver_end(const char *li);
 int							r_ver(const char *li);
 
-
-void    print_minishell_structs(int n);
+void						print_minishell_structs(int n);
 
 #endif

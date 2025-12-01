@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static int verify_whitespaces(const char *line)
+int verify_whitespaces(char *line)
 {
 	int i;
 
@@ -12,6 +12,7 @@ static int verify_whitespaces(const char *line)
 		else
 			return (1);
 	}
+	free(line);
 	return (0);
 }
 
@@ -37,10 +38,6 @@ bool	quotes(const char *line)
 
 int	verifications(const char *line)
 {
-	if (!line || !*line)
-		return (0);
-	if (!verify_whitespaces(line))
-		return (0);
 	if (!quotes(line))
 		return (te()->exit_code = 2, free_all(UNCLOSED_QUOTES, 0), 0);
 	if (!pipe_ver_end(line) || !pipe_ver_start(line) || !pipe_ver_mid(line))
