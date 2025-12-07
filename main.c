@@ -42,8 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	// int i;
 	// i = 0;
 	(void)argv;
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	setup_prompt_signal();
 	if (argc != 1)
 		basic_error(ERR_ARG);
 	mount_envp(envp);
@@ -58,6 +57,7 @@ int	main(int argc, char **argv, char **envp)
 			free(ps()->line);
 			continue ;
 		}
+		add_history(ps()->line);
 		if (!verify_whitespaces(ps()->line))
 			continue ;
 		if (!verifications(ps()->line))
@@ -74,5 +74,6 @@ int	main(int argc, char **argv, char **envp)
 		free_all("", 0);
 		ps()->line = NULL;
 	}
+	rl_clear_history();
 	cleanup();
 }

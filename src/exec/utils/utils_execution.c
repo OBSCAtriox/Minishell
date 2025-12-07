@@ -14,27 +14,27 @@ static int  is_builtin(const char *command, const char *name)
     return (ft_strncmp(command, name, name_len) == 0);
 }
 
-void    call_builtin(char **arg)
+void    call_builtin(char **argv)
 {
     char *command;
 
-    if (!arg || !arg[0])
+    if (!argv || !argv[0])
         return ;
-    command = arg[0];
+    command = argv[0];
     if (is_builtin(command, "echo"))
-        builtin_echo(arg[1]);
+        builtin_echo(argv);
     else if (is_builtin(command, "cd"))
-        builtin_cd(arg);
+        builtin_cd(argv);
     else if (is_builtin(command, "env"))
         builtin_env();
     else if (is_builtin(command, "pwd"))
         builtin_pwd();
     else if (is_builtin(command, "unset"))
-        builtin_unset(arg);
+        builtin_unset(argv);
     else if (is_builtin(command, "export"))
-        builtin_export(arg);
+        builtin_export(argv);
     else if (is_builtin(command, "exit"))
-        builtin_exit(arg);
+        builtin_exit(argv);
     else
         print_error(command, "comand not found");
 }

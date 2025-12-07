@@ -23,7 +23,7 @@ src/exec/builtin/export.c src/env/utils_env_3.c src/exec/builtin/unset.c src/exe
 src/exec/utils/free.c src/exec/builtin/exit.c src/heredoc/utils.c src/heredoc/expand.c \
 src/heredoc/utils_2.c src/heredoc/heredoc.c src/exec/execution.c src/exec/utils/utils_execution.c \
 src/exec/redir/redir.c src/exec/path/find_path.c src/exec/utils/utils_execution_2.c \
-src/exec/utils/utils_execution_3.c src/exec/redir/utils.c \
+src/exec/utils/utils_execution_3.c src/exec/redir/utils.c  src/exec/utils/handler_signal.c\
 \
 src/print_minishell_struct.c \
 
