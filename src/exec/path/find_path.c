@@ -27,6 +27,8 @@ char    *find_bin_path(char *arg)
     i = 0;
     path_bin = NULL;
     paths = tc()->paths;
+    if(!paths)
+        return (NULL);
     while(paths[i])
     {
         path_bin = join3(paths[i], BAR, arg);
@@ -45,8 +47,7 @@ char    *path_to_binary(char *arg)
     char *path;
 
     path = NULL;
-    if(!splited_path())
-        return (print_error(arg, "failed to search enviroment"), NULL);
+    splited_path();
     if(ft_strchr(arg, '/'))
     {
         if(!check_path(arg))

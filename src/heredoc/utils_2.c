@@ -28,7 +28,7 @@ void wait_heredoc(pid_t pid, int *fd)
         sig = WEXITSTATUS(status);
         if (sig == 130)
         {
-            printf("\n");
+            write(1, "\n", 1);
             tc()->signaled_heredoc = 1;
             if(fd[0] > 0)
                 close(fd[0]);

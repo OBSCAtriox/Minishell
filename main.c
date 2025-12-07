@@ -51,7 +51,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ps()->line = readline("T_Shell> ");
 		if (!ps()->line)
+		{
+			write(1, "exit\n", 5);
 			break ;
+		}
 		if (ps()->line[0] == '\0')
 		{
 			free(ps()->line);
@@ -63,8 +66,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!verifications(ps()->line))
 		{
 			free_all("", 0);
-			cleanup();
-			exit(1);
+			continue;
 		}
 		else
 		{
@@ -76,4 +78,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	rl_clear_history();
 	cleanup();
+	exit(te()->exit_code);
 }

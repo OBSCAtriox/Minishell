@@ -107,7 +107,7 @@ void sigint_hdoc(int sig);
 void    setup_heredoc_signals(int fd);
 void    count_cmd(void);
 void    execution(void);
-void    call_builtin(char **argv);
+int    call_builtin(char **argv);
 int restore_std(void);
 int clone_std(void);
 int splited_path(void);
@@ -131,4 +131,5 @@ int has_new_line(char *arg);
 void    print_echo(char **argv, int i);
 void setup_prompt_signal(void);
 void sigint_prompt(int sig);
+int  is_builtin(const char *command, const char *name);
 #endif

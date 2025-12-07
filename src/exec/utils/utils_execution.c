@@ -1,6 +1,6 @@
 #include "../../../includes/minishell.h"
 
-static int  is_builtin(const char *command, const char *name)
+int  is_builtin(const char *command, const char *name)
 {
     size_t  cmd_len;
     size_t  name_len;
@@ -14,12 +14,12 @@ static int  is_builtin(const char *command, const char *name)
     return (ft_strncmp(command, name, name_len) == 0);
 }
 
-void    call_builtin(char **argv)
+int    call_builtin(char **argv)
 {
     char *command;
 
     if (!argv || !argv[0])
-        return ;
+        return (FALSE);
     command = argv[0];
     if (is_builtin(command, "echo"))
         builtin_echo(argv);
@@ -36,7 +36,8 @@ void    call_builtin(char **argv)
     else if (is_builtin(command, "exit"))
         builtin_exit(argv);
     else
-        print_error(command, "comand not found");
+        return (FALSE);
+    return (TRUE);
 }
 
 int clone_std(void)

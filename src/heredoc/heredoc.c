@@ -35,21 +35,17 @@ int    mount_heredoc(int idx_cmd, int idx_rdir)
 
     delim = ms()->cmdv[idx_cmd]->redir[idx_rdir]->path;
     if(pipe(fd) < 0)
-    {
-        perror("pipe");
-        return (FALSE);
-    }
+        return (perror("pipe"), FALSE);
     pid = fork();
     if(pid < 0)
-    {
-        perror("fork");
-        return (FALSE);
-    }
-    else if(pid == 0 && !tc()->signaled_heredoc)
+        return (perror("fork"), FALSE);
+    signal(SIGINT, SIG_IGN);
+    if(pid == 0 && !tc()->signaled_heredoc)
         read_heredoc(idx_cmd, idx_rdir, fd, delim);
     close(fd[1]);
     ms()->cmdv[idx_cmd]->redir[idx_rdir]->hdoc_fd = fd[0];
     wait_heredoc(pid, fd);
+    setup_prompt_signal();
     if(te()->exit_code == 130)
         return (FALSE);
     return (TRUE);
