@@ -1,6 +1,6 @@
 #include "../../../includes/minishell.h"
 
-void builtin_env(void)
+int builtin_env(void)
 {
     int i;
     int size;
@@ -25,4 +25,5 @@ void builtin_env(void)
         i++;
     }
     te()->exit_code = 0;
+    return (TRUE);
 }

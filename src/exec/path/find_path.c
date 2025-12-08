@@ -58,11 +58,13 @@ char    *path_to_binary(char *arg)
     else
     {
         path = find_bin_path(arg);
-        if(!path)
+        if(!path && !check_builtin(arg))
         {
             tc()->exit_path = 127;
             return (print_error(arg, "command not found"), NULL);
         }
+        else if(!path && check_builtin(arg))
+            return (NULL);
     }
     return (path);
 }

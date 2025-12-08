@@ -1,6 +1,6 @@
 #include "../../../includes/minishell.h"
 
-void    builtin_exit(char **arg)
+int    builtin_exit(char **arg)
 {
     long    code;
 
@@ -9,17 +9,20 @@ void    builtin_exit(char **arg)
     else if(!ft_isnumeric(arg[1]))
     {
         print_error("exit", "numeric argument required");
-        code = 255;
+        code = 2;
     }
     else if(arg[2])
     {
+        if(tc()->in_parent)
+            write(1, "exit\n", 5);
         print_error("exit", "too many arguments");
-        return ;
+        te()->exit_code = 1;
+        return (FALSE);
     }
     else
         code = ft_atoi(arg[1]) % 256;
-    printf("exit\n");
-    cleanup();
+    if(tc()->in_parent)
+        cleanup();
     exit(code);
 }
 

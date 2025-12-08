@@ -1,12 +1,12 @@
 #include "../../../includes/minishell.h"
 
-void    builtin_export(char **argv)
+int    builtin_export(char **argv)
 {
     int i;
 
     i = 1;
     if(!argv || !argv[1])
-        return (print_export());
+        return (print_export(), 1);
     while(argv[i])
     {
         if(is_valid_identifier(argv[i]))
@@ -21,9 +21,11 @@ void    builtin_export(char **argv)
             write(2, "export: ", 8);
             print_error(argv[1], "not a valid identifier");
             te()->exit_code = 1;
+            return (FALSE);
         }
         i++;
     }
+    return (TRUE);
 }
 
 void    print_export(void)

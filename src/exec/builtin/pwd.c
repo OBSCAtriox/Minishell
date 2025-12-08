@@ -1,6 +1,6 @@
 #include "../../../includes/minishell.h"
 
-void    builtin_pwd(void)
+int    builtin_pwd(void)
 {
     char    *pwd;
 
@@ -9,10 +9,11 @@ void    builtin_pwd(void)
     {
         te()->exit_code = 1;
         perror("pwd");
-        return ;
+        return (FALSE);
     }
     write(1, pwd, ft_strlen(pwd));
     write(1, "\n", 1);
     free(pwd);
     te()->exit_code = 0;
+    return (TRUE);
 }

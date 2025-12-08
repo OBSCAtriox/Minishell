@@ -4,13 +4,27 @@ int    builtin_in_parent_process(void)
 {
     if(tc()->num_cmd == 1 && ms()->cmdv[0]->is_builtin)
     {
+        tc()->in_parent = TRUE;
         clone_std();
-        redir(ms()->cmdv[0]);
+        if(!redir(ms()->cmdv[0]))
+        {
+            restore_std();
+            te()->exit_code = 1;
+            return (TRUE);
+        }
         call_builtin(ms()->cmdv[0]->argv);
         restore_std();
         return (TRUE);
     }
     return (FALSE);
+}
+
+void    process_builtin(char **argv)
+{
+    tc()->in_parent = FALSE;
+    if(!call_builtin(argv))
+        exit(127);
+    exit(0);
 }
 
 int    exec_pipeline(void)
@@ -61,6 +75,8 @@ void    process_children(t_cmd *cmdv, int *fd, int temp_fd, int has_next)
         exit(1);
     }
     close_all(fd[0], fd[1], temp_fd, -1);
+    if(check_builtin(cmdv->argv[0]))
+        process_builtin(cmdv->argv);
     execve(path, cmdv->argv, envp);
     perror(cmdv->argv[0]);
     free(path);

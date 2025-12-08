@@ -16,12 +16,6 @@ int builtin_unset(char  **argv)
             else
                 te()->exit_code = 1;
         }
-        else
-        {
-            te()->exit_code = 1;
-            write(2, "unset: ", 7);
-            print_error(argv[i], "not a valid identifier");
-        }
         i++;
     }
     return (TRUE);

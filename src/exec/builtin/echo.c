@@ -1,6 +1,6 @@
 #include "../../../includes/minishell.h"
 
-void    builtin_echo(char **argv)
+int    builtin_echo(char **argv)
 {
     int n_flag;
     int i;
@@ -10,7 +10,7 @@ void    builtin_echo(char **argv)
     {
         write(1, "\n", 1);
         te()->exit_code = 0;
-        return;
+        return (FALSE);
     }
     i = 1;
     if(argv[i] && has_new_line(argv[i]))
@@ -23,6 +23,7 @@ void    builtin_echo(char **argv)
     if(!n_flag)
         write(1, "\n", 1);
     te()->exit_code = 0;
+    return (TRUE);
 }
 
 int has_new_line(char *arg)

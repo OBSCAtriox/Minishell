@@ -22,22 +22,21 @@ int    call_builtin(char **argv)
         return (FALSE);
     command = argv[0];
     if (is_builtin(command, "echo"))
-        builtin_echo(argv);
+        return (builtin_echo(argv));
     else if (is_builtin(command, "cd"))
-        builtin_cd(argv);
+        return (builtin_cd(argv));
     else if (is_builtin(command, "env"))
-        builtin_env();
+        return (builtin_env());
     else if (is_builtin(command, "pwd"))
-        builtin_pwd();
+        return (builtin_pwd());
     else if (is_builtin(command, "unset"))
-        builtin_unset(argv);
+        return (builtin_unset(argv));
     else if (is_builtin(command, "export"))
-        builtin_export(argv);
+        return (builtin_export(argv));
     else if (is_builtin(command, "exit"))
-        builtin_exit(argv);
+        return (builtin_exit(argv));
     else
         return (FALSE);
-    return (TRUE);
 }
 
 int clone_std(void)

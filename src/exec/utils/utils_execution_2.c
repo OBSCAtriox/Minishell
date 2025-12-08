@@ -35,7 +35,7 @@ void    parent_step(t_data *dt)
     dt->temp_fd = dt->fd[0];
     dt->fd[0] = -1;
     dt->fd[1] = -1;
-    if(dt->i == tc()->num_cmd)
+    if(dt->i == tc()->num_cmd - 1)
         tc()->last_pid = dt->pid;
 }
 
