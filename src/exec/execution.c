@@ -16,6 +16,14 @@ int    builtin_in_parent_process(void)
         restore_std();
         return (TRUE);
     }
+    else if(tc()->num_cmd == 1 && !ms()->cmdv[0]->is_builtin)
+    {
+        if(is_valid_identifier(ms()->cmdv[0]->argv[0]))
+        {
+            if(local_var(ms()->cmdv[0]->argv[0]))
+                return (TRUE);
+        }
+    }
     return (FALSE);
 }
 

@@ -77,7 +77,10 @@ void	update_local_var(char *name, char *value)
 	int	index;
 
 	if (!te()->l_var)
+	{
+		create_local_variable(name, value);
 		return ;
+	}
 	index = find_variable(name, te()->l_var);
 	if (index != -1)
 	{

@@ -67,10 +67,12 @@ int is_valid_identifier(char *arg)
     if(ft_isalpha(arg[0]) || arg[0] == '_')
         first_character = TRUE;
     i = 1;
-    while(arg[i])
+    while(arg[i] && arg[i] != '=')
     {
         if(ft_isdigit(arg[i]) || ft_isalpha(arg[i]) || arg[i] == '_')
             other_character = TRUE;
+        else
+            return (FALSE);
         i++;
     }
     if(first_character && other_character && len > 1)
@@ -95,7 +97,7 @@ void    export_variable(char *arg)
         var = te()->l_var[index];
         name = get_name_var(var);
         value = get_value_var(var);
-        if(!name || !value)
+        if(!name)
             return ;
         env_set(name, value, te()->envp);
     }
@@ -108,7 +110,7 @@ int aux_export(char **argv, int i)
 
     name = get_name_var(argv[i]);
     value = get_value_var(argv[i]);
-    if(!name || !value)
+    if(!name)
         return (FALSE);
     if(has_equal(argv[i]) && !value)
     {

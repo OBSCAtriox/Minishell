@@ -135,4 +135,7 @@ void sigint_prompt(int sig);
 int  is_builtin(const char *command, const char *name);
 int	check_builtin(char *argv);
 void    process_builtin(char **argv);
+void	update_local_var(char *name, char *value);
+int local_var(char *arg);
+char *expand_vrb(char *name);
 #endif

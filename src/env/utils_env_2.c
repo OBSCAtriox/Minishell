@@ -75,7 +75,7 @@ char	*get_value_var(char *arg)
 	if (arg[dt.i] != '=')
 		return (NULL);
 	if (arg[dt.i + 1] == 32 || arg[dt.i + 1] == '\0')
-		return (NULL);
+		return (ft_strdup(""));
 	result = malloc(sizeof(char) * ((dt.len - dt.i) + 1));
 	if (!result)
 		return (NULL);

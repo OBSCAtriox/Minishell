@@ -76,7 +76,7 @@ char    **exp_str_var(char *line)
             free(dt.str);
             continue;
         }
-        dt.var[dt.i] = expand_variable(dt.str, te()->envp);
+        dt.var[dt.i] = expand_vrb(dt.str);
         if(!dt.var[dt.i])
             dt.var[dt.i] = ft_strdup("");
         free_str(dt.str);
@@ -113,4 +113,17 @@ int count_len_exp(char *line)
     }
     dt.result = len_expanded_var(line);
     return (ft_strlen(line) - dt.size + dt.result);
+}
+
+char *expand_vrb(char *name)
+{
+    char *vrb;
+
+    vrb = expand_variable(name, te()->envp);
+    if(vrb)
+        return (vrb);
+    vrb = expand_variable(name, te()->l_var);
+    if(vrb)
+        return (vrb);
+    return (NULL);
 }

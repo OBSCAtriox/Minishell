@@ -62,3 +62,25 @@ int	check_builtin(char *arg)
         return (TRUE);
     return (FALSE);
 }
+
+int local_var(char *arg)
+{
+    char *name;
+    char *value;
+
+    if(!has_equal(arg))
+        return (FALSE);
+    name = get_name_var(arg);
+    value = get_value_var(arg);
+    if(!name)
+    {
+        free(name);
+        free(value);
+        return (FALSE);
+    }
+    if(value)
+        update_local_var(name, value);
+    free(name);
+    free(value);
+    return (TRUE);
+}
