@@ -16,7 +16,9 @@ int     count_words(t_tokens *t)
 
 int     if_redir(t_token_type type)
 {
-    if (type != WORD && type != PPIPE)
+  /*   if (!type)
+        return (0); */
+            if (type != WORD && type != PPIPE)
         return (1);
     return (0);
 }

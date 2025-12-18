@@ -35,7 +35,7 @@ void	ver_to_expand(t_tokens *t)
         {
             if (h->type != SINGLE)
             {
-                if (t->prev && t->prev->type != PR_HDOC)
+                if (!t->prev || t->prev->type != PR_HDOC)
                 {
                     exp_s = expand_line(h->str);
                     free(h->str);
