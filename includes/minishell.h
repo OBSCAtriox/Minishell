@@ -26,6 +26,7 @@ typedef struct s_env
 {
 	char			**l_var;
 	char			**envp;
+	char			**var_exp;
 	char			*oldpwd;
 	int				exit_code;
 }					t_env;

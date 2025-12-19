@@ -6,7 +6,7 @@ int    builtin_export(char **argv)
 
     i = 1;
     if(!argv || !argv[1])
-        return (print_export(), 1);
+        return (print_export(te()->envp), print_export(te()->var_exp), 1);
     while(argv[i])
     {
         if(is_valid_identifier(argv[i]))
@@ -28,15 +28,13 @@ int    builtin_export(char **argv)
     return (TRUE);
 }
 
-void    print_export(void)
+void    print_export(char **env)
 {
-    char    **env;
     int     count;
     int     printed_count;
     int     *printed;
     int     next;
 
-    env = te()->envp;
     count = size_vetor(env);
     printed = ft_calloc(count, sizeof(int));
     if(!printed)
@@ -91,7 +89,10 @@ void    export_variable(char *arg)
 
     index = find_variable(arg, te()->l_var);
     if(index == -1)
+    {
+        update_var_exp(arg);
         return;
+    }
     else
     {
         var = te()->l_var[index];
@@ -100,6 +101,7 @@ void    export_variable(char *arg)
         if(!name)
             return ;
         env_set(name, value, te()->envp);
+        remove_local_var(index);
     }
 }
 

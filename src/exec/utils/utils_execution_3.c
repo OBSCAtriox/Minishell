@@ -79,7 +79,7 @@ int local_var(char *arg)
         return (FALSE);
     }
     if(value)
-        update_local_var(name, value);
+        call_update_var(name, value);
     free(name);
     free(value);
     return (TRUE);

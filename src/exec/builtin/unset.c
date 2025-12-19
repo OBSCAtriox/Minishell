@@ -103,5 +103,11 @@ int aux_unset(char **argv, int i)
         if(!remove_local_var(index))
             return (FALSE);
     }
+    index = find_variable(argv[i], te()->var_exp);
+    if(index != -1)
+    {
+        if(!remove_var_exp(index))
+            return (FALSE);
+    }
     return (TRUE);
 }

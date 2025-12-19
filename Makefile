@@ -24,7 +24,7 @@ src/exec/utils/free.c src/exec/builtin/exit.c src/heredoc/utils.c src/heredoc/ex
 src/heredoc/utils_2.c src/heredoc/heredoc.c src/exec/execution.c src/exec/utils/utils_execution.c \
 src/exec/redir/redir.c src/exec/path/find_path.c src/exec/utils/utils_execution_2.c \
 src/exec/utils/utils_execution_3.c src/exec/redir/utils.c  src/exec/utils/handler_signal.c\
-\
+src/env/set_var_exp.c src/exec/utils/utils_execution_4.c\
 src/print_minishell_struct.c \
 
 OBJ = $(SRC:.c=.o)
