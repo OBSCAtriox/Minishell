@@ -42,37 +42,42 @@ int	main(int argc, char **argv, char **envp)
 	// int i;
 	// i = 0;
 	(void)argv;
-	setup_prompt_signal();
+	tc()->g_sig = 0;
 	if (argc != 1)
 		basic_error(ERR_ARG);
 	mount_envp(envp);
 	// printf("%s\n", expand_line("Ola $? $9 boas \"$1\""));
 	while (1)
 	{
+		tc()->g_sig = 0;
+		setup_prompt_signal();
 		ps()->line = readline("T_Shell> ");
 		if (!ps()->line)
 		{
 			write(1, "exit\n", 5);
 			break ;
 		}
+		if(tc()->g_sig == SIGINT)
+		{
+    		tc()->g_sig = 0;
+    		free(ps()->line);
+    		continue;
+		}
 		if (ps()->line[0] == '\0')
 		{
 			free(ps()->line);
 			continue ;
 		}
-		add_history(ps()->line);
 		if (!verify_whitespaces(ps()->line))
 			continue ;
+		add_history(ps()->line);
 		if (!verifications(ps()->line))
 		{
 			free_all("", 0);
 			continue;
 		}
 		else
-		{
-			//print_minishell_structs(1);
 			execution();
-		}
 		free_all("", 0);
 		ps()->line = NULL;
 	}

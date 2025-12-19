@@ -46,6 +46,7 @@ typedef struct s_control
     int fd_stdin;
     int in_parent;
     char    **paths;
+    int g_sig;
 }       t_control;
 
 t_control   *tc(void);
@@ -132,6 +133,8 @@ int has_new_line(char *arg);
 void    print_echo(char **argv, int i);
 void setup_prompt_signal(void);
 void sigint_prompt(int sig);
+void    setup_exec_parent_signals(void);
+void    setup_exec_child_signals(void);
 int  is_builtin(const char *command, const char *name);
 int	check_builtin(char *argv);
 void    process_builtin(char **argv);

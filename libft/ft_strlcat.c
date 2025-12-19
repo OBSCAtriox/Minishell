@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 21:18:58 by thde-sou          #+#    #+#             */
-/*   Updated: 2025/04/19 23:36:34 by thde-sou         ###   ########.fr       */
+/*   Updated: 2025/12/18 17:45:52 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	size_t	z_src;
 	size_t	z_sum;
 
+	if(!dst || !src)
+		return (0);
 	z_dst = ft_strlen(dst);
 	z_src = ft_strlen(src);
 	z_sum = (z_dst + z_src);

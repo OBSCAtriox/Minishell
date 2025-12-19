@@ -13,10 +13,27 @@ void setup_prompt_signal(void)
 
 void sigint_prompt(int sig)
 {
-    (void)sig;
-    write(1, "\n", 1);
-    rl_on_new_line();
+    write(STDOUT_FILENO, "\n", 1);
     rl_replace_line("", 0);
+    rl_on_new_line();
     rl_redisplay();
     te()->exit_code = 130;
+    tc()->g_sig = sig;
+}
+
+void    setup_exec_parent_signals(void)
+{
+    signal(SIGINT, SIG_IGN);
+    signal(SIGQUIT, SIG_IGN);
+}
+
+void    setup_exec_child_signals(void)
+{
+    struct sigaction sa;
+
+    sa.sa_handler = SIG_DFL;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGQUIT, &sa, NULL);
 }

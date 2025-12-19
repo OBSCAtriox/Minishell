@@ -54,7 +54,10 @@ int    exec_pipeline(void)
         }
         dt.pid = safe_fork();
         if (dt.pid == 0)
+        {
+            setup_exec_child_signals();
             process_children(cmdv[dt.i], dt.fd, dt.temp_fd, has_next);
+        }
         parent_step(&dt);
         dt.i++;
     }
@@ -95,9 +98,17 @@ void    execution(void)
 {
     count_cmd();
     if(!heredoc())
+    {
+        setup_prompt_signal();
         return ;
+    }
     if(builtin_in_parent_process())
+    {
+        setup_prompt_signal();
         return;
+    }
+    setup_exec_parent_signals();
     exec_pipeline();
+    setup_prompt_signal();
     free_pipeline();
 }
