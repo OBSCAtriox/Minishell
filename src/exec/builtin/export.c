@@ -54,7 +54,6 @@ void    print_export(char **env)
 
 int is_valid_identifier(char *arg)
 {
-    int i;
     int first_character;
     int other_character;
     int len;
@@ -64,15 +63,7 @@ int is_valid_identifier(char *arg)
     len = ft_strlen(arg);
     if(ft_isalpha(arg[0]) || arg[0] == '_')
         first_character = TRUE;
-    i = 1;
-    while(arg[i] && arg[i] != '=')
-    {
-        if(ft_isdigit(arg[i]) || ft_isalpha(arg[i]) || arg[i] == '_')
-            other_character = TRUE;
-        else
-            return (FALSE);
-        i++;
-    }
+    other_character = valid_sec_character(arg);
     if(first_character && other_character && len > 1)
         return (TRUE);
     else if (first_character && len == 1)
@@ -117,14 +108,15 @@ int aux_export(char **argv, int i)
     if(has_equal(argv[i]) && !value)
     {
         if(!env_set(name, "", te()->envp))
-            return (FALSE);
+            return (free(name), free(value), FALSE);
     }
     else if(!has_equal(argv[i]) && !value)
         export_variable(name);
     else
     {
-        if(!env_set(name, value, te()->envp))
-            return (FALSE);
+        if(!check_sum_and_set(name, value, te()->envp))
+            return (free(name), free(value), FALSE);
+        remove_var_exp(find_variable(name, te()->var_exp));
     }
     free(name);
     free(value);

@@ -17,6 +17,8 @@ void    cleanup(void)
         free(te()->oldpwd);
         te()->oldpwd = NULL;
     }
+    if(te()->var_exp)
+        free_doble_pointer(te()->var_exp);
     free_all("", 0);
     free_pipeline();
 }

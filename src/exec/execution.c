@@ -97,6 +97,7 @@ void    process_children(t_cmd *cmdv, int *fd, int temp_fd, int has_next)
 void    execution(void)
 {
     count_cmd();
+    tc()->sum_export = FALSE;
     if(!heredoc())
     {
         setup_prompt_signal();
@@ -105,10 +106,12 @@ void    execution(void)
     if(builtin_in_parent_process())
     {
         setup_prompt_signal();
+        tc()->sum_export = FALSE;
         return;
     }
     setup_exec_parent_signals();
     exec_pipeline();
     setup_prompt_signal();
+    tc()->sum_export = FALSE;
     free_pipeline();
 }

@@ -47,6 +47,7 @@ typedef struct s_control
     int in_parent;
     char    **paths;
     int g_sig;
+    int sum_export;
 }       t_control;
 
 t_control   *tc(void);
@@ -147,4 +148,9 @@ int     create_new_var_exp(char *name);
 void    create_var_exp(char *name);
 int remove_var_exp(int index);
 void    call_update_var(char *name, char *value);
+int valid_sec_character(char *arg);
+int check_sum_and_set(char *name, char *value, char **env);
+int    not_sum(char *name, char *value, char **env);
+void check_sum_local_var(char *name, char *value);
+
 #endif

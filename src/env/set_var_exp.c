@@ -67,6 +67,9 @@ void update_var_exp(char *name)
     index = find_variable(name, te()->envp);
     if(index != -1)
         return;
+    index = find_variable(name, te()->var_exp);
+    if(index != -1)
+        return;
     if(!te()->var_exp)
     {
         create_new_var_exp(name);
@@ -85,7 +88,7 @@ int remove_var_exp(int index)
 
     dt.size = size_vetor(te()->var_exp);
     dt.env = malloc(sizeof(char *) * (dt.size + 1));
-    if(!dt.env)
+    if(!dt.env || index == -1)
         return (FALSE);
     dt.i = 0;
     dt.j = 0;

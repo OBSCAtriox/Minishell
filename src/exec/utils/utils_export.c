@@ -65,3 +65,27 @@ int has_equal(char *arg)
     }
     return (FALSE);    
 }
+
+int valid_sec_character(char *arg)
+{
+    int i;
+
+    i = 1;
+    while(arg[i] && arg[i] != '=')
+    {
+        if(ft_isdigit(arg[i]) || ft_isalpha(arg[i]) || arg[i] == '_' || arg[i] == '+')
+        {
+            if(arg[i] == '+')
+            {
+                if(arg[i] == '+' && arg[i + 1] == '=')
+                    tc()->sum_export = TRUE;
+                else
+                    return (FALSE);
+            }
+        }
+        else
+            return (FALSE);
+        i++;
+    }
+    return (TRUE);
+}

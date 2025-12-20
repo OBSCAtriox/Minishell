@@ -45,21 +45,20 @@ char	*get_name_var(char *arg)
 {
 	int		i;
 	int		j;
+	int		k;
 	char	*result;
 
 	i = 0;
 	j = 0;
-	while (arg[i] && arg[i] != '=')
+	k = 0;
+	while (arg[i] && arg[i] != '+' && arg[i] != '=')
 		i++;
 	result = malloc(sizeof(char) * (i + 1));
 	if (!result)
 		return (NULL);
 	while (j < i)
-	{
-		result[j] = arg[j];
-		j++;
-	}
-	result[i] = '\0';
+		result[j++] = arg[k++];
+	result[j] = '\0';
 	return (result);
 }
 
