@@ -37,6 +37,7 @@ void    wait_for_children(pid_t last_pid)
 	}
 	te()->exit_code = exit_code;
     tc()->last_pid = 1;
+    tc()->sum_export = FALSE;
 }
 
 int	check_builtin(char *arg)

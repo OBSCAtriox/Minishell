@@ -54,10 +54,7 @@ int    exec_pipeline(void)
         }
         dt.pid = safe_fork();
         if (dt.pid == 0)
-        {
-            setup_exec_child_signals();
             process_children(cmdv[dt.i], dt.fd, dt.temp_fd, has_next);
-        }
         parent_step(&dt);
         dt.i++;
     }
@@ -72,6 +69,7 @@ void    process_children(t_cmd *cmdv, int *fd, int temp_fd, int has_next)
     char    **envp;
     char    *path;
 
+    setup_exec_child_signals();
     envp = te()->envp;
     safe_path(&path, fd, temp_fd, cmdv);
     if(!make_dup_pipe(fd, temp_fd, has_next))
@@ -112,6 +110,5 @@ void    execution(void)
     setup_exec_parent_signals();
     exec_pipeline();
     setup_prompt_signal();
-    tc()->sum_export = FALSE;
     free_pipeline();
 }

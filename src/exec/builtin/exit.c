@@ -2,15 +2,10 @@
 
 int    builtin_exit(char **arg)
 {
-    long    code;
+    long long    code;
 
     if(!arg[1])
         code = te()->exit_code;
-    else if(!ft_isnumeric(arg[1]))
-    {
-        print_error("exit", "numeric argument required");
-        code = 2;
-    }
     else if(arg[2])
     {
         if(tc()->in_parent)
@@ -20,7 +15,12 @@ int    builtin_exit(char **arg)
         return (FALSE);
     }
     else
-        code = ft_atoi(arg[1]) % 256;
+    {
+        if(!check_number(arg[1]))
+            code = 2;
+        else
+            code = ft_atoi(arg[1]) % 256;
+    }
     if(tc()->in_parent)
         cleanup();
     exit(code);
@@ -37,5 +37,34 @@ int ft_isnumeric(char *str)
             return (FALSE);
         i++;
     }
+    return (TRUE);
+}
+
+int check_number(char *arg)
+{
+    int sign;
+    unsigned long long result;
+    int i;
+
+    i = 0;
+    sign = 0;
+    result = 0;
+    if(arg[i] == '-' || arg[i] == '+')
+    {
+        if(arg[i] == '-')
+            sign = 1;
+        i++;
+    }
+    while(arg[i])
+    {
+        if(!ft_isdigit(arg[i]))
+            return (print_error("exit", "numeric argument required"), FALSE);
+        result = result * 10 + (arg[i] - '0');
+        i++;
+    }
+    if(sign && result > ((unsigned long long)LLONG_MAX + 1))
+        return (print_error("exit", "numeric argument required"), FALSE);
+    else if(!sign && result > (unsigned long long)LLONG_MAX)
+        return (print_error("exit", "numeric argument required"), FALSE);
     return (TRUE);
 }

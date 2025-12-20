@@ -6,16 +6,16 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 16:07:28 by thde-sou          #+#    #+#             */
-/*   Updated: 2025/04/20 19:04:04 by thde-sou         ###   ########.fr       */
+/*   Updated: 2025/12/20 14:54:47 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+long long	ft_atoi(const char *nptr)
 {
 	int	sign;
-	int	res;
+	long long	res;
 	int	a;
 
 	sign = 1;

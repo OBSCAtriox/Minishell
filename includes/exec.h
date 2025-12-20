@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <signal.h>
+#include <limits.h>
 
 #define FALSE 0
 #define TRUE 1
@@ -152,5 +153,6 @@ int valid_sec_character(char *arg);
 int check_sum_and_set(char *name, char *value, char **env);
 int    not_sum(char *name, char *value, char **env);
 void check_sum_local_var(char *name, char *value);
+int check_number(char *arg);
 
 #endif
