@@ -6,6 +6,11 @@ int	mount_envp(char **envp)
 	int	i;
 
 	i = 0;
+	if(!*envp)
+	{
+		inits_min_var();
+		return (FALSE);
+	}
 	size = size_vetor(envp);
 	te()->envp = malloc(sizeof(char *) * (size + 1));
 	if (!te()->envp)
@@ -64,7 +69,7 @@ int	env_set(char *name, char *value, char **env)
 		env[dt.index] = join3(name, EQUAL, value);
 		return (1);
 	}
-	else if (dt.index == -1 && dt.size > 0)
+	else if (dt.index == -1)
 	{
 		if (!update_variable(name, value, env))
 			return (print_error(NULL, "failed to add variable"), 0);

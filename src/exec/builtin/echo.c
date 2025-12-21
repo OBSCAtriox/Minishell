@@ -3,27 +3,29 @@
 int    builtin_echo(char **argv)
 {
     int n_flag;
+    int printed;
     int i;
 
     n_flag = 0;
+    printed = 0;
     if(!argv)
     {
         write(1, "\n", 1);
-        te()->exit_code = 0;
-        return (FALSE);
+        return (te()->exit_code = 0, FALSE);
     }
     i = 1;
     if(argv[i] && has_new_line(argv[i]))
         n_flag = 1;
     while(argv[i])
     {
-        print_echo(argv, i);
+        print_echo(argv, i, printed);
+        if(!has_new_line(argv[i]))
+            printed = 1;
         i++;
     }
     if(!n_flag)
         write(1, "\n", 1);
-    te()->exit_code = 0;
-    return (TRUE);
+    return (te()->exit_code = 0, TRUE);
 }
 
 int has_new_line(char *arg)
@@ -45,9 +47,9 @@ int has_new_line(char *arg)
     return (FALSE);
 }
 
-void    print_echo(char **argv, int i)
+void    print_echo(char **argv, int i, int printed)
 {
-    if(!has_new_line(argv[i]))
+    if(!has_new_line(argv[i]) || printed)
     {
         write(1, argv[i], ft_strlen(argv[i]));
         if(argv[i] && argv[i + 1])

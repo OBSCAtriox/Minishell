@@ -49,3 +49,14 @@ int    re_mount_locar_var(char **envp)
     te()->l_var[i] = NULL;
     return (TRUE);
 }
+
+void    inits_min_var(void)
+{
+    char *pwd;
+
+    pwd = getcwd(NULL, 0);
+    if(!pwd)
+        return (perror("pwd"));
+    env_set("PWD", pwd, te()->envp);
+    free(pwd);
+}

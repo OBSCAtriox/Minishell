@@ -132,7 +132,7 @@ int aux_export(char **argv, int i);
 int aux_unset(char **argv, int i);
 void    free_pipeline(void);
 int has_new_line(char *arg);
-void    print_echo(char **argv, int i);
+void    print_echo(char **argv, int i, int printed);
 void setup_prompt_signal(void);
 void sigint_prompt(int sig);
 void    setup_exec_parent_signals(void);
@@ -154,5 +154,7 @@ int check_sum_and_set(char *name, char *value, char **env);
 int    not_sum(char *name, char *value, char **env);
 void check_sum_local_var(char *name, char *value);
 int check_number(char *arg);
+void    shell_level(void);
+void    inits_min_var(void);
 
 #endif

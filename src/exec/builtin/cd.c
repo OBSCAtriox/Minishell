@@ -11,7 +11,7 @@ int builtin_cd(char **arg)
         return (FALSE);
     old_pwd = getcwd(NULL, 0);
     if (!old_pwd)
-        return (failed_cd(NULL, &target, NULL), FALSE);
+        old_pwd = expand_variable("PWD", te()->envp);
     if (chdir(target) == -1)
         return (failed_cd(NULL, &target, &old_pwd), FALSE);
     new_pwd = getcwd(NULL, 0);
@@ -21,6 +21,7 @@ int builtin_cd(char **arg)
         free(te()->oldpwd);
     te()->oldpwd = old_pwd;
     env_set("PWD", new_pwd, te()->envp);
+    env_set("OLD_PWD", old_pwd, te()->envp);
     free_cd(&new_pwd, &target, &old_pwd, 0);
     te()->exit_code = 0;
     return (TRUE);

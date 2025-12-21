@@ -53,3 +53,30 @@ void call_update_var(char *name, char *value)
     }
     check_sum_local_var(name, value);
 }
+
+void    shell_level(void)
+{
+    int index;
+    int value;
+    char *exp_value;
+    char *str_value;
+
+    index = find_variable("SHLVL", te()->envp);
+    if(index == -1)
+    {
+        env_set("SHLVL", "1", te()->envp);
+        return;
+    }
+    exp_value = expand_variable("SHLVL", te()->envp);
+    if(!exp_value || !ft_isnumeric(exp_value))
+    {
+        env_set("SHLVL", "1", te()->envp);
+        return;
+    }
+    value = ft_atoi(exp_value);
+    value += 1;
+    str_value = ft_itoa(value);
+    env_set("SHLVL", str_value, te()->envp);
+    free(exp_value);
+    free(str_value);
+}

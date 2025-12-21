@@ -7,9 +7,13 @@ int    builtin_pwd(void)
     pwd = getcwd(NULL, 0);
     if(!pwd)
     {
-        te()->exit_code = 1;
-        perror("pwd");
-        return (FALSE);
+        pwd = expand_variable("PWD", te()->envp);
+        if(!pwd)
+        {
+            te()->exit_code = 1;
+            perror("pwd");
+            return (FALSE);
+        }
     }
     write(1, pwd, ft_strlen(pwd));
     write(1, "\n", 1);
