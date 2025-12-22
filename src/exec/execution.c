@@ -84,6 +84,7 @@ void    process_children(t_cmd *cmdv, int *fd, int temp_fd, int has_next)
         exit(1);
     }
     close_all(fd[0], fd[1], temp_fd, -1);
+    clean_redir_fd();
     if(check_builtin(cmdv->argv[0]))
         process_builtin(cmdv->argv);
     execve(path, cmdv->argv, envp);

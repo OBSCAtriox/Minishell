@@ -156,5 +156,6 @@ void check_sum_local_var(char *name, char *value);
 int check_number(char *arg);
 void    shell_level(void);
 void    inits_min_var(void);
+void    clean_redir_fd(void);
 
 #endif
