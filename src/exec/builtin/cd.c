@@ -21,7 +21,7 @@ int builtin_cd(char **arg)
         free(te()->oldpwd);
     te()->oldpwd = old_pwd;
     env_set("PWD", new_pwd, te()->envp);
-    env_set("OLD_PWD", old_pwd, te()->envp);
+    env_set("OLDPWD", old_pwd, te()->envp);
     free_cd(&new_pwd, &target, &old_pwd, 0);
     te()->exit_code = 0;
     return (TRUE);
