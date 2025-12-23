@@ -19,9 +19,10 @@ int    builtin_export(char **argv)
         else
         {
             write(2, "export: ", 8);
-            print_error(argv[1], "not a valid identifier");
+            print_error(argv[i], "not a valid identifier");
             te()->exit_code = 1;
-            return (FALSE);
+            if(!argv[i + 1])
+                return (FALSE);
         }
         i++;
     }

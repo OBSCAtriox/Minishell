@@ -141,7 +141,6 @@ int  is_builtin(const char *command, const char *name);
 int	check_builtin(char *argv);
 void    process_builtin(char **argv);
 void	update_local_var(char *name, char *value);
-int local_var(char *arg);
 char *expand_vrb(char *name);
 void update_var_exp(char *name);
 int    re_mount_var_exp(char **envp);
@@ -157,5 +156,6 @@ int check_number(char *arg);
 void    shell_level(void);
 void    inits_min_var(void);
 void    clean_redir_fd(void);
+int local_var(char *argv);
 
 #endif

@@ -80,3 +80,22 @@ void    shell_level(void)
     free(exp_value);
     free(str_value);
 }
+
+int    add_check_vars(t_cmd **cmdv)
+{
+    int i;
+    char **argv;
+
+    i = 0;
+    argv = cmdv[0]->argv;
+    while(argv[i])
+    {
+        if(is_valid_identifier(argv[i]))
+        {
+            if(!local_var(argv[i]))
+                return (FALSE);
+        }
+        i++;
+    }
+    return (TRUE);
+}
