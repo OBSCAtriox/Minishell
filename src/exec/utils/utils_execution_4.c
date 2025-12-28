@@ -90,16 +90,18 @@ int    add_check_vars(t_cmd **cmdv)
     argv = cmdv[0]->argv;
     while(argv[i])
     {
-        if(is_valid_identifier(argv[i]))
+        if(is_valid_identifier(argv[i]) && has_equal(argv[i]))
         {
-            if(!local_var(argv[i]))
-            //adicionar função que atualiza o argv em caso de sucesso
+            if(local_var(argv[i]))
+                update_argv(argv);
+            else
                 return (FALSE);
         }
         else
+        {
+            remove_vars_fallback();
             return (FALSE);
-            //remover as variáveis locais caso falhe
-        i++;
+        }
     }
     return (TRUE);
 }

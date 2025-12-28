@@ -47,6 +47,7 @@ typedef struct s_control
     int fd_stdin;
     int in_parent;
     char    **paths;
+    char    **fallback_vars;
     int g_sig;
     int sum_export;
 }       t_control;
@@ -158,5 +159,9 @@ void    inits_min_var(void);
 void    clean_redir_fd(void);
 int local_var(char *argv);
 void set_cwd(void);
+void    update_argv(char **argv);
+int    copy_vetor(char ***dest, char **src);
+void    add_fallback_var(char *arg);
+void    remove_vars_fallback(void);
 
 #endif
