@@ -83,10 +83,13 @@ void    remove_vars_fallback(void)
     int i;
 
     i = 0;
+    if(!tc()->fallback_vars)
+        return;
     while(tc()->fallback_vars[i])
     {
         aux_unset(tc()->fallback_vars, i);
         i++;
     }
     free_doble_pointer(tc()->fallback_vars);
+    tc()->fallback_vars = NULL;
 }
