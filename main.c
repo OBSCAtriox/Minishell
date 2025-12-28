@@ -47,6 +47,7 @@ int	main(int argc, char **argv, char **envp)
 		basic_error(ERR_ARG);
 	mount_envp(envp);
 	shell_level();
+	set_cwd();
 	// printf("%s\n", expand_line("Ola $? $9 boas \"$1\""));
 	while (1)
 	{

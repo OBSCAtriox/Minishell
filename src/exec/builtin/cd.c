@@ -20,6 +20,8 @@ int builtin_cd(char **arg)
     if (te()->oldpwd)
         free(te()->oldpwd);
     te()->oldpwd = old_pwd;
+    free(te()->cwd);
+    te()->cwd = join3(new_pwd, NULL, NULL);
     env_set("PWD", new_pwd, te()->envp);
     env_set("OLDPWD", old_pwd, te()->envp);
     free_cd(&new_pwd, &target, &old_pwd, 0);
@@ -44,7 +46,10 @@ char    *get_target(char **arg)
     {
         target = expand_variable("HOME", te()->envp);
         if (!target)
+        {
+            te()->exit_code = 1;
             return (print_error("cd", "HOME not set"), NULL);
+        }
     }
     return (target);
 }
@@ -75,4 +80,14 @@ void    failed_cd(char **new_pwd, char **target, char **old_pwd)
 {
     free_cd(new_pwd, target, old_pwd, 1);
     te()->exit_code = 1;
+}
+
+void set_cwd(void)
+{
+    te()->cwd = getcwd(NULL, 0);
+    if(!te()->cwd)
+    {
+        te()->cwd = NULL;
+        return;
+    }
 }

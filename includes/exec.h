@@ -157,5 +157,6 @@ void    shell_level(void);
 void    inits_min_var(void);
 void    clean_redir_fd(void);
 int local_var(char *argv);
+void set_cwd(void);
 
 #endif

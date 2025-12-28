@@ -19,6 +19,8 @@ void    cleanup(void)
     }
     if(te()->var_exp)
         free_doble_pointer(te()->var_exp);
+    if(te()->cwd)
+        free(te()->cwd);
     free_all("", 0);
     free_pipeline();
 }

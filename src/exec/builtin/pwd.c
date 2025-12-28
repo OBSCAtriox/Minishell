@@ -7,7 +7,7 @@ int    builtin_pwd(void)
     pwd = getcwd(NULL, 0);
     if(!pwd)
     {
-        pwd = expand_variable("PWD", te()->envp);
+        pwd = join3(te()->cwd, NULL, NULL);
         if(!pwd)
         {
             te()->exit_code = 1;
