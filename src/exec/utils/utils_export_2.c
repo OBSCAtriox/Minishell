@@ -38,3 +38,11 @@ int check_sum_and_set(char *name, char *value, char **env)
     }
     return (TRUE);
 }
+
+void    aux_export_two(char *arg, int *signaled_exit)
+{
+    write(2, "export: ", 8);
+    print_error(arg, "not a valid identifier");
+    te()->exit_code = 1;
+    *signaled_exit = TRUE;
+}

@@ -8,7 +8,7 @@ int builtin_cd(char **arg)
 
     target = get_target(arg);
     if(!target)
-        return (FALSE);
+        return (te()->exit_code = 1, FALSE);
     old_pwd = getcwd(NULL, 0);
     if (!old_pwd)
         old_pwd = expand_variable("PWD", te()->envp);
@@ -46,10 +46,7 @@ char    *get_target(char **arg)
     {
         target = expand_variable("HOME", te()->envp);
         if (!target)
-        {
-            te()->exit_code = 1;
             return (print_error("cd", "HOME not set"), NULL);
-        }
     }
     return (target);
 }

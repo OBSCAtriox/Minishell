@@ -64,7 +64,10 @@ void    read_heredoc(int idx_cmd, int idx_rdir, int *fd, char *delim)
     {
         line = readline("> ");
         if(!line)
+        {
+            printf("%s%s')\n", MSG_HEREDOC, delim);
             break;
+        }
         if(ft_strncmp(line, delim, ft_strlen(delim)) == 0)
         {
             free(line);

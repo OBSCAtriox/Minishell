@@ -12,6 +12,7 @@
 #define EQUAL "="
 #define BAR "/"
 #define _POSIX_C_SOURCE 200809L
+#define MSG_HEREDOC "warning: here-document delimited by end-of-file (wanted `"
 
 typedef struct s_data
 {
@@ -163,5 +164,6 @@ void    update_argv(char **argv);
 int    copy_vetor(char ***dest, char **src);
 void    add_fallback_var(char *arg);
 void    remove_vars_fallback(void);
+void    aux_export_two(char *arg, int *signaled_exit);
 
 #endif

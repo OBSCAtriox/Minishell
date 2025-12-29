@@ -32,7 +32,10 @@ void    wait_for_children(pid_t last_pid)
 			if (WIFEXITED(status))
 				exit_code = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
+            {
+                write(1, "\n", 1);
 				exit_code = 128 + WTERMSIG(status);
+            }
 		}
 	}
 	te()->exit_code = exit_code;

@@ -53,7 +53,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		tc()->g_sig = 0;
 		setup_prompt_signal();
-		ps()->line = readline("T_Shell> ");
+		ps()->line = readline("\001\033[1;32m\002T_Shell> \001\033[0m\002");
 		if (!ps()->line)
 		{
 			write(1, "exit\n", 5);

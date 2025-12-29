@@ -19,7 +19,11 @@ int    builtin_in_parent_process(void)
     else if(tc()->num_cmd == 1 && !ms()->cmdv[0]->is_builtin)
     {
         if(add_check_vars(ms()->cmdv))
+        {
+            free_doble_pointer(tc()->fallback_vars);
+            tc()->fallback_vars = NULL;
             return (TRUE);
+        }
     }
     return (FALSE);
 }

@@ -3,8 +3,10 @@
 int    builtin_export(char **argv)
 {
     int i;
+    int signaled_exit;
 
     i = 1;
+    signaled_exit = FALSE;
     if(!argv || !argv[1])
         return (print_export(te()->envp), print_export(te()->var_exp), 1);
     while(argv[i])
@@ -12,18 +14,15 @@ int    builtin_export(char **argv)
         if(is_valid_identifier(argv[i]))
         {
             if(aux_export(argv, i))
-                te()->exit_code = 0;
+            {
+                if(!signaled_exit)
+                    te()->exit_code = 0;
+            }
             else
                 te()->exit_code = 1;
         }
         else
-        {
-            write(2, "export: ", 8);
-            print_error(argv[i], "not a valid identifier");
-            te()->exit_code = 1;
-            if(!argv[i + 1])
-                return (FALSE);
-        }
+            aux_export_two(argv[i], &signaled_exit);
         i++;
     }
     return (TRUE);
