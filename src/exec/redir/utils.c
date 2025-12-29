@@ -14,20 +14,23 @@ int is_dir(char *arg)
 
 int check_path(char *arg)
 {
+    if (access(arg, F_OK) != 0)
+    {
+        print_error(arg, "No such file or directory");
+        tc()->exit_path = 127;
+        return (FALSE);
+    }
     if(is_dir(arg))
     {
         print_error(arg, "Is a directory");
         tc()->exit_path = 126;
         return (FALSE);
     }
-    else
+    if(access(arg, X_OK) < 0)
     {
-        if(access(arg, X_OK) < 0)
-        {
-            print_error(arg, "No such file or directory");
-            tc()->exit_path = 127;
-            return (FALSE);
-        }
+        print_error(arg, "Permission denied");
+        tc()->exit_path = 126;
+        return (FALSE);
     }
     return (TRUE);
 }

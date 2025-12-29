@@ -1,6 +1,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+#define _XOPEN_SOURCE 700
+#include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>

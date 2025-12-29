@@ -4,14 +4,12 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-#include <signal.h>
 #include <limits.h>
 
 #define FALSE 0
 #define TRUE 1
 #define EQUAL "="
 #define BAR "/"
-#define _POSIX_C_SOURCE 200809L
 #define MSG_HEREDOC "warning: here-document delimited by end-of-file (wanted `"
 
 typedef struct s_data

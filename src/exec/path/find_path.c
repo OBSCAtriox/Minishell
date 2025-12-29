@@ -34,8 +34,8 @@ char    *find_bin_path(char *arg)
         path_bin = join3(paths[i], BAR, arg);
         if(!path_bin)
             return (NULL);
-        if(access(path_bin, X_OK) == 0)
-            return(path_bin);
+        if (!is_dir(path_bin) && access(path_bin, X_OK) == 0)
+            return (path_bin);
         free(path_bin);
         i++;
     }
@@ -48,12 +48,11 @@ char    *path_to_binary(char *arg)
 
     path = NULL;
     splited_path();
-    if(ft_strchr(arg, '/'))
+    if(!ft_strcmp(arg, ".") || !ft_strcmp(arg, "..") || ft_strchr(arg, '/'))
     {
         if(!check_path(arg))
             return (NULL);
-        else
-            return (arg);
+        return (arg);
     }
     else
     {
