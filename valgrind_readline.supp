@@ -1,7 +1,7 @@
 {
-    readline_set_prompt_reachable
+    readline_set_prompt
     Memcheck:Leak
-    match-leak-kinds: reachable
+    match-leak-kinds: all
     fun:malloc
     fun:xmalloc
     fun:rl_set_prompt
@@ -10,9 +10,9 @@
 }
 
 {
-    readline_expand_prompt_reachable
+    readline_expand_prompt
     Memcheck:Leak
-    match-leak-kinds: reachable
+    match-leak-kinds: all
     fun:malloc
     fun:xmalloc
     fun:rl_expand_prompt
@@ -22,12 +22,48 @@
 }
 
 {
-    readline_terminal_setup_reachable
+    readline_terminal_setup
     Memcheck:Leak
-    match-leak-kinds: reachable
+    match-leak-kinds: all
     fun:malloc
     ...
     fun:_rl_init_terminal_io
     fun:rl_initialize
     fun:readline
+}
+
+{
+    readline_malloc
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:malloc
+    ...
+    fun:readline
+}
+
+{
+    readline_calloc
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:calloc
+    ...
+    fun:readline
+}
+
+{
+    readline_realloc
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:realloc
+    ...
+    fun:readline
+}
+
+{
+    readline_add_history
+    Memcheck:Leak
+    match-leak-kinds: all
+    fun:malloc
+    ...
+    fun:add_history
 }

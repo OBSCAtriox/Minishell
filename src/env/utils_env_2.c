@@ -33,10 +33,16 @@ void	create_local_variable(char *name, char *value)
 {
 	if (!te()->l_var)
 	{
-		te()->l_var = malloc(sizeof(char *) + 2);
+		te()->l_var = malloc(sizeof(char *) * 2);
 		if (!te()->l_var)
 			return ;
 		te()->l_var[0] = join3(name, EQUAL, value);
+		if (!te()->l_var[0])
+		{
+			free(te()->l_var);
+			te()->l_var = NULL;
+			return ;
+		}
 		te()->l_var[1] = NULL;
 	}
 }

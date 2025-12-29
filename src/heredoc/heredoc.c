@@ -76,8 +76,7 @@ void    read_heredoc(int idx_cmd, int idx_rdir, int *fd, char *delim)
         write_line(quoted, line, fd[1]);
         free(line);
     }
-    close(fd[1]);
-    exit(0);
+    exit_heredoc(fd[1]);
 }
 
 void    write_line(int quoted, char *line, int fd)

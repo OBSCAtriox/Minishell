@@ -14,7 +14,10 @@ void    clean_redir_fd(void)
     {
         redir = cmdv[i]->redir;
         if (redir)
+        {
             clean_redir(redir);
+            cmdv[i]->redir = NULL;
+        }
         i++;
     }
 }

@@ -22,7 +22,10 @@ int    builtin_exit(char **arg)
             code = ft_atoi(arg[1]) % 256;
     }
     if(tc()->in_parent)
+    {
+        restore_std();
         cleanup();
+    }
     exit(code);
 }
 

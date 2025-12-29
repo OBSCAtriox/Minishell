@@ -28,11 +28,17 @@ int    builtin_in_parent_process(void)
     return (FALSE);
 }
 
-void    process_builtin(char **argv)
+void    process_builtin(char **argv, char *path)
 {
     tc()->in_parent = FALSE;
     if(!call_builtin(argv))
+    {
+        free(path);
+        cleanup();
         exit(127);
+    }
+    free(path);
+    cleanup();
     exit(0);
 }
 
@@ -87,10 +93,11 @@ void    process_children(t_cmd *cmdv, int *fd, int temp_fd, int has_next)
     close_all(fd[0], fd[1], temp_fd, -1);
     clean_redir_fd();
     if(check_builtin(cmdv->argv[0]))
-        process_builtin(cmdv->argv);
+        process_builtin(cmdv->argv, path);
     execve(path, cmdv->argv, envp);
     perror(cmdv->argv[0]);
     free(path);
+    cleanup();
     exit(127);
 }
 
@@ -101,12 +108,14 @@ void    execution(void)
     if(!heredoc())
     {
         setup_prompt_signal();
+        free_pipeline();
         return ;
     }
     if(builtin_in_parent_process())
     {
         setup_prompt_signal();
         tc()->sum_export = FALSE;
+        free_pipeline();
         return;
     }
     setup_exec_parent_signals();

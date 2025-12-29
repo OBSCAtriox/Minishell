@@ -26,6 +26,7 @@ src/exec/redir/redir.c src/exec/path/find_path.c src/exec/utils/utils_execution_
 src/exec/utils/utils_execution_3.c src/exec/redir/utils.c  src/exec/utils/handler_signal.c\
 src/env/set_var_exp.c src/exec/utils/utils_execution_4.c src/exec/utils/utils_export_2.c\
 src/print_minishell_struct.c src/exec/utils/free_2.c  src/exec/utils/utils_execution_5.c\
+src/heredoc/utils_3.c \
 
 OBJ = $(SRC:.c=.o)
 

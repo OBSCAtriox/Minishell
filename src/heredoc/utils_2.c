@@ -70,5 +70,6 @@ void sigint_hdoc(int sig)
     (void)sig;
     if (tc()->hdoc_wfd >= 0)
         close(tc()->hdoc_wfd);
+    cleanup();
     exit(130);
 }

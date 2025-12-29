@@ -139,7 +139,7 @@ void    setup_exec_parent_signals(void);
 void    setup_exec_child_signals(void);
 int  is_builtin(const char *command, const char *name);
 int	check_builtin(char *argv);
-void    process_builtin(char **argv);
+void    process_builtin(char **argv, char *path);
 void	update_local_var(char *name, char *value);
 char *expand_vrb(char *name);
 void update_var_exp(char *name);
@@ -163,5 +163,6 @@ int    copy_vetor(char ***dest, char **src);
 void    add_fallback_var(char *arg);
 void    remove_vars_fallback(void);
 void    aux_export_two(char *arg, int *signaled_exit);
+void    exit_heredoc(int fd_1);
 
 #endif

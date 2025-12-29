@@ -6,6 +6,7 @@ void    safe_path(char **path, int *fd, int temp_fd, t_cmd *cmdv)
     if(!*path && !check_builtin(cmdv->argv[0]))
     {
         close_all(fd[0], fd[1], temp_fd, -1);
+        cleanup();
         exit(tc()->exit_path);
     }
 }
