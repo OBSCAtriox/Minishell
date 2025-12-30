@@ -56,11 +56,8 @@ void	free_all(char *msg, int i)
 		free_tokens();
 	if (ps()->sp)
 		free_split_list(&ps()->sp);
-	/* if (ms()->cmdv)
-	{
-	} */
-	/* if (ps()->line)
-		free(ps()->line); */
+	if (ps()->tl)
+		free_list_of_tok_list();
 	if (ps()->line)
 	{
 		free(ps()->line);

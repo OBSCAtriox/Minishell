@@ -126,5 +126,7 @@ int							r_ver_end(const char *li);
 int							r_ver(const char *li);
 
 void						print_minishell_structs(int n);
+void    free_tokens_arg(t_tokens **toks);
+void	free_list_of_tok_list();
 
 #endif
