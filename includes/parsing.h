@@ -128,5 +128,7 @@ int							r_ver(const char *li);
 void						print_minishell_structs(int n);
 void    free_tokens_arg(t_tokens **toks);
 void	free_list_of_tok_list();
+void	free_all_kill(void);
+void	aux_tok_split(t_tokens **start, t_tokens **pipe, t_tokens **prev, t_tokens **t);
 
 #endif

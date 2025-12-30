@@ -49,6 +49,7 @@ t_per_cmd_tok	*tok_split(t_tokens *t)
 	t_per_cmd_tok	*tail;
 	t_tokens		*start;
 	t_tokens		*prev;
+	t_tokens		*pipe;
 
 	init_tok_split_list(&head, &tail, &start, &prev, t);
 	while (t)
@@ -56,9 +57,12 @@ t_per_cmd_tok	*tok_split(t_tokens *t)
 		if (t->type == PPIPE)
 		{
 			if (prev)
+			{
 				prev->next = NULL;
-			add_list_to_list(&head, &tail, start);
-			start = t->next;
+				add_list_to_list(&head, &tail, start);
+			}
+			aux_tok_split(&start, &pipe, &prev, &t);
+			continue;
 		}
 		prev = t;
 		t = t->next;
@@ -66,4 +70,17 @@ t_per_cmd_tok	*tok_split(t_tokens *t)
 	if (start)
 		add_list_to_list(&head, &tail, start);
 	return (head);
+}
+
+void	aux_tok_split(t_tokens **start, t_tokens **pipe, t_tokens **prev, t_tokens **t)
+{
+	*pipe = *t;
+	*t = (*t)->next;
+	if (*t)
+		(*t)->prev = NULL;
+	*start = *t;
+	if ((*pipe)->value)
+		free((*pipe)->value);
+	free(*pipe);
+	*prev = NULL;
 }

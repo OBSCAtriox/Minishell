@@ -93,6 +93,8 @@ void    export_variable(char *arg)
             return ;
         env_set(name, value, te()->envp);
         remove_local_var(index);
+        free(name);
+        free(value);
     }
 }
 

@@ -52,12 +52,15 @@ void	free_all(char *msg, int i)
 {
 	if (!ft_strcmp(MALLOC_FAIL, msg))
 		te()->exit_code = 1;
-	if (ps()->tok)
+	if (ps()->tl)
+	{
+		free_list_of_tok_list();
+		ps()->tok = NULL;
+	}
+	else if (ps()->tok)
 		free_tokens();
 	if (ps()->sp)
 		free_split_list(&ps()->sp);
-	if (ps()->tl)
-		free_list_of_tok_list();
 	if (ps()->line)
 	{
 		free(ps()->line);
@@ -65,13 +68,20 @@ void	free_all(char *msg, int i)
 	}
 	ps_error(msg);
 	if (i)
-	{
-		if (te()->envp)
-			free_double_pchar(te()->envp);
-		if (te()->l_var)
-			free_doble_pointer(te()->l_var);
-		if (te()->oldpwd)
-			free(te()->oldpwd);
-		return(clear_history(), exit(0), (void)(0));
-	}
+		free_all_kill();
+}
+
+void	free_all_kill(void)
+{
+	if (te()->envp)
+		free_double_pchar(te()->envp);
+	if (te()->l_var)
+		free_doble_pointer(te()->l_var);
+	if (te()->oldpwd)
+		free(te()->oldpwd);
+	if (te()->var_exp)
+		free(te()->var_exp);
+	if (te()->cwd)
+		free(te()->cwd);
+	return(clear_history(), exit(0));
 }
