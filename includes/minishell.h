@@ -65,5 +65,10 @@ void    safe_path(char **path, int *fd, int temp_fd, t_cmd *cmdv);
 void    clean_redir(t_redir **redir);
 int verifications_after_malloc_struct(t_tokens *t);
 int    add_check_vars(t_cmd **cmdv);
+void    initis_main(int argc, char **argv, char **envp);
+int readline_and_check(void);
+int check_sigint(void);
+int empty_line(void);
+void    exit_main(void);
 
 #endif
