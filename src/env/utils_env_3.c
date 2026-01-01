@@ -60,3 +60,14 @@ void    inits_min_var(void)
     env_set("PWD", pwd, te()->envp);
     free(pwd);
 }
+
+int inits_var_exp(t_data *dt)
+{
+    (*dt).size = size_vetor(te()->var_exp);
+    (*dt).env = malloc(sizeof(char *) * ((*dt).size + 1));
+    if(!(*dt).env)
+        return (FALSE);
+    (*dt).i = 0;
+    (*dt).j = 0;
+    return (TRUE);
+}

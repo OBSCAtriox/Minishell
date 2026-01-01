@@ -29,6 +29,8 @@ int     create_new_var_exp(char *name)
         dt.i++;
     }
     dt.env[dt.size] = join3(name, NULL, NULL);
+    if(!dt.env[dt.size])
+        return (free_doble_pointer(dt.env), FALSE);
     dt.env[dt.size + 1] = NULL;
     if(!re_mount_var_exp(dt.env))
         return(free_doble_pointer((dt.env)), FALSE);
@@ -43,6 +45,11 @@ int    re_mount_var_exp(char **envp)
     
     i = 0;
     size = size_vetor(envp);
+    if (te()->var_exp)
+    {
+        free_doble_pointer(te()->var_exp);
+        te()->var_exp = NULL;
+    }
     te()->var_exp = malloc(sizeof(char *) * (size + 1));
     if(!te()->var_exp)
         return (FALSE);
@@ -86,12 +93,10 @@ int remove_var_exp(int index)
 {
     t_data dt;
 
-    dt.size = size_vetor(te()->var_exp);
-    dt.env = malloc(sizeof(char *) * (dt.size + 1));
-    if(!dt.env || index == -1)
+    if(index == -1 || !te()->var_exp)
         return (FALSE);
-    dt.i = 0;
-    dt.j = 0;
+    if(!inits_var_exp(&dt))
+        return (FALSE);
     while(te()->var_exp[dt.i])
     {
         if(skip_var_dell(index, &dt.i))
@@ -103,7 +108,6 @@ int remove_var_exp(int index)
         dt.j++;
     }
     dt.env[dt.j] = NULL;
-    free_doble_pointer(te()->var_exp);
     if(!re_mount_var_exp(dt.env))
         return (free_doble_pointer(dt.env), FALSE);
     free_doble_pointer(dt.env);

@@ -11,7 +11,7 @@ void check_sum_local_var(char *name, char *value)
         index = find_variable(name, te()->l_var);
         if(index == -1)
         {
-            update_local_var(name, value);
+            create_local_variable(name, value);
             return;
         }
         old_value = expand_variable(name, te()->l_var);
