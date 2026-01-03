@@ -52,7 +52,7 @@ char    *path_to_binary(char *arg)
     {
         if(!check_path(arg))
             return (NULL);
-        return (arg);
+        return (ft_strdup(arg));
     }
     else
     {

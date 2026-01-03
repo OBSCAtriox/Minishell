@@ -8,7 +8,7 @@ int    builtin_export(char **argv)
     i = 1;
     signaled_exit = FALSE;
     if(!argv || !argv[1])
-        return (print_export(te()->envp), print_export(te()->var_exp), 1);
+        return (global_print(), 1);
     while(argv[i])
     {
         if(is_valid_identifier(argv[i]))

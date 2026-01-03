@@ -1,5 +1,15 @@
 #include "../../../includes/minishell.h"
 
+static int check_valid_arg(char *arg)
+{
+    if(!arg || arg[0] == '\0')
+    {
+        print_error("exit", "numeric argument required");
+        return (FALSE);
+    }
+    return (TRUE);
+}
+
 int    builtin_exit(char **arg)
 {
     long long    code;
@@ -16,7 +26,7 @@ int    builtin_exit(char **arg)
     }
     else
     {
-        if(!check_number(arg[1]))
+        if(!check_valid_arg(arg[1]) || !check_number(arg[1]))
             code = 2;
         else
             code = ft_atoi(arg[1]) % 256;
@@ -52,7 +62,7 @@ int check_number(char *arg)
     i = 0;
     sign = 0;
     result = 0;
-    if(arg[i] == '-' || arg[i] == '+')
+    if((arg[i] == '-' || arg[i] == '+') && arg[i + 1])
     {
         if(arg[i] == '-')
             sign = 1;

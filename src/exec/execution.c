@@ -18,11 +18,12 @@ int    builtin_in_parent_process(void)
     }
     else if(tc()->num_cmd == 1 && !ms()->cmdv[0]->is_builtin)
     {
+        if(check_if_redir(ms()->cmdv))
+            return (TRUE);
         if(add_check_vars(ms()->cmdv))
         {
             free_doble_pointer(tc()->fallback_vars);
-            tc()->fallback_vars = NULL;
-            return (TRUE);
+            return (tc()->fallback_vars = NULL, TRUE);
         }
     }
     return (FALSE);
@@ -80,23 +81,17 @@ void    process_children(t_cmd *cmdv, int *fd, int temp_fd, int has_next)
     envp = te()->envp;
     safe_path(&path, fd, temp_fd, cmdv);
     if(!make_dup_pipe(fd, temp_fd, has_next))
-    {
-        free(path);
-        exit(1);
-    }
+        process_fail(fd, temp_fd, &path);
     if(!redir(cmdv))
-    {
-        close_all(fd[0], fd[1], temp_fd, -1);
-        free(path);
-        exit(1);
-    }
+        process_fail(fd, temp_fd, &path);
     close_all(fd[0], fd[1], temp_fd, -1);
     clean_redir_fd();
     if(check_builtin(cmdv->argv[0]))
         process_builtin(cmdv->argv, path);
     execve(path, cmdv->argv, envp);
     perror(cmdv->argv[0]);
-    free(path);
+    if(path)
+        free(path);
     cleanup();
     exit(127);
 }

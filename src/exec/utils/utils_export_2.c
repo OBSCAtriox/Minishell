@@ -46,3 +46,29 @@ void    aux_export_two(char *arg, int *signaled_exit)
     te()->exit_code = 1;
     *signaled_exit = TRUE;
 }
+
+void    global_print(void)
+{
+    char **var;
+    int i;
+    int j;
+    int len_env;
+    int len_exp;
+
+    i = 0;
+    j = 0;
+    var = NULL;
+    len_env = size_vetor(te()->envp);
+    len_exp = size_vetor(te()->var_exp);
+    var = malloc(sizeof(char *) * (len_env + len_exp + 1));
+    if(!var)
+        return;
+    while(te()->envp && te()->envp[j])
+        var[i++] = te()->envp[j++];
+    j = 0;
+    while(te()->var_exp && te()->var_exp[j])
+        var[i++] = te()->var_exp[j++];
+    var[i] = NULL;
+    print_export(var);
+    free(var);
+}

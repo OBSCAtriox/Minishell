@@ -68,7 +68,7 @@ void    read_heredoc(int idx_cmd, int idx_rdir, int *fd, char *delim)
             printf("%s%s')\n", MSG_HEREDOC, delim);
             break;
         }
-        if(ft_strncmp(line, delim, ft_strlen(delim)) == 0)
+        if(ft_strcmp(line, delim) == 0)
         {
             free(line);
             break;

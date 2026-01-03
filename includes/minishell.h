@@ -70,5 +70,6 @@ int readline_and_check(void);
 int check_sigint(void);
 int empty_line(void);
 void    exit_main(void);
+int check_if_redir(t_cmd **cmdv);
 
 #endif

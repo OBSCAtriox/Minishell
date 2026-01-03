@@ -88,6 +88,8 @@ int    add_check_vars(t_cmd **cmdv)
 
     i = 0;
     argv = cmdv[0]->argv;
+    if(!argv)
+        return (FALSE);
     while(argv[i])
     {
         if(is_valid_identifier(argv[i]) && has_equal(argv[i]))
@@ -104,4 +106,23 @@ int    add_check_vars(t_cmd **cmdv)
         }
     }
     return (TRUE);
+}
+
+int check_if_redir(t_cmd **cmdv)
+{
+    char **argv;
+
+    argv = cmdv[0]->argv;
+    if(!argv || !argv[0])
+    {
+        clone_std();
+        if(!redir(cmdv[0]))
+        {
+            restore_std();
+            return (te()->exit_code = 1, TRUE);
+        }
+        restore_std();
+        return (te()->exit_code = 0, TRUE);
+    }
+    return (FALSE);
 }

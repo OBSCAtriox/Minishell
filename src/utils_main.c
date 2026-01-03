@@ -24,12 +24,13 @@ int readline_and_check(void)
 
 int check_sigint(void)
 {
-    if(tc()->g_sig == SIGINT)
+    if(tc()->g_sig == SIGINT && ps()->line && ps()->line[0] == '\0')
 	{
     	tc()->g_sig = 0;
     	free(ps()->line);
     	return (TRUE);
 	}
+    tc()->g_sig = 0;
     return (FALSE);
 }
 

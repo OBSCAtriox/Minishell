@@ -165,5 +165,7 @@ void    remove_vars_fallback(void);
 void    aux_export_two(char *arg, int *signaled_exit);
 void    exit_heredoc(int fd_1);
 int inits_var_exp(t_data *dt);
+void    global_print(void);
+void    process_fail(int *fd, int temp_fd, char **path);
 
 #endif
