@@ -20,7 +20,12 @@ static char *ver_expand_h(t_quote_split *h)
     }
     return (new_s);
 }
-//adicionar verification para ver se he H DOC ou nao
+
+void    ver_after_expand(char **arr, t_quote_split **h)
+{
+
+}
+
 void	ver_to_expand(t_tokens *t)
 {
     t_quote_split   *h;

@@ -100,7 +100,7 @@ int		r_ver_bef_aft_pipe(bool d_q, bool s_q, const char *li)
 			while (li[j] && ms_isspaces(li[j]))
 				j++;
 			if (!li[j] || ft_strchr("<>", li[j]))
-				return (0);
+				return (1);
 		}
 		i++;
 	}
