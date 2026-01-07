@@ -11,7 +11,7 @@ static int count_words(char *str)
     count = 0;
     while (str[i])
     {
-        if (i == 0 || ms_isspaces(str[i - 1]) && !ms_isspaces(str[i]))
+        if (i == 0 || ((ms_isspaces(str[i - 1])) && (!ms_isspaces(str[i]))))
              count += 1;
         i++;
     }
@@ -29,7 +29,7 @@ static int str_size(char *str, int start)
             break ;
         i++;
     }
-    reutrn (i - start);
+    return (i - start);
 }
 
 static int    make_arr(char *str, char **arr)
@@ -42,13 +42,13 @@ static int    make_arr(char *str, char **arr)
     y = 0;
     while (str[i])
     {
-        if (i == 0 || ms_isspaces(str[i - 1]) && !ms_isspaces(str[i]))
+        if (i == 0 || ((ms_isspaces(str[i - 1])) && (!ms_isspaces(str[i]))))
         {
-            len = count_str(str, i);
+            len = str_size(str, i);
             arr[y] = ft_substr(str, i, len);
             if(!arr[y])
             {
-                arr[y] == NULL;
+                arr[y] = NULL;
                 return (0);
             }
             y++;
@@ -58,7 +58,7 @@ static int    make_arr(char *str, char **arr)
             i++;
     }
     arr[y] = NULL;
-    reutrn (1);
+    return (1);
 }
 
 static void free_split(char **arr)

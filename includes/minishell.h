@@ -71,5 +71,6 @@ int check_sigint(void);
 int empty_line(void);
 void    exit_main(void);
 int check_if_redir(t_cmd **cmdv);
+char    **isspace_split(char *str);
 
 #endif
