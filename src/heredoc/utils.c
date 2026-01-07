@@ -50,6 +50,8 @@ void inits_expand_line(t_data *dt, char *line, char ***exp)
     dt->i = 0;
     dt->j = 0;
     dt->k = 0;
+    dt->len_p = NULL;
+    dt->index_p = NULL;
     dt->len = count_len_exp(line);
     *exp = exp_str_var(line);
 }

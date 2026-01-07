@@ -9,7 +9,7 @@ char    *expand_line(char *line)
     inits_expand_line(&dt, line, &exp);
     exp_find_var(line, &dt.index_p, &dt.len_p);
     line_out = malloc(sizeof(char) * (dt.len + 1));
-    if(!exp || !line_out)
+    if(!exp || !line_out || !dt.index_p || !dt.len_p)
         return (NULL);
     while(dt.i < dt.len)
     {
@@ -41,7 +41,7 @@ void    exp_find_var(char *line, int **index, int **len)
     while(line[dt.i])
     {
         dt.j = 1;
-        if(line[dt.i] == '$' && line[dt.j + 1] && is_valid_character(line[dt.i + 1]))
+        if(line[dt.i] == '$' && line[dt.i + 1] && is_valid_character(line[dt.i + 1]))
         {
             (*index)[dt.k] = dt.i + 1;
             while (line[dt.i + dt.j] && is_valid_character(line[dt.i + dt.j]))
