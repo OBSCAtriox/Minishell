@@ -46,7 +46,11 @@ void    print_export_line(char *env)
         write(1, "=\"", 2);
         i++;
         while (env[i])
+        {
+            if(ft_strchr("$\\`\"", env[i]))
+                write(1, "\\", 1);
             write(1, &env[i++], 1);
+        }
         write(1, "\"", 1);
     }
     write(1, "\n", 1);

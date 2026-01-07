@@ -41,7 +41,7 @@ void    exp_find_var(char *line, int **index, int **len)
     while(line[dt.i])
     {
         dt.j = 1;
-        if(line[dt.i] == '$' && is_valid_character(line[dt.i + 1]))
+        if(line[dt.i] == '$' && line[dt.j + 1] && is_valid_character(line[dt.i + 1]))
         {
             (*index)[dt.k] = dt.i + 1;
             while (line[dt.i + dt.j] && is_valid_character(line[dt.i + dt.j]))
