@@ -46,7 +46,7 @@ int	verifications(const char *line)
 		return (te()->exit_code = 2, 0);
 	num_pipes(line);
 	token_list(line);
-	ver_to_expand(ps()->tok);
+	ver_to_expand(&ps()->tok);
 	malloc_struct();
 	verifications_after_malloc_struct(ps()->tok);
 	return (1);

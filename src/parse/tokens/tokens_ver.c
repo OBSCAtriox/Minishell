@@ -1,6 +1,6 @@
 #include "../../../includes/minishell.h"
 
-static char *ver_expand_h(t_quote_split *h)
+char *ver_expand_h(t_quote_split *h)
 {
     char *tmp;
     char *new_s;
@@ -21,40 +21,71 @@ static char *ver_expand_h(t_quote_split *h)
     return (new_s);
 }
 
-/* void    ver_after_expand(char **arr, t_quote_split **h)
+char    **expand_then_split(t_quote_split *h, t_tokens *t)
 {
+    t_quote_split *head;
+    char *expanded;
+    char **words;
 
-} */
+    head = h;
+    expand_quotes(h, t);
+    expanded = ver_expand_h(head);
+    if (!expanded)
+        return (printf("here"), NULL);
+    words = isspace_split(expanded);
+    free(expanded);
+    return (words);
+}
 
-void	ver_to_expand(t_tokens *t)
+void replace_tok_with_words(t_tokens *tok, char **words)
 {
+    t_tokens *cur;
+    t_tokens *next;
+    int i;
+    if (!words || !words[0])
+        return ;
+    free(tok->value);
+    tok->value = ft_strdup(words[0]);
+    cur = tok;
+    i = 1;
+    while (words[i])
+    {
+        next = new_tok(ft_strdup(words[i]), tok->type);
+        next->next = cur->next;
+        if (cur->next)
+            cur->next->prev = next;
+        cur->next = next;
+        next->prev = cur;
+        cur = next;
+        i++;
+    }
+}
+
+void	ver_to_expand(t_tokens **t_head)
+{
+    t_tokens *t;
     t_quote_split   *h;
-    char *exp_s;
-    char *new_s;
+    char **words;
+    char *expanded;
 
+    t = *t_head;
 	while (t)
 	{
-        ps()->sp = ms_split(t->value);
-        h = ps()->sp;
-        while (h)
+        h = ms_split(t->value);
+        if (is_assignment(t->value))
         {
-            if (h->type != SINGLE)
-            {
-                if (!t->prev || t->prev->type != PR_HDOC)
-                {
-                    exp_s = expand_line(h->str);
-                    free(h->str);
-                    h->str = exp_s;
-                }
-            }
-            h = h->next;
+            expand_quotes(h, t);
+            expanded = ver_expand_h(h);
+            free(t->value);
+            t->value = expanded;
         }
-        h = ps()->sp;
-        new_s = ver_expand_h(h);
-        free(t->value);
-        t->value = new_s;
+        else
+        {
+            words = expand_then_split(h, t);
+            ver_to_expand_helper2(t, words);
+        }
+        free_split_list(&h);
         t = t->next;
-        free_split_list(&ps()->sp);
     }
 }
 

@@ -23,3 +23,33 @@ void	inc_i(int *i, int n)
 	else
 		(*i)++;
 }
+
+t_tokens *new_tok(char *value, int type)
+{
+	t_tokens *t;
+
+	t = malloc(sizeof(t_tokens));
+	if (!t)
+		free_all(MALLOC_FAIL, 1);
+	t->value = value;
+	t->type = type;
+	t->next = NULL;
+	t->prev = NULL;
+	return (t);
+}
+
+bool is_assignment(const char *s)
+{
+	int i;
+
+	i = 0;
+	if (!ft_isalpha(s[0]) && s[0] != '_')
+		return (false);
+	while (s[i] && s[i] != '=')
+	{
+		if (!ft_isalnum(s[i]) && s[i] != '_')
+			return (false);
+		i++;
+	}
+	return (s[i] == '=');
+}
