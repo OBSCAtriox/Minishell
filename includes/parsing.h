@@ -138,5 +138,6 @@ char *ver_expand_h(t_quote_split *h);
 char    **expand_then_split(t_quote_split *h, t_tokens *t);
 void replace_tok_with_words(t_tokens *tok, char **words);
 void    ver_to_expand_helper2(t_tokens *t, char **words);
+void    remove_empty_tokens(t_tokens **head);
 
 #endif

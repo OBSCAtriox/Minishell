@@ -1,15 +1,46 @@
 # include "../../../includes/minishell.h"
 
+void    remove_empty_tokens(t_tokens **head)
+{
+    t_tokens *cur;
+    t_tokens *next;
+
+    cur = *head;
+    while (cur)
+    {
+        next = cur->next;
+        if (cur->value && cur->value[0] == '\0')
+        {
+            if (cur->prev)
+                cur->prev->next = cur->next;
+            else
+                *head = cur->next;
+            if (cur->next)
+                cur->next->prev = cur->prev;
+            free(cur->value);
+            free(cur);
+        }
+        cur = next;
+    }
+}
+
 void    expand_quotes(t_quote_split *h, t_tokens *t)
 {
     char *tmp;
+    char *original;
 
     while (h)
     {
         if (h->type != SINGLE 
             && (!t->prev || t->prev->type != PR_HDOC))
         {
+            original = h->str;
             tmp = expand_line(h->str);
+            if (original[0] == '$' && !ft_strcmp(tmp, original))
+            {
+                free(tmp);
+                tmp = ft_strdup("");
+            }
             free(h->str);
             h->str = tmp;
         }
@@ -24,7 +55,10 @@ void    ver_to_expand_helper2(t_tokens *t, char **words)
     else if (words && words[0])
     {
         free(t->value);
-        t->value = ft_strdup(words[0]);
+        if (words[0][0] == '\0')
+            t->value = ft_strdup("");
+        else
+            t->value = ft_strdup(words[0]);
     }
     free_doble_pointer(words);
 }
