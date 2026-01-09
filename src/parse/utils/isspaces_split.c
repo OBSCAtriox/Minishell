@@ -11,7 +11,7 @@ static int count_words(char *str)
     count = 0;
     while (str[i])
     {
-        if (i == 0 || ((ms_isspaces(str[i - 1])) && (!ms_isspaces(str[i]))))
+        if (!ms_isspaces(str[i]) && (i == 0 || ms_isspaces(str[i - 1])))
              count += 1;
         i++;
     }
@@ -42,7 +42,7 @@ static int    make_arr(char *str, char **arr)
     y = 0;
     while (str[i])
     {
-        if (i == 0 || ((ms_isspaces(str[i - 1])) && (!ms_isspaces(str[i]))))
+        if (!ms_isspaces(str[i]) && (i == 0 || ms_isspaces(str[i - 1])))
         {
             len = str_size(str, i);
             arr[y] = ft_substr(str, i, len);

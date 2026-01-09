@@ -20,6 +20,7 @@ int    create_new_local_var(char *name, char *value)
     if(!dt.env[dt.size])
         return(free_doble_pointer(dt.env), FALSE);
     dt.env[dt.size + 1] = NULL;
+    free_doble_pointer(te()->l_var);
     if(!re_mount_locar_var(dt.env))
         return(free_doble_pointer((dt.env)), FALSE);
     free_doble_pointer(dt.env);
@@ -39,7 +40,7 @@ int    re_mount_locar_var(char **envp)
     while(envp[i])
     {
         te()->l_var[i] = ft_strdup(envp[i]);
-        if(!te()->envp[i])
+        if(!te()->l_var[i])
         {
             free_vetor_failed(te()->l_var, i);
             return (FALSE);

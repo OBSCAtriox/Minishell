@@ -48,7 +48,14 @@ bool is_assignment(const char *s)
 	while (s[i] && s[i] != '=')
 	{
 		if (!ft_isalnum(s[i]) && s[i] != '_')
+		{
+			if(s[i] == '+' && s[i + 1] == '=')
+			{
+				i++;
+				continue;
+			}
 			return (false);
+		}
 		i++;
 	}
 	return (s[i] == '=');

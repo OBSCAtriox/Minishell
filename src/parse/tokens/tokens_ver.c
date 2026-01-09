@@ -69,6 +69,7 @@ void	replace_tok_with_words(t_tokens *tok, char **words)
 			cur->next->prev = next;
 		cur->next = next;
 		next->prev = cur;
+		next->quote = 0;
 		cur = next;
 		i++;
 	}
@@ -85,7 +86,7 @@ void	ver_to_expand(t_tokens **t_head)
 	while (t)
 	{
 		h = ms_split(t->value);
-		if (is_assignment(t->value))
+		if (is_assignment(t->value) || t->quote)
 		{
 			expand_quotes(h, t);
 			expanded = ver_expand_h(h);
