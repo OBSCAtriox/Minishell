@@ -75,6 +75,8 @@ void	add_to_struct(void)
 
 	init_s_var(&v);
 	tmp = ps()->tl;
+	if(!tmp)
+		return;
 	while (ms()->cmdv[v.i])
 	{
 		malloc_redir_struct(v.i, count_redirs(tmp->cmdt));

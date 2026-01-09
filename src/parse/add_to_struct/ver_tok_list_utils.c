@@ -66,6 +66,8 @@ void	add_cmd_argv(t_per_cmd_tok *tl)
 	int	i;
 
 	i = 0;
+	if(!tl)
+		return ;
 	while (ms()->cmdv[i])
 	{
 		malloc_ms_argv(tl->cmdt, i);
