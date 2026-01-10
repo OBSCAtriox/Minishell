@@ -9,7 +9,8 @@ void    remove_empty_tokens(t_tokens **head)
     while (cur)
     {
         next = cur->next;
-        if (cur->value && cur->value[0] == '\0')
+        if (cur->type == WORD && cur->value && cur->value[0] == '\0'
+            && !cur->quote && !(cur->prev && if_redir(cur->prev->type)))
         {
             if (cur->prev)
                 cur->prev->next = cur->next;

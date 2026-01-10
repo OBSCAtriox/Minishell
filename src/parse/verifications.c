@@ -47,6 +47,7 @@ int	verifications(const char *line)
 	num_pipes(line);
 	token_list(line);
 	ver_to_expand(&ps()->tok);
+	remove_empty_tokens(&ps()->tok);
 	malloc_struct();
 	verifications_after_malloc_struct(ps()->tok);
 	return (1);
