@@ -17,6 +17,11 @@ static void check_after_two_arg(char *arg)
         if(tc()->in_parent)
             write(1, "exit\n", 5);
         print_error("exit", "numeric argument required");
+        if(tc()->in_parent)
+        {
+            restore_std();
+            cleanup();
+        }
         exit(2);
     }
 }

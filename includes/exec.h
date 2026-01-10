@@ -166,5 +166,6 @@ void    exit_heredoc(int fd_1);
 int inits_var_exp(t_data *dt);
 void    global_print(void);
 void    process_fail(int *fd, int temp_fd, char **path);
+void setup_exec_builtin_signals(void);
 
 #endif

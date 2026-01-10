@@ -31,6 +31,7 @@ int    builtin_in_parent_process(void)
 
 void    process_builtin(char **argv, char *path)
 {
+    setup_exec_builtin_signals();
     tc()->in_parent = FALSE;
     if(!call_builtin(argv))
     {
