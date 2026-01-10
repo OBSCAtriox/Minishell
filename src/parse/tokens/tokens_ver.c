@@ -101,7 +101,6 @@ void	ver_to_expand(t_tokens **t_head)
 		free_split_list(&h);
 		t = t->next;
 	}
-    remove_empty_tokens(t_head);
 }
 
 void	verify_contain_quote(t_tokens *t)

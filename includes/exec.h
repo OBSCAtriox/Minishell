@@ -87,7 +87,6 @@ int remove_local_var(int index);
 int builtin_env(void);
 int    builtin_exit(char **arg);
 void    cleanup(void);
-int ft_isnumeric(char *str);
 char    *get_target(char **arg);
 void    free_cd(char **new_pwd, char **target, char **old_pwd, int err);
 void    exp_find_var(char *line, int **index, int **len);

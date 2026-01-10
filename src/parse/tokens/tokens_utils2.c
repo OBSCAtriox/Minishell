@@ -39,7 +39,7 @@ void    expand_quotes(t_quote_split *h, t_tokens *t)
             if (original[0] == '$' && !ft_strcmp(tmp, original))
             {
                 free(tmp);
-                tmp = ft_strdup("");
+                tmp = ft_strdup("\x1F");
             }
             free(h->str);
             h->str = tmp;

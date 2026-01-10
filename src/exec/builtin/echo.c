@@ -52,7 +52,7 @@ void    print_echo(char **argv, int i, int printed)
     if(!has_new_line(argv[i]) || printed)
     {
         write(1, argv[i], ft_strlen(argv[i]));
-        if(argv[i] && argv[i + 1])
+        if(argv[i] && !ft_strncmp(argv[i], "\x1F", 2) && argv[i + 1])
             write(1, " ", 1);
     }
 }

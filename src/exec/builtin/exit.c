@@ -10,6 +10,27 @@ static int check_valid_arg(char *arg)
     return (TRUE);
 }
 
+static void check_after_two_arg(char *arg)
+{
+    if(!ft_isdigit(arg[1]))
+    {
+        if(tc()->in_parent)
+            write(1, "exit\n", 5);
+        print_error("exit", "numeric argument required");
+        exit(2);
+    }
+}
+
+static int more_than_one(char **arg)
+{
+    check_after_two_arg(arg[1]);
+    if(tc()->in_parent)
+        write(1, "exit\n", 5);
+    print_error("exit", "too many arguments");
+    te()->exit_code = 1;
+    return (FALSE);
+}
+
 int    builtin_exit(char **arg)
 {
     long long    code;
@@ -18,11 +39,8 @@ int    builtin_exit(char **arg)
         code = te()->exit_code;
     else if(arg[2])
     {
-        if(tc()->in_parent)
-            write(1, "exit\n", 5);
-        print_error("exit", "too many arguments");
-        te()->exit_code = 1;
-        return (FALSE);
+        if(!more_than_one(arg))
+            return (FALSE);
     }
     else
     {
@@ -37,20 +55,6 @@ int    builtin_exit(char **arg)
         cleanup();
     }
     exit(code);
-}
-
-int ft_isnumeric(char *str)
-{
-    int i;
-
-    i = 0;
-    while(str[i])
-    {
-        if (str[i] < 48 || str[i] > 57)
-            return (FALSE);
-        i++;
-    }
-    return (TRUE);
 }
 
 int check_number(char *arg)
