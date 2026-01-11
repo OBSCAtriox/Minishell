@@ -37,6 +37,8 @@ void    expand_quotes(t_quote_split *h, t_tokens *t)
         {
             original = h->str;
             tmp = expand_line(h->str);
+            if(!tmp)
+                return;
             if (original[0] == '$' && !ft_strcmp(tmp, original))
             {
                 free(tmp);

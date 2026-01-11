@@ -71,7 +71,8 @@ void    shell_level(void)
     if(!exp_value || !ft_isnumeric(exp_value))
     {
         env_set("SHLVL", "1", te()->envp);
-        return;
+        free(exp_value);
+        return ;
     }
     value = ft_atoi(exp_value);
     value += 1;

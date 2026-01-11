@@ -12,7 +12,7 @@ int splited_path(void)
             return (FALSE);
         tc()->paths = ft_split(path, ':');
         if(!tc()->paths)
-            return (FALSE);
+            return (free(path), FALSE);
         free(path);
     }
     return (TRUE);

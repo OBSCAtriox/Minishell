@@ -38,7 +38,7 @@ int    mount_heredoc(int idx_cmd, int idx_rdir)
         return (perror("pipe"), FALSE);
     pid = fork();
     if(pid < 0)
-        return (perror("fork"), FALSE);
+        return (perror("fork"), close_all(fd[0], fd[1], -1, -1), FALSE);
     signal(SIGINT, SIG_IGN);
     if(pid == 0 && !tc()->signaled_heredoc)
         read_heredoc(idx_cmd, idx_rdir, fd, delim);

@@ -43,13 +43,13 @@ int apply_redir_in(t_redir *redir)
     {
         fd = dup(redir->hdoc_fd);
         if(fd < 0)
-            return (perror("hdoc"), FALSE);
+            return (perror("hdoc"), close(redir->hdoc_fd), FALSE);
         close(redir->hdoc_fd);
     }
     if(fd >= 0)
     {
         if(dup2(fd, target) < 0)
-            return(close(fd), perror("dup2"), FALSE);
+            return(perror("dup2"), close_all(fd, redir->hdoc_fd, -1, -1), FALSE);
         close(fd);
     }
     return (TRUE);

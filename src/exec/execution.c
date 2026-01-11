@@ -59,7 +59,7 @@ int    exec_pipeline(void)
         if(dt.i < tc()->num_cmd - 1)
         {
             if(pipe(dt.fd) == -1)
-                return(perror("pipe"), FALSE);
+                return(perror("pipe"), close(dt.temp_fd), FALSE);
         }
         dt.pid = safe_fork();
         if (dt.pid == 0)
