@@ -1,9 +1,9 @@
 #include "../../../includes/minishell.h"
 
-void free_tokens()
+void	free_tokens(void)
 {
-	t_tokens *head;
-	t_tokens *tmp;
+	t_tokens	*head;
+	t_tokens	*tmp;
 
 	head = ps()->tok;
 	while (head)
@@ -22,9 +22,9 @@ void free_tokens()
 
 void	free_split_list(t_quote_split **head)
 {
-	t_quote_split *tmp;
+	t_quote_split	*tmp;
 
-	while(*head)
+	while (*head)
 	{
 		tmp = (*head)->next;
 		if ((*head)->str)
@@ -37,7 +37,7 @@ void	free_split_list(t_quote_split **head)
 
 void	free_double_pchar(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i])
@@ -83,5 +83,5 @@ void	free_all_kill(void)
 		free(te()->var_exp);
 	if (te()->cwd)
 		free(te()->cwd);
-	return(clear_history(), exit(0));
+	return (clear_history(), exit(0));
 }

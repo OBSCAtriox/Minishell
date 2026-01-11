@@ -96,12 +96,11 @@ int							verifications(const char *line);
 int							malloc_struct(void);
 int							malloc_redir_struct(int cmd_i, int size);
 bool						quotes(const char *line);
-bool is_assignment(const char *s);
+bool						is_assignment(const char *s);
 void						create_token(t_tokens **head, t_tokens **tail,
 								char *buffer, int buf_i);
 void						buf_i_ver(t_tokens **head, t_tokens **tail,
 								char *buf, int *buf_i, bool yn);
-
 void						quotes_ver(bool *d_quotes, bool *s_quotes, char c);
 void						token_list(const char *li);
 void						ver_to_expand(t_tokens **t);
@@ -116,28 +115,26 @@ void						init_split_vars(t_split_var *va);
 void						init_token(int *i, int *buf_i, bool *d_q,
 								bool *s_q);
 void						verify_contain_quote(t_tokens *t);
-
 int							r_ver_bef_aft_pipe(bool d_q, bool s_q,
 								const char *li);
-// int					r_ver_pipe_util(bool d_q, bool s_q, const char *li);
 int							r_ver_after(bool d_q, bool s_q, const char *li);
 int							r_ver_synt(bool d_q, bool s_q, const char *li);
 int							r_ver_start(const char *li);
 int							r_ver_end(const char *li);
 int							r_ver(const char *li);
-
 void						print_minishell_structs(int n);
-void    free_tokens_arg(t_tokens **toks);
-void	free_list_of_tok_list();
-void	free_all_kill(void);
-void	aux_tok_split(t_tokens **start, t_tokens **pipe, t_tokens **prev, t_tokens **t);
-char    **isspace_split(char *str);
-void    expand_quotes(t_quote_split *h, t_tokens *t);
-t_tokens *new_tok(char *value, int type);
-char *ver_expand_h(t_quote_split *h);
-char    **expand_then_split(t_quote_split *h, t_tokens *t);
-void replace_tok_with_words(t_tokens *tok, char **words);
-void    ver_to_expand_helper2(t_tokens *t, char **words);
-void    remove_empty_tokens(t_tokens **head);
+void						free_tokens_arg(t_tokens **toks);
+void						free_list_of_tok_list(void);
+void						free_all_kill(void);
+void						aux_tok_split(t_tokens **start, t_tokens **pipe,
+								t_tokens **prev, t_tokens **t);
+char						**isspace_split(char *str);
+void						expand_quotes(t_quote_split *h, t_tokens *t);
+t_tokens					*new_tok(char *value, int type);
+char						*ver_expand_h(t_quote_split *h);
+char						**expand_then_split(t_quote_split *h, t_tokens *t);
+void						replace_tok_with_words(t_tokens *tok, char **words);
+void						ver_to_expand_helper2(t_tokens *t, char **words);
+void						remove_empty_tokens(t_tokens **head);
 
 #endif

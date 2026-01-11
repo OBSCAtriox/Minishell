@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-void	print_minishell_structs(int n)
+/* void	print_minishell_structs(int n)
 {
 	int	i;
 	int	count;
@@ -44,4 +44,4 @@ void	print_minishell_structs(int n)
 		}
 		
 	}
-}
+} */

@@ -1,6 +1,7 @@
 #include "../../../includes/minishell.h"
 
-void	buf_i_ver(t_tokens **head, t_tokens **tail, char *buf, int *buf_i, bool yn)
+void	buf_i_ver(t_tokens **head, t_tokens **tail, char *buf, int *buf_i,
+		bool yn)
 {
 	if (*buf_i > 0)
 		create_token(head, tail, buf, *buf_i);
@@ -24,9 +25,9 @@ void	inc_i(int *i, int n)
 		(*i)++;
 }
 
-t_tokens *new_tok(char *value, int type)
+t_tokens	*new_tok(char *value, int type)
 {
-	t_tokens *t;
+	t_tokens	*t;
 
 	t = malloc(sizeof(t_tokens));
 	if (!t)
@@ -38,9 +39,9 @@ t_tokens *new_tok(char *value, int type)
 	return (t);
 }
 
-bool is_assignment(const char *s)
+bool	is_assignment(const char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!ft_isalpha(s[0]) && s[0] != '_')
@@ -49,10 +50,10 @@ bool is_assignment(const char *s)
 	{
 		if (!ft_isalnum(s[i]) && s[i] != '_')
 		{
-			if(s[i] == '+' && s[i + 1] == '=')
+			if (s[i] == '+' && s[i + 1] == '=')
 			{
 				i++;
-				continue;
+				continue ;
 			}
 			return (false);
 		}

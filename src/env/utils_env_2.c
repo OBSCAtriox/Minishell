@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_env_2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/11 19:35:09 by thde-sou          #+#    #+#             */
+/*   Updated: 2026/01/11 20:14:52 by thde-sou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 char	*expand_variable(char *name, char **env)
@@ -31,19 +43,23 @@ char	*expand_variable(char *name, char **env)
 
 void	create_local_variable(char *name, char *value)
 {
+	char	**l_var;
+
+	l_var = te()->l_var;
 	if (!te()->l_var)
 	{
-		te()->l_var = malloc(sizeof(char *) * 2);
-		if (!te()->l_var)
+		l_var = malloc(sizeof(char *) * 2);
+		if (!l_var)
 			return ;
-		te()->l_var[0] = join3(name, EQUAL, value);
-		if (!te()->l_var[0])
+		l_var[0] = join3(name, EQUAL, value);
+		if (!l_var[0])
 		{
-			free(te()->l_var);
-			te()->l_var = NULL;
+			free(l_var);
+			l_var = NULL;
 			return ;
 		}
-		te()->l_var[1] = NULL;
+		l_var[1] = NULL;
+		te()->l_var = l_var;
 	}
 }
 

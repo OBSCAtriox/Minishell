@@ -54,21 +54,24 @@ static void	add_token(t_tokens **head, t_tokens **tail, char *sym,
 	}
 }
 
-static void	handle_symbols(t_tokens **head, t_tokens **tail, const char *li, int *i)
+static void	handle_symbols(t_tokens **head, t_tokens **tail, const char *li,
+		int *i)
 {
 	if (li[*i] == '|')
 		return (add_token(head, tail, "|", PPIPE), (*i)++, (void)(0));
 	else if (li[*i] == '<')
 	{
 		if (li[*i + 1] == '<')
-			return (add_token(head, tail, "<<", PR_HDOC), inc_i(i, 1), (void)(0));
+			return (add_token(head, tail, "<<", PR_HDOC), inc_i(i, 1),
+				(void)(0));
 		else
 			return (add_token(head, tail, "<", PR_IN), inc_i(i, 0), (void)(0));
 	}
 	else if (li[*i] == '>')
 	{
 		if (li[*i + 1] == '>')
-			return (add_token(head, tail, ">>", PR_APP), inc_i(i, 1), (void)(0));
+			return (add_token(head, tail, ">>", PR_APP), inc_i(i, 1),
+				(void)(0));
 		else
 			return (add_token(head, tail, ">", PR_OUT), inc_i(i, 0), (void)(0));
 	}

@@ -10,7 +10,7 @@ static t_redir_type	redir_conv(t_token_type type)
 		return (R_IN);
 	else if (type == PR_OUT)
 		return (R_OUT);
-    return (0);
+	return (0);
 }
 
 static void	ver_hdoc_and_quoted(t_tokens *t, int i, int y)
@@ -75,8 +75,8 @@ void	add_to_struct(void)
 
 	init_s_var(&v);
 	tmp = ps()->tl;
-	if(!tmp)
-		return;
+	if (!tmp)
+		return ;
 	while (ms()->cmdv[v.i])
 	{
 		malloc_redir_struct(v.i, count_redirs(tmp->cmdt));

@@ -1,17 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_isnumeric.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/11 19:22:49 by thde-sou          #+#    #+#             */
+/*   Updated: 2026/01/11 19:23:03 by thde-sou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-int ft_isnumeric(char *str)
+int	ft_isnumeric(char *str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!str)
-        return (0);
-    while(str[i])
-    {
-        if (str[i] < 48 || str[i] > 57)
-            return (0);
-        i++;
-    }
-    return (1);
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] < 48 || str[i] > 57)
+			return (0);
+		i++;
+	}
+	return (1);
 }

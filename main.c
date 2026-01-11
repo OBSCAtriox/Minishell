@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/11 21:14:53 by thde-sou          #+#    #+#             */
+/*   Updated: 2026/01/11 21:14:54 by thde-sou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "includes/minishell.h"
 
 t_env	*te(void)
@@ -14,24 +26,6 @@ t_pipeline	*ms(void)
 	return (&ms);
 }
 
-/* static void	printf_list_tok(t_per_cmd_tok *tl)
-{
-	t_tokens	*tmp;
-
-	while (tl)
-	{
-		printf("\n//////////////////////\n");
-		tmp = tl->cmdt;
-		while (tmp)
-		{
-			printf("list of tok list : --> %s\n", tmp->value);
-			printf("\n------------------\n");
-			tmp = tmp->next;
-		}
-		tl = tl->next;
-	}
-} */
-
 int	main(int argc, char **argv, char **envp)
 {
 	initis_main(argc, argv, envp);
@@ -39,19 +33,19 @@ int	main(int argc, char **argv, char **envp)
 	{
 		tc()->g_sig = 0;
 		setup_prompt_signal();
-		if(!readline_and_check())
-			break;
-		if(check_sigint())
-			continue;
-		if(empty_line())
-			continue;
+		if (!readline_and_check())
+			break ;
+		if (check_sigint())
+			continue ;
+		if (empty_line())
+			continue ;
 		if (!verify_whitespaces(ps()->line))
 			continue ;
 		add_history(ps()->line);
 		if (!verifications(ps()->line))
 		{
 			free_all("", 0);
-			continue;
+			continue ;
 		}
 		else
 			execution();

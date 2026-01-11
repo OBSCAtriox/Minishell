@@ -1,8 +1,8 @@
 #include "../../includes/minishell.h"
 
-int verify_whitespaces(char *line)
+int	verify_whitespaces(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])

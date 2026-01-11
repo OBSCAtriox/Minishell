@@ -1,6 +1,5 @@
-# ifndef COLORS_H
+#ifndef COLORS_H
 # define COLORS_H
-
 
 //Background colors
 
@@ -24,7 +23,7 @@
 
 //Foreground colors
 
-# define FGBLACK  "\033[30m"
+# define FGBLACK "\033[30m"
 # define FGRED "\033[31m"
 # define FGGREEN "\033[32m"
 # define FGYELLOW "\033[33m"
@@ -55,4 +54,4 @@
 # define HIDDEN "\033[8m"
 # define STRIKE "\033[9m"
 
-# endif
+#endif

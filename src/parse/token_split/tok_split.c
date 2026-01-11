@@ -14,7 +14,7 @@ static t_per_cmd_tok	*new_cmd_list(t_tokens *tok_slice)
 	t_per_cmd_tok	*new;
 
 	if (!tok_slice)
-		return NULL;
+		return (NULL);
 	new = malloc(sizeof(t_per_cmd_tok));
 	if (!new)
 		free_all(MALLOC_FAIL, 1);
@@ -62,7 +62,7 @@ t_per_cmd_tok	*tok_split(t_tokens *t)
 				add_list_to_list(&head, &tail, start);
 			}
 			aux_tok_split(&start, &pipe, &prev, &t);
-			continue;
+			continue ;
 		}
 		prev = t;
 		t = t->next;
@@ -72,7 +72,8 @@ t_per_cmd_tok	*tok_split(t_tokens *t)
 	return (head);
 }
 
-void	aux_tok_split(t_tokens **start, t_tokens **pipe, t_tokens **prev, t_tokens **t)
+void	aux_tok_split(t_tokens **start, t_tokens **pipe, t_tokens **prev,
+		t_tokens **t)
 {
 	*pipe = *t;
 	*t = (*t)->next;

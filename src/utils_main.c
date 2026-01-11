@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_main.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/11 21:14:16 by thde-sou          #+#    #+#             */
+/*   Updated: 2026/01/11 21:14:17 by thde-sou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-void    initis_main(int argc, char **argv, char **envp)
+void	initis_main(int argc, char **argv, char **envp)
 {
-    (void)argv;
+	(void)argv;
 	tc()->g_sig = 0;
 	if (argc != 1)
 		basic_error(ERR_ARG);
@@ -11,42 +23,42 @@ void    initis_main(int argc, char **argv, char **envp)
 	set_cwd();
 }
 
-int readline_and_check(void)
+int	readline_and_check(void)
 {
-    ps()->line = readline("\001\033[1;32m\002T_Shell> \001\033[0m\002");
+	ps()->line = readline("\001\033[1;32m\002T_Shell> \001\033[0m\002");
 	if (!ps()->line)
 	{
 		write(1, "exit\n", 5);
 		return (FALSE);
 	}
-    return (TRUE);
+	return (TRUE);
 }
 
-int check_sigint(void)
+int	check_sigint(void)
 {
-    if(tc()->g_sig == SIGINT && ps()->line && ps()->line[0] == '\0')
+	if (tc()->g_sig == SIGINT && ps()->line && ps()->line[0] == '\0')
 	{
-    	tc()->g_sig = 0;
-    	free(ps()->line);
-    	return (TRUE);
+		tc()->g_sig = 0;
+		free(ps()->line);
+		return (TRUE);
 	}
-    tc()->g_sig = 0;
-    return (FALSE);
+	tc()->g_sig = 0;
+	return (FALSE);
 }
 
-int empty_line(void)
+int	empty_line(void)
 {
-    if (ps()->line[0] == '\0')
+	if (ps()->line[0] == '\0')
 	{
 		free(ps()->line);
 		return (TRUE);
 	}
-    return (FALSE);
+	return (FALSE);
 }
 
-void    exit_main(void)
+void	exit_main(void)
 {
-    rl_clear_history();
+	rl_clear_history();
 	cleanup();
 	exit(te()->exit_code);
 }
