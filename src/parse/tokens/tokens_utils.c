@@ -1,12 +1,11 @@
 #include "../../../includes/minishell.h"
 
-void	buf_i_ver(t_tokens **head, t_tokens **tail, char *buf, int *buf_i,
-		bool yn)
+void	buf_i_ver(t_tokens **head, t_tokens **tail, t_vars *v, bool yn)
 {
-	if (*buf_i > 0)
-		create_token(head, tail, buf, *buf_i);
+	if (v->buf_i > 0)
+		create_token(head, tail, v->buf, v->buf_i);
 	if (yn)
-		*buf_i = 0;
+		v->buf_i = 0;
 }
 
 void	quotes_ver(bool *d_quotes, bool *s_quotes, char c)
@@ -49,14 +48,7 @@ bool	is_assignment(const char *s)
 	while (s[i] && s[i] != '=')
 	{
 		if (!ft_isalnum(s[i]) && s[i] != '_')
-		{
-			if (s[i] == '+' && s[i + 1] == '=')
-			{
-				i++;
-				continue ;
-			}
 			return (false);
-		}
 		i++;
 	}
 	return (s[i] == '=');

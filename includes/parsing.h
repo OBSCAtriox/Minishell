@@ -72,7 +72,18 @@ typedef struct s_vars
 	int						y;
 	bool					d_q;
 	bool					s_q;
+	int						buf_i;
+	char					buf[BUF_SIZE];
 }							t_vars;
+
+typedef struct s_tok_split_vars
+{
+	t_per_cmd_tok			*head;
+	t_per_cmd_tok			*tail;
+	t_tokens				*start;
+	t_tokens				*prev;
+	t_tokens				*pipe;
+}							t_tok_split_vars;
 
 void						free_split_list(t_quote_split **head);
 void						free_all(char *msg, int i);
@@ -100,7 +111,8 @@ bool						is_assignment(const char *s);
 void						create_token(t_tokens **head, t_tokens **tail,
 								char *buffer, int buf_i);
 void						buf_i_ver(t_tokens **head, t_tokens **tail,
-								char *buf, int *buf_i, bool yn);
+								t_vars *v, bool yn);
+
 void						quotes_ver(bool *d_quotes, bool *s_quotes, char c);
 void						token_list(const char *li);
 void						ver_to_expand(t_tokens **t);
@@ -112,16 +124,18 @@ void						create_spl_list(t_quote_split **head,
 								t_quote_type type);
 void						inc_i(int *i, int n);
 void						init_split_vars(t_split_var *va);
-void						init_token(int *i, int *buf_i, bool *d_q,
-								bool *s_q);
+void						init_token(t_vars *v);
 void						verify_contain_quote(t_tokens *t);
+
 int							r_ver_bef_aft_pipe(bool d_q, bool s_q,
 								const char *li);
+// int					r_ver_pipe_util(bool d_q, bool s_q, const char *li);
 int							r_ver_after(bool d_q, bool s_q, const char *li);
 int							r_ver_synt(bool d_q, bool s_q, const char *li);
 int							r_ver_start(const char *li);
 int							r_ver_end(const char *li);
 int							r_ver(const char *li);
+
 void						print_minishell_structs(int n);
 void						free_tokens_arg(t_tokens **toks);
 void						free_list_of_tok_list(void);

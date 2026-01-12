@@ -1,10 +1,10 @@
 #include "../../../includes/minishell.h"
 
-static void	ver_pos(int i, int st, char *li, t_quote_split **head,
+static void	ver_pos(t_split_var v, char *li, t_quote_split **head,
 		t_quote_split **tail)
 {
-	if (i > st)
-		create_spl_list(head, tail, ft_substr(li, st, i - st), NONE);
+	if (v.i > v.st)
+		create_spl_list(head, tail, ft_substr(li, v.st, v.i - v.st), NONE);
 }
 
 static t_quote_type	ver_type(char c)
@@ -27,8 +27,8 @@ t_quote_split	*ms_split(char *li)
 		if (v.ty == NONE && ft_strchr("\"\'", li[v.i]))
 		{
 			if (v.i > v.st)
-				create_spl_list(&v.head, &v.tail, ft_substr(li, v.st,
-						(v.i - v.st)), v.ty);
+				create_spl_list(&v.head, &v.tail, ft_substr(li, v.st, (v.i
+							- v.st)), v.ty);
 			v.ty = ver_type(li[v.i]);
 			v.st = v.i + 1;
 		}
@@ -41,6 +41,6 @@ t_quote_split	*ms_split(char *li)
 		}
 		v.i++;
 	}
-	ver_pos(v.i, v.st, li, &v.head, &v.tail);
+	ver_pos(v, li, &v.head, &v.tail);
 	return (v.head);
 }

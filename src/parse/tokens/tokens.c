@@ -79,31 +79,27 @@ static void	handle_symbols(t_tokens **head, t_tokens **tail, const char *li,
 
 static void	token_help(t_tokens **head, t_tokens **tail, const char *li)
 {
-	char	buf[BUF_SIZE];
-	int		i;
-	int		buf_i;
-	bool	d_quotes;
-	bool	s_quotes;
+	t_vars	v;
 
-	init_token(&i, &buf_i, &d_quotes, &s_quotes);
-	while (li[i])
+	init_token(&v);
+	while (li[v.i])
 	{
-		quotes_ver(&d_quotes, &s_quotes, li[i]);
-		if (isspace(li[i]) && !d_quotes && !s_quotes)
+		quotes_ver(&v.d_q, &v.s_q, li[v.i]);
+		if (isspace(li[v.i]) && !v.d_q && !v.s_q)
 		{
-			buf_i_ver(head, tail, buf, &buf_i, true);
-			i++;
+			buf_i_ver(head, tail, &v, true);
+			v.i++;
 		}
-		else if ((ft_strchr("><|", li[i])) && !d_quotes && !s_quotes)
+		else if ((ft_strchr("><|", li[v.i])) && !v.d_q && !v.s_q)
 		{
-			buf_i_ver(head, tail, buf, &buf_i, true);
-			handle_symbols(head, tail, li, &i);
+			buf_i_ver(head, tail, &v, true);
+			handle_symbols(head, tail, li, &v.i);
 		}
 		else
-			buf[buf_i++] = li[i++];
+			v.buf[v.buf_i++] = li[v.i++];
 	}
-	buf_i_ver(head, tail, buf, &buf_i, false);
-	ft_bzero(buf, ft_strlen(buf));
+	buf_i_ver(head, tail, &v, false);
+	ft_bzero(v.buf, ft_strlen(v.buf));
 }
 
 void	token_list(const char *li)
