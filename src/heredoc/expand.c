@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 21:10:08 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/13 20:58:25 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/13 22:16:07 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	**exp_str_var(char *line)
 	while (dt.i < dt.size)
 	{
 		dt.str = ft_substr(line, dt.index_p[dt.i], dt.len_p[dt.i]);
-		if(!dt.str)
+		if (!dt.str)
 			return (free_fail_expand(dt.var, NULL, &dt, dt.i), NULL);
 		dt.var[dt.i] = expand_vrb(dt.str);
 		if (!dt.var[dt.i])
@@ -134,7 +134,7 @@ char	*expand_vrb(char *name)
 	if (name[0] == '?')
 	{
 		vrb = ft_itoa(te()->exit_code);
-		if(vrb)
+		if (vrb)
 			return (vrb);
 	}
 	vrb = expand_variable(name, te()->envp);
