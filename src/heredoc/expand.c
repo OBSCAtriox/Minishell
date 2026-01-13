@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 21:10:08 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 21:12:58 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/13 20:58:25 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*expand_line(char *line)
 	exp_find_var(line, &dt.index_p, &dt.len_p);
 	line_out = malloc(sizeof(char) * (dt.len + 1));
 	if (!exp || !line_out || !dt.index_p || !dt.len_p)
-		return (NULL);
+		return (free_fail_expand(exp, line_out, &dt, -1), NULL);
 	while (dt.i < dt.len)
 	{
 		dt.l = 0;
@@ -74,24 +74,22 @@ char	**exp_str_var(char *line)
 {
 	t_data	dt;
 
+	dt.len_p = NULL;
+	dt.index_p = NULL;
 	dt.size = count_var(line);
 	exp_find_var(line, &dt.index_p, &dt.len_p);
 	dt.var = malloc(sizeof(char *) * (dt.size + 1));
 	if (!dt.var || !dt.index_p || !dt.len_p)
-		return (NULL);
+		return (free_fail_expand(NULL, NULL, &dt, -1), free(dt.var), NULL);
 	dt.i = 0;
 	while (dt.i < dt.size)
 	{
 		dt.str = ft_substr(line, dt.index_p[dt.i], dt.len_p[dt.i]);
-		if (dt.str[0] == '?')
-		{
-			dt.var[dt.i++] = ft_itoa(te()->exit_code);
-			free(dt.str);
-			continue ;
-		}
+		if(!dt.str)
+			return (free_fail_expand(dt.var, NULL, &dt, dt.i), NULL);
 		dt.var[dt.i] = expand_vrb(dt.str);
 		if (!dt.var[dt.i])
-			dt.var[dt.i] = ft_strdup("");
+			return (free_fail_expand(dt.var, dt.str, &dt, dt.i), NULL);
 		free_str(dt.str);
 		dt.i++;
 	}
@@ -132,11 +130,18 @@ char	*expand_vrb(char *name)
 {
 	char	*vrb;
 
+	vrb = NULL;
+	if (name[0] == '?')
+	{
+		vrb = ft_itoa(te()->exit_code);
+		if(vrb)
+			return (vrb);
+	}
 	vrb = expand_variable(name, te()->envp);
 	if (vrb)
 		return (vrb);
 	vrb = expand_variable(name, te()->l_var);
 	if (vrb)
 		return (vrb);
-	return (NULL);
+	return (ft_strdup(""));
 }

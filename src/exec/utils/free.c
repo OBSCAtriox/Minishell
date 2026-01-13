@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:30:33 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:30:34 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/12 20:29:50 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ void	clean_redir(t_redir **redir)
 		if (redir[i]->path)
 			free(redir[i]->path);
 		if (redir[i]->hdoc_fd != -1)
+		{
 			close(redir[i]->hdoc_fd);
+			redir[i]->hdoc_fd = -1;
+		}
 		free(redir[i]);
 		i++;
 	}
@@ -107,6 +110,7 @@ void	free_pipeline(void)
 		i++;
 	}
 	free_doble_pointer(tc()->paths);
+	tc()->paths = NULL;
 	free(cmdv);
 	ms()->cmdv = NULL;
 }

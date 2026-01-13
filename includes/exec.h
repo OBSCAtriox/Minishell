@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:24:24 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:25:47 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/13 21:31:35 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ void		process_fail(int *fd, int temp_fd, char **path);
 void		setup_exec_builtin_signals(void);
 void		define_limits_exit(unsigned long long *limit, int sign);
 void		print_exit(void);
-void		close_fd_in(int fd, int h_doc);
+void		close_fd_in(int fd, int *h_doc);
+void		free_fail_expand(char **db_ptr, char *ptr, t_data *dt, int idx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:20:04 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:26:25 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/12 20:22:55 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ int	apply_redir_in(t_redir *redir)
 	{
 		fd = dup(redir->hdoc_fd);
 		if (fd < 0)
-			return (perror("hdoc"), close(redir->hdoc_fd), FALSE);
-		close(redir->hdoc_fd);
+			return (perror("hdoc"), close_fd_in(-1, &redir->hdoc_fd), FALSE);
+		close_fd_in(-1, &redir->hdoc_fd);
 	}
 	if (fd >= 0)
 	{
 		if (dup2(fd, target) < 0)
-			return (perror("dup2"), close_fd_in(fd, redir->hdoc_fd), FALSE);
+			return (perror("dup2"), close_fd_in(fd, &redir->hdoc_fd), FALSE);
 		close(fd);
 	}
 	return (TRUE);

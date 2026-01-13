@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:34:40 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:02:40 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/13 21:54:02 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	env_set(char *name, char *value, char **env)
 	else if (dt.index == -1)
 	{
 		if (!update_variable(name, value, env))
-			return (print_error(NULL, "failed to add variable"), 0);
+			return (0);
 	}
 	return (1);
 }

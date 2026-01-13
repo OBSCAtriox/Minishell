@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:20:15 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:25:38 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/12 20:25:17 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,13 @@ int	check_path(char *arg)
 	return (TRUE);
 }
 
-void	close_fd_in(int fd, int h_doc)
+void	close_fd_in(int fd, int *h_doc)
 {
 	if (fd != -1)
 		close(fd);
-	if (h_doc != -1)
-		close(h_doc);
+	if (*h_doc != -1)
+	{
+		close(*h_doc);
+		*h_doc = -1;
+	}
 }

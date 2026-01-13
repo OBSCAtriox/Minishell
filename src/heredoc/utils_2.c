@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 21:10:19 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 21:10:20 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/12 20:07:18 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	close_fd_redir(void)
 		dt.j = 0;
 		while (redir && redir[dt.j])
 		{
-			if (redir[dt.j]->hdoc_fd > 0)
+			if (redir[dt.j]->hdoc_fd >= 0)
 				close(redir[dt.j]->hdoc_fd);
 			ms()->cmdv[dt.i]->redir[dt.j]->hdoc_fd = -1;
 			dt.j++;

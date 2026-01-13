@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:30:45 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:30:46 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/12 20:31:06 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	safe_path(char **path, int *fd, int temp_fd, t_cmd *cmdv)
 {
+	*path = NULL;
+	if (!cmdv->argv || !cmdv->argv[0])
+		return ;
 	*path = path_to_binary(cmdv->argv[0]);
 	if (!*path && !check_builtin(cmdv->argv[0]))
 	{

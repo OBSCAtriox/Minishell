@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:35:27 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:35:28 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/12 20:30:38 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ void	process_children(t_cmd *cmdv, int *fd, int temp_fd, int has_next)
 		process_fail(fd, temp_fd, &path);
 	close_all(fd[0], fd[1], temp_fd, -1);
 	clean_redir_fd();
+	if (!cmdv->argv || !cmdv->argv[0])
+		return (cleanup(), exit(0));
 	if (check_builtin(cmdv->argv[0]))
 		process_builtin(cmdv->argv, path);
 	execve(path, cmdv->argv, envp);

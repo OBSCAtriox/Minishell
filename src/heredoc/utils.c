@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 21:10:26 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 21:10:27 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/13 20:19:37 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,6 @@ void	inits_expand_line(t_data *dt, char *line, char ***exp)
 	dt->index_p = NULL;
 	dt->len = count_len_exp(line);
 	*exp = exp_str_var(line);
+	if(!*exp)
+		*exp = NULL;
 }
