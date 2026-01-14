@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:27:41 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/13 22:06:59 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/14 17:02:15 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ int					empty_line(void);
 void				exit_main(void);
 int					check_if_redir(t_cmd **cmdv);
 char				**isspace_split(char *str);
+void				inits_pipeline(t_data *dt, int *has_next, t_cmd ***cmdv);
 
 #endif

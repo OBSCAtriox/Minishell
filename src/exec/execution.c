@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:35:27 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/12 20:30:38 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/14 18:22:18 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,14 @@ int	exec_pipeline(void)
 	t_cmd	**cmdv;
 	int		has_next;
 
-	inits_pipeline(&dt);
-	cmdv = ms()->cmdv;
-	has_next = 1;
+	inits_pipeline(&dt, &has_next, &cmdv);
 	while (cmdv[dt.i])
 	{
 		check_last_comand(dt, &has_next);
-		if (dt.i < tc()->num_cmd - 1)
-		{
-			if (pipe(dt.fd) == -1)
-				return (perror("pipe"), close(dt.temp_fd), FALSE);
-		}
-		dt.pid = safe_fork();
+		if(!safe_pipe(&dt))
+			break;
+		if(!safe_fork(&dt))
+			break ;
 		if (dt.pid == 0)
 			process_children(cmdv[dt.i], dt.fd, dt.temp_fd, has_next);
 		parent_step(&dt);
@@ -82,6 +78,8 @@ int	exec_pipeline(void)
 	if (dt.temp_fd != -1)
 		close(dt.temp_fd);
 	wait_for_children(tc()->last_pid);
+	if(dt.fail_loop)
+		return (FALSE);
 	return (TRUE);
 }
 
@@ -129,7 +127,8 @@ void	execution(void)
 		return ;
 	}
 	setup_exec_parent_signals();
-	exec_pipeline();
+	if(!exec_pipeline())
+		te()->exit_code = 1;
 	setup_prompt_signal();
 	free_pipeline();
 }

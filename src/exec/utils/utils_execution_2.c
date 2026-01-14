@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:30:42 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:30:43 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/14 18:17:38 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,29 @@ t_control	*tc(void)
 	return (&control);
 }
 
-void	inits_pipeline(t_data *dt)
+void	inits_pipeline(t_data *dt, int *has_next, t_cmd ***cmdv)
 {
 	dt->i = 0;
 	dt->fd[0] = -1;
 	dt->fd[1] = -1;
 	dt->temp_fd = -1;
+	dt->fail_loop = FALSE;
 	tc()->last_pid = -1;
+	*cmdv = ms()->cmdv;
+	*has_next = 1;
 }
 
-pid_t	safe_fork(void)
+int	safe_fork(t_data *dt)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-		return (perror("fork"), pid);
-	return (pid);
+	dt->pid = fork();
+	if (dt->pid < 0)
+	{
+		perror("fork");
+		close_caller_pipe(dt);
+		dt->fail_loop = TRUE;
+		return(FALSE);
+	}
+	return (TRUE);
 }
 
 void	parent_step(t_data *dt)
@@ -47,8 +53,7 @@ void	parent_step(t_data *dt)
 	dt->temp_fd = dt->fd[0];
 	dt->fd[0] = -1;
 	dt->fd[1] = -1;
-	if (dt->i == tc()->num_cmd - 1)
-		tc()->last_pid = dt->pid;
+	tc()->last_pid = dt->pid;
 }
 
 void	close_all(int fd_1, int fd_2, int fd_3, int fd_4)

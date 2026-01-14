@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:24:24 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/13 21:31:35 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/14 18:15:52 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_data
 	pid_t	pid;
 	int		fd[2];
 	int		temp_fd;
+	int		fail_loop;
 	int		result;
 	int		count;
 	int		index;
@@ -129,8 +130,7 @@ int			splited_path(void);
 char		*find_bin_path(char *arg);
 char		*path_to_binary(char *arg);
 int			builtin_in_parent_process(void);
-void		inits_pipeline(t_data *dt);
-pid_t		safe_fork(void);
+int			safe_fork(t_data *dt);
 void		parent_step(t_data *dt);
 void		close_all(int fd_1, int fd_2, int fd_3, int fd_4);
 int			make_dup_pipe(int *fd, int temp_fd, int has_next);
@@ -183,5 +183,7 @@ void		define_limits_exit(unsigned long long *limit, int sign);
 void		print_exit(void);
 void		close_fd_in(int fd, int *h_doc);
 void		free_fail_expand(char **db_ptr, char *ptr, t_data *dt, int idx);
+void		close_caller_pipe(t_data *dt);
+int			safe_pipe(t_data *dt);
 
 #endif
