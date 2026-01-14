@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 21:10:19 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/12 20:07:18 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/14 20:06:02 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	wait_heredoc(pid_t pid, int *fd)
 	int	status;
 	int	sig;
 
-	waitpid(pid, &status, 0);
+	if (!safe_waitpid_hdoc(pid, &status))
+		return ;
 	if (WIFEXITED(status))
 	{
 		sig = WEXITSTATUS(status);

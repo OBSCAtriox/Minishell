@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:24:24 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/14 18:15:52 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/14 19:27:08 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,5 +185,7 @@ void		close_fd_in(int fd, int *h_doc);
 void		free_fail_expand(char **db_ptr, char *ptr, t_data *dt, int idx);
 void		close_caller_pipe(t_data *dt);
 int			safe_pipe(t_data *dt);
+int			safe_waitpid_exec(pid_t *wpid, int *status);
+int			safe_waitpid_hdoc(pid_t pid, int *status);
 
 #endif

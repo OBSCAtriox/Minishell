@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:35:27 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/14 18:22:18 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/14 20:07:19 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ int	exec_pipeline(void)
 	while (cmdv[dt.i])
 	{
 		check_last_comand(dt, &has_next);
-		if(!safe_pipe(&dt))
-			break;
-		if(!safe_fork(&dt))
+		if (!safe_pipe(&dt))
+			break ;
+		if (!safe_fork(&dt))
 			break ;
 		if (dt.pid == 0)
 			process_children(cmdv[dt.i], dt.fd, dt.temp_fd, has_next);
@@ -78,7 +78,7 @@ int	exec_pipeline(void)
 	if (dt.temp_fd != -1)
 		close(dt.temp_fd);
 	wait_for_children(tc()->last_pid);
-	if(dt.fail_loop)
+	if (dt.fail_loop)
 		return (FALSE);
 	return (TRUE);
 }
@@ -127,7 +127,7 @@ void	execution(void)
 		return ;
 	}
 	setup_exec_parent_signals();
-	if(!exec_pipeline())
+	if (!exec_pipeline())
 		te()->exit_code = 1;
 	setup_prompt_signal();
 	free_pipeline();

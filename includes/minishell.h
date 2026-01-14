@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:27:41 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/14 17:02:15 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/14 18:36:39 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../libft/libft.h"
 # include "colors.h"
 # include "error.h"
+# include <errno.h>
 # include "exec.h"
 # include "parsing.h"
 # include <readline/history.h>

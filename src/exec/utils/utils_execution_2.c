@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:30:42 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/14 18:17:38 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/14 20:07:01 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	safe_fork(t_data *dt)
 		perror("fork");
 		close_caller_pipe(dt);
 		dt->fail_loop = TRUE;
-		return(FALSE);
+		return (FALSE);
 	}
 	return (TRUE);
 }

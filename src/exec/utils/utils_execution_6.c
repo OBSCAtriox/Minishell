@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:30:54 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/14 18:16:59 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/14 20:05:03 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	process_fail(int *fd, int temp_fd, char **path)
 
 void	close_caller_pipe(t_data *dt)
 {
-	if(dt->fd[0] != -1)
+	if (dt->fd[0] != -1)
 		close(dt->fd[0]);
-	if(dt->fd[1] != -1)
+	if (dt->fd[1] != -1)
 		close(dt->fd[1]);
 }
 
@@ -40,6 +40,17 @@ int	safe_pipe(t_data *dt)
 			dt->fail_loop = TRUE;
 			return (FALSE);
 		}
+	}
+	return (TRUE);
+}
+
+int	safe_waitpid_exec(pid_t *wpid, int *status)
+{
+	*wpid = waitpid(-1, status, 0);
+	if (*wpid < 0 && errno == EINTR)
+	{
+		*wpid = 1;
+		return (FALSE);
 	}
 	return (TRUE);
 }

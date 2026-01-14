@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 21:10:23 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/13 22:15:32 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/14 20:06:19 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,23 @@ void	free_fail_expand(char **db_ptr, char *ptr, t_data *dt, int idx)
 		free(dt->len_p);
 	if (dt->index_p)
 		free(dt->index_p);
+}
+
+int	safe_waitpid_hdoc(pid_t pid, int *status)
+{
+	pid_t	wpid;
+
+	wpid = 1;
+	while (wpid > 0)
+	{
+		wpid = waitpid(pid, status, 0);
+		if (wpid < 0 && errno == EINTR)
+		{
+			wpid = 1;
+			continue ;
+		}
+		if (wpid == pid)
+			return (TRUE);
+	}
+	return (FALSE);
 }
