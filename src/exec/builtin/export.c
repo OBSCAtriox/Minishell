@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:17:39 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/14 19:44:52 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/15 16:37:07 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	is_valid_identifier(char *arg)
 	int	other_character;
 	int	len;
 
+	if (!arg || arg[0] == '\0')
+		return (FALSE);
 	first_character = FALSE;
 	other_character = FALSE;
 	len = ft_strlen(arg);
