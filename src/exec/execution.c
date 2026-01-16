@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:35:27 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/14 20:07:19 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/16 17:51:40 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	builtin_in_parent_process(void)
 			te()->exit_code = 1;
 			return (TRUE);
 		}
-		call_builtin(ms()->cmdv[0]->argv);
+		if(!call_builtin(ms()->cmdv[0]->argv))
+			te()->exit_code = 1;
 		restore_std();
 		return (TRUE);
 	}

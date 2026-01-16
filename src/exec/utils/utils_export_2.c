@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:31:03 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:31:04 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/16 18:00:54 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	aux_export_two(char *arg, int *signaled_exit)
 	*signaled_exit = TRUE;
 }
 
-void	global_print(void)
+int	global_print(void)
 {
 	char	**var;
 	int		i;
@@ -74,7 +74,7 @@ void	global_print(void)
 	len_exp = size_vetor(te()->var_exp);
 	var = malloc(sizeof(char *) * (len_env + len_exp + 1));
 	if (!var)
-		return ;
+		return (cons_err("export"), FALSE) ;
 	while (te()->envp && te()->envp[j])
 		var[i++] = te()->envp[j++];
 	j = 0;
@@ -83,4 +83,5 @@ void	global_print(void)
 	var[i] = NULL;
 	print_export(var);
 	free(var);
+	return (TRUE);
 }

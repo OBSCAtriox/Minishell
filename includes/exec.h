@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:24:24 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/15 21:28:30 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/16 17:46:06 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void		remove_vars_fallback(void);
 void		aux_export_two(char *arg, int *signaled_exit);
 void		exit_heredoc(int fd_1);
 int			inits_var_exp(t_data *dt);
-void		global_print(void);
+int			global_print(void);
 void		process_fail(int *fd, int temp_fd, char **path);
 void		setup_exec_builtin_signals(void);
 void		define_limits_exit(unsigned long long *limit, int sign);

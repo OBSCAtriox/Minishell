@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:17:39 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/15 21:32:45 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/16 17:57:44 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	builtin_export(char **argv)
 	i = 1;
 	signaled_exit = FALSE;
 	if (!argv || !argv[1])
-		return (global_print(), 1);
+		return (global_print());
 	while (argv[i])
 	{
 		if (is_valid_identifier(argv[i]))
