@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:17:39 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/15 16:37:07 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/15 21:32:45 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	aux_export(char **argv, int i)
 	name = get_name_var(argv[i]);
 	value = get_value_var(argv[i]);
 	if (!name)
-		return (FALSE);
+		return (cons_err("export"), FALSE);
 	if (has_equal(argv[i]) && !value)
 	{
 		if (!env_set(name, "", te()->envp))

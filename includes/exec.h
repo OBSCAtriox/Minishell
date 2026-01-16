@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:24:24 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/14 19:27:08 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/15 21:28:30 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_control
 	char	**fallback_vars;
 	int		g_sig;
 	int		sum_export;
+	int		last_err;
 }			t_control;
 
 t_control	*tc(void);
@@ -187,5 +188,7 @@ void		close_caller_pipe(t_data *dt);
 int			safe_pipe(t_data *dt);
 int			safe_waitpid_exec(pid_t *wpid, int *status);
 int			safe_waitpid_hdoc(pid_t pid, int *status);
+void    	set_err(int err);
+void    	cons_err(char *command);
 
 #endif

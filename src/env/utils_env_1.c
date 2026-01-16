@@ -6,11 +6,12 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:35:04 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 19:36:03 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/15 21:58:40 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#define malloc(...) NULL
 
 int	size_vetor(char **vetor)
 {

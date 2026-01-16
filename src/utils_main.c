@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 21:14:16 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 21:14:17 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/15 21:34:11 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	initis_main(int argc, char **argv, char **envp)
 	mount_envp(envp);
 	shell_level();
 	set_cwd();
+	tc()->last_err = 0;
 }
 
 int	readline_and_check(void)

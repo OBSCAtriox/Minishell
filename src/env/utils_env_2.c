@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:35:09 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/14 19:37:58 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/15 21:55:14 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*get_name_var(char *arg)
 		i++;
 	result = malloc(sizeof(char) * (i + 1));
 	if (!result)
-		return (NULL);
+		return (set_err(errno), NULL);
 	while (j < i)
 		result[j++] = arg[k++];
 	result[j] = '\0';
@@ -99,7 +99,7 @@ char	*get_value_var(char *arg)
 		return (ft_strdup(""));
 	result = malloc(sizeof(char) * ((dt.len - dt.i) + 1));
 	if (!result)
-		return (NULL);
+		return (set_err(errno), NULL);
 	dt.i++;
 	dt.j = 0;
 	while (arg[dt.i])
