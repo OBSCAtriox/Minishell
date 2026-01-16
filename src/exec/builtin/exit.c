@@ -6,7 +6,7 @@
 /*   By: tide-pau <tide-pau@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:17:36 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/16 16:06:04 by tide-pau         ###   ########.fr       */
+/*   Updated: 2026/01/16 17:56:07 by tide-pau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,11 @@ int	builtin_exit(char **arg)
 {
 	long long	code;
 
+	code = 0;
 	if (!arg[1])
 		code = te()->exit_code;
 	else if (arg[2])
-	{
-		if (!more_than_one(arg))
-			return (FALSE);
-	}
+		more_than_one(arg);
 	else
 	{
 		print_exit();
