@@ -6,7 +6,7 @@
 /*   By: tide-pau <tide-pau@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 18:40:23 by tide-pau          #+#    #+#             */
-/*   Updated: 2026/01/12 18:46:09 by tide-pau         ###   ########.fr       */
+/*   Updated: 2026/01/16 15:45:44 by tide-pau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 # include "minishell.h"
 
 # define ERR_ARG "\033[91mT_Shell: Error\n \033[0m"
-# define SYNT_ERR_P "\033[91mT_Shell: syntax \
+# define SYNT_ERR_P "\033[91mT_Shell: syntax\
 error near unexpected token --> ´|'\n \033[0m"
-# define SYNT_ERR_R "\033[91mT_Shell: syntax \
+# define SYNT_ERR_R "\033[91mT_Shell: syntax\
 error from --> ´redirections'\n \033[0m"
-# define MALLOC_FAIL "\033[91mT_Shell: \
+# define MALLOC_FAIL "\033[91mT_Shell:\
 Malloc Failure.\n \033[0m"
-# define UNCLOSED_QUOTES "\033[91mT_Shell: \
+# define UNCLOSED_QUOTES "\033[91mT_Shell:\
 syntax error from --> ´Unclosed Quotes'\n \033[0m"
 
 void	basic_error(char *msg);
