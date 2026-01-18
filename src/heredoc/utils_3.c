@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 21:10:23 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/14 20:06:19 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/18 04:17:44 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	exit_heredoc(int fd_1)
 	exit(0);
 }
 
-void	free_fail_expand(char **db_ptr, char *ptr, t_data *dt, int idx)
+void	free_fail_exp(char **db_ptr, char *ptr, t_data *dt, int idx)
 {
 	if (db_ptr)
 	{
 		if (idx >= 0)
-			free_vetor_failed(db_ptr, idx);
+			free_vetor_failed(&db_ptr, idx);
 		else
 			free_doble_pointer(db_ptr);
 	}

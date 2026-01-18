@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:24:24 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/16 17:46:06 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/18 04:14:16 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,13 @@ typedef struct s_control
 	int		g_sig;
 	int		sum_export;
 	int		last_err;
+	int		err_printed;
 }			t_control;
 
 t_control	*tc(void);
 int			size_vetor(char **vetor);
 int			mount_envp(char **envp);
-void		free_vetor_failed(char **vetor, int i);
+void		free_vetor_failed(char ***vetor, int i);
 int			builtin_cd(char **argv);
 int			find_variable(char *name, char **env);
 char		*join3(char *s1, char *s2, char *s3);
@@ -81,7 +82,7 @@ int			builtin_echo(char **argv);
 int			builtin_pwd(void);
 void		error_pwd(void);
 char		*expand_variable(char *name, char **env);
-void		print_export(char **env);
+int			print_export(char **env);
 int			find_next_min(char **env, int *printed);
 int			ft_strcmp_var(const char *s1, const char *s2);
 void		print_export_line(char *env);
@@ -91,7 +92,7 @@ int			is_valid_identifier(char *arg);
 char		*get_name_var(char *arg);
 char		*get_value_var(char *arg);
 int			has_equal(char *arg);
-void		export_variable(char *arg);
+int			export_variable(char *arg);
 int			re_mount_locar_var(char **envp);
 int			create_new_local_var(char *name, char *value);
 int			remove_env_var(int index);
@@ -154,7 +155,7 @@ int			check_builtin(char *argv);
 void		process_builtin(char **argv, char *path);
 void		update_local_var(char *name, char *value);
 char		*expand_vrb(char *name);
-void		update_var_exp(char *name);
+int			update_var_exp(char *name);
 int			re_mount_var_exp(char **envp);
 int			create_new_var_exp(char *name);
 void		create_var_exp(char *name);
@@ -162,11 +163,11 @@ int			remove_var_exp(int index);
 void		call_update_var(char *name, char *value);
 int			valid_sec_character(char *arg);
 int			check_sum_and_set(char *name, char *value, char **env);
-int			not_sum(char *name, char *value, char **env);
+int			not_sum(char *name, char *value, char **env, int *added);
 void		check_sum_local_var(char *name, char *value);
 int			check_number(char *arg);
-void		shell_level(void);
-void		inits_min_var(void);
+int			shell_level(void);
+int			inits_min_var(void);
 void		clean_redir_fd(void);
 int			local_var(char *argv);
 void		set_cwd(void);
@@ -183,12 +184,15 @@ void		setup_exec_builtin_signals(void);
 void		define_limits_exit(unsigned long long *limit, int sign);
 void		print_exit(void);
 void		close_fd_in(int fd, int *h_doc);
-void		free_fail_expand(char **db_ptr, char *ptr, t_data *dt, int idx);
+void		free_fail_exp(char **db_ptr, char *ptr, t_data *dt, int idx);
 void		close_caller_pipe(t_data *dt);
 int			safe_pipe(t_data *dt);
 int			safe_waitpid_exec(pid_t *wpid, int *status);
 int			safe_waitpid_hdoc(pid_t pid, int *status);
-void    	set_err(int err);
-void    	cons_err(char *command);
+void		set_err(int err);
+void		cons_err(char *command);
+int			copy_envp(char **envp);
+int			aux_cd(char *new_pwd, char *old_pwd, char *target);
+void		print_cd_back(char **arg, char *target);
 
 #endif

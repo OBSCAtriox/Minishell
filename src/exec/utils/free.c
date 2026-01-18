@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:30:33 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/12 20:29:50 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/18 04:23:23 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,20 @@ void	free_doble_pointer(char **p)
 	p = NULL;
 }
 
-void	free_vetor_failed(char **vetor, int i)
+void	free_vetor_failed(char ***vetor, int i)
 {
 	int	j;
 
-	if (!vetor)
+	if (!*vetor)
 		return ;
 	j = 0;
 	while (j < i)
 	{
-		free(vetor[j]);
+		free((*vetor)[j]);
 		j++;
 	}
-	free(vetor);
+	free(*vetor);
+	*vetor = NULL;
 }
 
 void	clean_redir(t_redir **redir)

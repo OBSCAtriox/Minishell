@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeparse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tide-pau <tide-pau@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 18:37:02 by tide-pau          #+#    #+#             */
-/*   Updated: 2026/01/12 18:38:37 by tide-pau         ###   ########.fr       */
+/*   Updated: 2026/01/18 03:58:25 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,20 @@ int	pipe_ver_start(const char *line)
 
 int	pipe_ver_end(const char *line)
 {
-	size_t	lenght;
+	size_t	length;
 
-	lenght = ft_strlen(line) - 1;
-	while (line[lenght])
-	{
-		if (ms_isspaces(line[lenght]))
-			lenght--;
-		else
-		{
-			if (line[lenght] == '|')
-				return (0);
-			break ;
-		}
-	}
+	if (!line)
+		return (1);
+	length = ft_strlen(line);
+	if (length == 0)
+		return (1);
+	length--;
+	while (length > 0 && ms_isspaces(line[length]))
+		length--;
+	if (ms_isspaces(line[length]))
+		return (1);
+	if (line[length] == '|')
+		return (0);
 	return (1);
 }
 

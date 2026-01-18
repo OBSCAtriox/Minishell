@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tide-pau <tide-pau@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:17:36 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/16 17:56:07 by tide-pau         ###   ########.fr       */
+/*   Updated: 2026/01/17 20:25:00 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,12 @@ static void	check_after_two_arg(char *arg)
 	}
 }
 
-static int	more_than_one(char **arg)
+static void	more_than_one(char **arg)
 {
 	print_exit();
 	check_after_two_arg(arg[1]);
 	print_error("exit", "too many arguments");
 	te()->exit_code = 1;
-	return (FALSE);
 }
 
 int	builtin_exit(char **arg)
@@ -54,7 +53,7 @@ int	builtin_exit(char **arg)
 	if (!arg[1])
 		code = te()->exit_code;
 	else if (arg[2])
-		more_than_one(arg);
+		return (more_than_one(arg), FALSE);
 	else
 	{
 		print_exit();

@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:35:09 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/15 21:55:14 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/17 20:04:48 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*expand_variable(char *name, char **env)
 		dt.i++;
 	result = malloc(sizeof(char) * ((dt.len - dt.i) + 1));
 	if (!result)
-		return (NULL);
+		return (set_err(errno), NULL);
 	dt.i++;
 	while (dt.temp[dt.i])
 	{
@@ -50,7 +50,7 @@ void	create_local_variable(char *name, char *value)
 	{
 		l_var = malloc(sizeof(char *) * 2);
 		if (!l_var)
-			return ;
+			return (set_err(errno));
 		l_var[0] = join3(name, EQUAL, value);
 		if (!l_var[0])
 		{

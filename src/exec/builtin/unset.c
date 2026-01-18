@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:17:45 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/14 19:48:01 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/18 04:17:11 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	builtin_unset(char **argv)
 			if (aux_unset(argv, i))
 				te()->exit_code = 0;
 			else
-				te()->exit_code = 1;
+				return (cons_err("unset"), FALSE);
 		}
 		i++;
 	}
@@ -40,7 +40,7 @@ int	remove_env_var(int index)
 	dt.size = size_vetor(te()->envp);
 	dt.env = malloc(sizeof(char *) * (dt.size + 1));
 	if (!dt.env)
-		return (FALSE);
+		return (set_err(errno), FALSE);
 	dt.i = 0;
 	dt.j = 0;
 	while (te()->envp[dt.i])
@@ -49,7 +49,7 @@ int	remove_env_var(int index)
 			continue ;
 		dt.env[dt.j] = ft_strdup(te()->envp[dt.i]);
 		if (!dt.env[dt.j])
-			return (free_vetor_failed(dt.env, dt.j), FALSE);
+			return (set_err(errno), free_vetor_failed(&dt.env, dt.j), FALSE);
 		dt.i++;
 		dt.j++;
 	}
@@ -68,7 +68,7 @@ int	remove_local_var(int index)
 	dt.size = size_vetor(te()->l_var);
 	dt.env = malloc(sizeof(char *) * (dt.size + 1));
 	if (!dt.env)
-		return (FALSE);
+		return (set_err(errno), FALSE);
 	dt.i = 0;
 	dt.j = 0;
 	while (te()->l_var[dt.i])
@@ -77,7 +77,7 @@ int	remove_local_var(int index)
 			continue ;
 		dt.env[dt.j] = ft_strdup(te()->l_var[dt.i]);
 		if (!dt.env[dt.j])
-			return (free_vetor_failed(dt.env, dt.j), FALSE);
+			return (set_err(errno), free_vetor_failed(&dt.env, dt.j), FALSE);
 		dt.i++;
 		dt.j++;
 	}

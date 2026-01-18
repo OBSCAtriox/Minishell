@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:17:33 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:17:34 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/17 19:56:53 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ int	builtin_env(void)
 			write(1, value, ft_strlen(value));
 			write(1, "\n", 1);
 		}
+		else
+			return (cons_err("env"), free(name), free(value), FALSE);
 		free(name);
 		free(value);
 		i++;
 	}
-	te()->exit_code = 0;
-	return (TRUE);
+	return (te()->exit_code = 0, TRUE);
 }

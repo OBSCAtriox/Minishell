@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:17:24 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:17:25 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/18 03:01:20 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,22 @@ int	builtin_cd(char **arg)
 
 	target = get_target(arg);
 	if (!target)
-		return (te()->exit_code = 1, FALSE);
+		return (FALSE);
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
+	{
 		old_pwd = expand_variable("PWD", te()->envp);
+		if (!old_pwd)
+			return (cons_err("cd"), FALSE);
+	}
 	if (chdir(target) == -1)
 		return (failed_cd(NULL, &target, &old_pwd), FALSE);
 	new_pwd = getcwd(NULL, 0);
 	if (!new_pwd)
 		return (failed_cd(&new_pwd, &target, &old_pwd), FALSE);
-	if (te()->oldpwd)
-		free(te()->oldpwd);
-	te()->oldpwd = old_pwd;
-	free(te()->cwd);
-	te()->cwd = join3(new_pwd, NULL, NULL);
-	env_set("PWD", new_pwd, te()->envp);
-	env_set("OLDPWD", old_pwd, te()->envp);
-	free_cd(&new_pwd, &target, &old_pwd, 0);
-	te()->exit_code = 0;
+	print_cd_back(arg, target);
+	if (!aux_cd(new_pwd, old_pwd, target))
+		return (FALSE);
 	return (TRUE);
 }
 
@@ -48,17 +46,23 @@ char	*get_target(char **arg)
 	target = NULL;
 	if (arg[1] && arg[2])
 		return (print_error("cd", "too many arguments"), NULL);
-	if (arg[1])
-	{
-		target = ft_strdup(arg[1]);
-		if (!target)
-			return (print_error("cd", "allocation failed"), NULL);
-	}
-	else
+	if (!arg[1] || (arg[1][0] == '~' && arg[1][1] == '\0'))
 	{
 		target = expand_variable("HOME", te()->envp);
 		if (!target)
 			return (print_error("cd", "HOME not set"), NULL);
+	}
+	else if (arg[1] && arg[1][0] == '-' && arg[1][1] == '\0')
+	{
+		target = expand_variable("OLDPWD", te()->envp);
+		if (!target && find_variable("OLDPWD", te()->envp) == -1)
+			return (print_error("cd", "OLDPWD not defined"), NULL);
+	}
+	else if (arg[1])
+	{
+		target = ft_strdup(arg[1]);
+		if (!target)
+			return (print_error("cd", "allocation failed"), NULL);
 	}
 	return (target);
 }

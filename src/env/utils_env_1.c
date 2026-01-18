@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 19:35:04 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/16 17:35:46 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/18 03:39:29 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int	find_variable(char *name, char **env)
 
 char	*join3(char *s1, char *s2, char *s3)
 {
-	int		len;
+	size_t	len;
 	char	*str;
 
 	len = ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1;
 	str = ft_calloc(sizeof(char), len);
 	if (!str)
-		return (NULL);
+		return (set_err(errno), NULL);
 	ft_strlcat(str, s1, len);
 	ft_strlcat(str, s2, len);
 	ft_strlcat(str, s3, len);

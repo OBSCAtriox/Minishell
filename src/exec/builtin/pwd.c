@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:17:42 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:17:43 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/17 19:31:28 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	builtin_pwd(void)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
-		pwd = join3(te()->cwd, NULL, NULL);
+		pwd = ft_strdup(te()->cwd);
 		if (!pwd)
 		{
-			te()->exit_code = 1;
 			perror("pwd");
+			te()->exit_code = 1;
 			return (FALSE);
 		}
 	}

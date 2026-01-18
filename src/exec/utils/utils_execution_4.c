@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:30:48 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/11 20:30:49 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/17 17:52:59 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	call_update_var(char *name, char *value)
 	check_sum_local_var(name, value);
 }
 
-void	shell_level(void)
+int	shell_level(void)
 {
 	int		index;
 	int		value;
@@ -76,22 +76,22 @@ void	shell_level(void)
 	index = find_variable("SHLVL", te()->envp);
 	if (index == -1)
 	{
-		env_set("SHLVL", "1", te()->envp);
-		return ;
+		if (!env_set("SHLVL", "1", te()->envp))
+			return (FALSE);
+		return (TRUE);
 	}
 	exp_value = expand_variable("SHLVL", te()->envp);
 	if (!exp_value || !ft_isnumeric(exp_value))
 	{
 		env_set("SHLVL", "1", te()->envp);
-		free(exp_value);
-		return ;
+		return (free(exp_value), FALSE);
 	}
 	value = ft_atoi(exp_value);
 	value += 1;
 	str_value = ft_itoa(value);
-	env_set("SHLVL", str_value, te()->envp);
-	free(exp_value);
-	free(str_value);
+	if (!env_set("SHLVL", str_value, te()->envp))
+		return (free(exp_value), free(str_value), FALSE);
+	return (free(exp_value), free(str_value), TRUE);
 }
 
 int	add_check_vars(t_cmd **cmdv)

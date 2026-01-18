@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 20:17:39 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/16 17:57:44 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/18 04:57:34 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	builtin_export(char **argv)
 					te()->exit_code = 0;
 			}
 			else
-				te()->exit_code = 1;
+				return (cons_err("export"), FALSE);
 		}
 		else
 			aux_export_two(argv[i], &signaled_exit);
@@ -40,17 +40,19 @@ int	builtin_export(char **argv)
 	return (TRUE);
 }
 
-void	print_export(char **env)
+int	print_export(char **env)
 {
 	int	count;
 	int	printed_count;
 	int	*printed;
 	int	next;
 
+	if (!env || !*env)
+		return (FALSE);
 	count = size_vetor(env);
 	printed = ft_calloc(count, sizeof(int));
 	if (!printed)
-		return ;
+		return (set_err(errno), FALSE);
 	printed_count = 0;
 	while (printed_count < count)
 	{
@@ -62,6 +64,7 @@ void	print_export(char **env)
 		printed_count++;
 	}
 	free(printed);
+	return (TRUE);
 }
 
 int	is_valid_identifier(char *arg)
@@ -85,7 +88,7 @@ int	is_valid_identifier(char *arg)
 	return (FALSE);
 }
 
-void	export_variable(char *arg)
+int	export_variable(char *arg)
 {
 	int		index;
 	char	*var;
@@ -95,21 +98,23 @@ void	export_variable(char *arg)
 	index = find_variable(arg, te()->l_var);
 	if (index == -1)
 	{
-		update_var_exp(arg);
-		return ;
+		if (!update_var_exp(arg))
+			return (FALSE);
 	}
 	else
 	{
 		var = te()->l_var[index];
 		name = get_name_var(var);
 		value = get_value_var(var);
-		if (!name)
-			return ;
-		env_set(name, value, te()->envp);
-		remove_local_var(index);
-		free(name);
-		free(value);
+		if (!name || !value)
+			return (free(name), free(value), FALSE);
+		if (!env_set(name, value, te()->envp))
+			return (free(name), free(value), FALSE);
+		if (!remove_local_var(index))
+			return (free(name), free(value), FALSE);
+		return (free(name), free(value), TRUE);
 	}
+	return (TRUE);
 }
 
 int	aux_export(char **argv, int i)
@@ -120,21 +125,23 @@ int	aux_export(char **argv, int i)
 	name = get_name_var(argv[i]);
 	value = get_value_var(argv[i]);
 	if (!name)
-		return (cons_err("export"), FALSE);
+		return (free(name), free(value), FALSE);
 	if (has_equal(argv[i]) && !value)
 	{
 		if (!env_set(name, "", te()->envp))
 			return (free(name), free(value), FALSE);
 	}
 	else if (!has_equal(argv[i]) && !value)
-		export_variable(name);
+	{
+		if (!export_variable(name))
+			return (free(name), free(value), FALSE);
+	}
 	else
 	{
 		if (!check_sum_and_set(name, value, te()->envp))
 			return (free(name), free(value), FALSE);
-		remove_var_exp(find_variable(name, te()->var_exp));
+		if (!remove_var_exp(find_variable(name, te()->var_exp)))
+			return (free(name), free(value), FALSE);
 	}
-	free(name);
-	free(value);
-	return (TRUE);
+	return (free(name), free(value), TRUE);
 }
