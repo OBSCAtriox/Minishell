@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 21:14:16 by thde-sou          #+#    #+#             */
-/*   Updated: 2026/01/24 23:11:22 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/25 03:05:39 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	initis_main(int argc, char **argv, char **envp)
 		exit(1);
 	}
 	set_cwd();
+	init_readline_completion();
 	tc()->last_err = 0;
 }
 

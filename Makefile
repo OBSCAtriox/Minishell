@@ -22,7 +22,8 @@ src/parse/add_to_struct/ver_tok_list_utils.c src/parse/add_to_struct/ver_tok_lis
 src/parse/token_split/tok_split.c src/parse/verifications_after_malloc_struct.c \
 src/parse/free_funcs/free_ver2.c src/parse/utils/isspaces_split.c src/parse/tokens/tokens_utils2.c \
 \
-src/env/set_env.c src/env/utils_env_1.c src/exec/builtin/cd.c src/exec/builtin/echo.c \
+src/env/set_env.c src/env/utils_env_1.c src/env/rl_cmd_list_utils.c src/env/rl_cmd_list_path.c \
+src/env/rl_cmd_list.c src/env/rl_completion.c src/exec/builtin/cd.c src/exec/builtin/echo.c \
 src/exec/error/error_msg.c src/exec/builtin/pwd.c src/env/utils_env_2.c src/exec/utils/utils_export.c \
 src/exec/builtin/export.c src/env/utils_env_3.c src/exec/builtin/unset.c src/exec/builtin/env.c \
 src/exec/utils/free.c src/exec/builtin/exit.c src/heredoc/utils.c src/heredoc/expand.c \

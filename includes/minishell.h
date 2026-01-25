@@ -67,6 +67,13 @@ typedef struct s_pipeline
 	t_cmd			**cmdv;
 }					t_pipeline;
 
+typedef struct s_cmd_list
+{
+	char			**items;
+	int				count;
+	int				cap;
+}					t_cmd_list;
+
 t_env				*te(void);
 t_pipeline			*ms(void);
 int					redir(t_cmd *cmdv);
@@ -84,6 +91,11 @@ char				*build_prompt(void);
 int					check_sigint(void);
 int					empty_line(void);
 void				exit_main(void);
+void				init_readline_completion(void);
+char				**build_cmd_list(void);
+int					add_path_cmds(char *path, t_cmd_list *list);
+int					cmd_list_grow(t_cmd_list *list);
+int					cmd_list_add(t_cmd_list *list, const char *value);
 int					check_if_redir(t_cmd **cmdv);
 char				**isspace_split(char *str);
 void				inits_pipeline(t_data *dt, int *has_next, t_cmd ***cmdv);
