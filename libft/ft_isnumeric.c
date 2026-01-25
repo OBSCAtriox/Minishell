@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_isnumeric.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/15 15:56:26 by tide-pau          #+#    #+#             */
-/*   Updated: 2026/01/18 23:40:20 by thde-sou         ###   ########.fr       */
+/*   Created: 2026/01/11 19:22:49 by thde-sou          #+#    #+#             */
+/*   Updated: 2026/01/11 19:23:03 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "libft.h"
 
-void	ps_error(char *msg)
+int	ft_isnumeric(char *str)
 {
-	write(2, msg, ft_strlen(msg));
-}
+	int	i;
 
-void	basic_error(char *msg)
-{
-	if (!ft_strcmp(MALLOC_FAIL, msg))
-		te()->exit_code = 1;
-	write(2, msg, ft_strlen(msg));
-	exit(1);
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] < 48 || str[i] > 57)
+			return (0);
+		i++;
+	}
+	return (1);
 }

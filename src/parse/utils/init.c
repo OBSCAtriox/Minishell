@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tide-pau <tide-pau@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/12 18:36:55 by tide-pau          #+#    #+#             */
+/*   Updated: 2026/01/12 18:38:37 by tide-pau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
 t_parse	*ps(void)
@@ -7,12 +19,12 @@ t_parse	*ps(void)
 	return (&ps);
 }
 
-void	init_token(int *i, int *buf_i, bool *d_q, bool *s_q)
+void	init_token(t_vars *v)
 {
-	*i = 0;
-	*buf_i = 0;
-	*d_q = false;
-	*s_q = false;
+	v->i = 0;
+	v->buf_i = 0;
+	v->d_q = false;
+	v->s_q = false;
 }
 
 void	init_s_var(t_vars *var)

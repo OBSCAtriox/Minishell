@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   add_to_struct.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tide-pau <tide-pau@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/12 18:34:46 by tide-pau          #+#    #+#             */
+/*   Updated: 2026/01/20 16:53:09 by tide-pau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
 static t_redir_type	redir_conv(t_token_type type)
@@ -10,7 +22,7 @@ static t_redir_type	redir_conv(t_token_type type)
 		return (R_IN);
 	else if (type == PR_OUT)
 		return (R_OUT);
-    return (0);
+	return (0);
 }
 
 static void	ver_hdoc_and_quoted(t_tokens *t, int i, int y)
@@ -43,7 +55,7 @@ static int	count_redirs(t_tokens *cmdt)
 	return (count);
 }
 
-void	add_redirs(t_tokens *t, t_per_cmd_tok *tl, int i)
+static void	add_redirs(t_tokens *t, t_per_cmd_tok *tl, int i)
 {
 	int	y;
 
@@ -75,6 +87,8 @@ void	add_to_struct(void)
 
 	init_s_var(&v);
 	tmp = ps()->tl;
+	if (!tmp)
+		return ;
 	while (ms()->cmdv[v.i])
 	{
 		malloc_redir_struct(v.i, count_redirs(tmp->cmdt));

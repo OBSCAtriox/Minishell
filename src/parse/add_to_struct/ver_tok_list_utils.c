@@ -1,13 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ver_tok_list_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tide-pau <tide-pau@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/12 18:34:51 by tide-pau          #+#    #+#             */
+/*   Updated: 2026/01/12 18:38:37 by tide-pau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
 static int	ver_if_builtin(const char *cmd)
 {
 	if (!cmd || !*cmd)
 		return (0);
-	if (!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "echo") 
-		|| !ft_strcmp(cmd,"pwd") || !ft_strcmp(cmd, "unset") 
-		|| !ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "env") 
-		|| !ft_strcmp(cmd, "exit"))
+	if (!ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "echo") || !ft_strcmp(cmd,
+			"pwd") || !ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "export")
+		|| !ft_strcmp(cmd, "env") || !ft_strcmp(cmd, "exit"))
 		return (1);
 	else
 		return (0);
@@ -66,6 +77,8 @@ void	add_cmd_argv(t_per_cmd_tok *tl)
 	int	i;
 
 	i = 0;
+	if (!tl)
+		return ;
 	while (ms()->cmdv[i])
 	{
 		malloc_ms_argv(tl->cmdt, i);

@@ -1,75 +1,88 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/11 21:10:19 by thde-sou          #+#    #+#             */
+/*   Updated: 2026/01/14 20:06:02 by thde-sou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-void    initis_exp_find_var(t_data *dt, char *line)
+void	initis_exp_find_var(t_data *dt, char *line)
 {
-    dt->i = 0;
-    dt->k = 0;
-    dt->count = count_var(line);
+	dt->i = 0;
+	dt->k = 0;
+	dt->count = count_var(line);
 }
 
-void    free_expand_line(t_data *dt, char ***exp)
+void	free_expand_line(t_data *dt, char ***exp)
 {
-    if(dt->len_p)
-        free(dt->len_p);
-    if(dt->index_p)
-        free(dt->index_p);
-    if(*exp)
-        free_doble_pointer(*exp);
+	if (dt->len_p)
+		free(dt->len_p);
+	if (dt->index_p)
+		free(dt->index_p);
+	if (*exp)
+		free_doble_pointer(*exp);
 }
 
-void wait_heredoc(pid_t pid, int *fd)
+void	wait_heredoc(pid_t pid, int *fd)
 {
-    int status;
-    int sig;
+	int	status;
+	int	sig;
 
-    waitpid(pid, &status, 0);
-    if (WIFEXITED(status))
-    {
-        sig = WEXITSTATUS(status);
-        if (sig == 130)
-        {
-            write(1, "\n", 1);
-            tc()->signaled_heredoc = 1;
-            if(fd[0] > 0)
-                close(fd[0]);
-            if(fd[1] > 0)
-                close(fd[1]);
-            close_fd_redir();
-            te()->exit_code = 130;
-        }
-        else
-            te()->exit_code = WEXITSTATUS(status);
-    }
+	if (!safe_waitpid_hdoc(pid, &status))
+		return ;
+	if (WIFEXITED(status))
+	{
+		sig = WEXITSTATUS(status);
+		if (sig == 130)
+		{
+			write(1, "\n", 1);
+			tc()->signaled_heredoc = 1;
+			if (fd[0] > 0)
+				close(fd[0]);
+			if (fd[1] > 0)
+				close(fd[1]);
+			close_fd_redir();
+			te()->exit_code = 130;
+		}
+		else
+			te()->exit_code = WEXITSTATUS(status);
+	}
 }
 
-void    close_fd_redir(void)
+void	close_fd_redir(void)
 {
-    t_data dt;
-    t_cmd **cmdv;
-    t_redir **redir;
+	t_data	dt;
+	t_cmd	**cmdv;
+	t_redir	**redir;
 
-    dt.i = 0;
-    cmdv = ms()->cmdv;
-    while(cmdv[dt.i])
-    {
-        redir = cmdv[dt.i]->redir;
-        dt.j = 0;
-        while (redir && redir[dt.j])
-        {
-            if(redir[dt.j]->hdoc_fd > 0)
-                close(redir[dt.j]->hdoc_fd);
-            ms()->cmdv[dt.i]->redir[dt.j]->hdoc_fd = -1;
-            dt.j++;
-        }
-        dt.i++;
-    }
+	dt.i = 0;
+	cmdv = ms()->cmdv;
+	while (cmdv[dt.i])
+	{
+		redir = cmdv[dt.i]->redir;
+		dt.j = 0;
+		while (redir && redir[dt.j])
+		{
+			if (redir[dt.j]->hdoc_fd >= 0)
+				close(redir[dt.j]->hdoc_fd);
+			ms()->cmdv[dt.i]->redir[dt.j]->hdoc_fd = -1;
+			dt.j++;
+		}
+		dt.i++;
+	}
 }
 
-void sigint_hdoc(int sig)
+void	sigint_hdoc(int sig)
 {
-    (void)sig;
-    if (tc()->hdoc_wfd >= 0)
-        close(tc()->hdoc_wfd);
-    cleanup();
-    exit(130);
+	(void)sig;
+	if (tc()->hdoc_wfd >= 0)
+		close(tc()->hdoc_wfd);
+	cleanup();
+	exit(130);
 }

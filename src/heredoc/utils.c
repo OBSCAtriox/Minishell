@@ -1,55 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/11 21:10:26 by thde-sou          #+#    #+#             */
+/*   Updated: 2026/01/13 22:16:22 by thde-sou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-int count_var(char *line)
+int	count_var(char *line)
 {
-    int i;
-    int count;
+	int	i;
+	int	count;
 
-    i = 0;
-    count = 0;
-    while(line[i])
-    {
-        if(line[i] == '$' && is_valid_character(line[i + 1]))
-            count++;
-        i++;
-    }
-    return (count);
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		if (line[i] == '$' && is_valid_character(line[i + 1]))
+			count++;
+		i++;
+	}
+	return (count);
 }
 
-void    free_str(void *p1)
+void	free_str(void *p1)
 {
-    if(p1)
-        free(p1);
+	if (p1)
+		free(p1);
 }
 
-int len_expanded_var(char *line)
+int	len_expanded_var(char *line)
 {
-    t_data dt;
+	t_data	dt;
 
-    dt.result = 0;
-    dt.size = count_var(line);
-    dt.var = exp_str_var(line);
-    if(!dt.var)
-        return (0);
-    dt.i = 0;
-    while(dt.i < dt.size)
-        dt.result += ft_strlen(dt.var[dt.i++]);
-    free_doble_pointer(dt.var);
-    return (dt.result);
+	dt.result = 0;
+	dt.size = count_var(line);
+	dt.var = exp_str_var(line);
+	if (!dt.var)
+		return (0);
+	dt.i = 0;
+	while (dt.i < dt.size)
+		dt.result += ft_strlen(dt.var[dt.i++]);
+	free_doble_pointer(dt.var);
+	return (dt.result);
 }
 
-int is_valid_character(char c)
+int	is_valid_character(char c)
 {
-    if(c == '_' || c == '?' || ft_isalnum(c))
-        return (TRUE);
-    return (FALSE);
+	if (c == '_' || c == '?' || ft_isalnum(c))
+		return (TRUE);
+	return (FALSE);
 }
 
-void inits_expand_line(t_data *dt, char *line, char ***exp)
+void	inits_expand_line(t_data *dt, char *line, char ***exp)
 {
-    dt->i = 0;
-    dt->j = 0;
-    dt->k = 0;
-    dt->len = count_len_exp(line);
-    *exp = exp_str_var(line);
+	dt->i = 0;
+	dt->j = 0;
+	dt->k = 0;
+	dt->len_p = NULL;
+	dt->index_p = NULL;
+	dt->len = count_len_exp(line);
+	*exp = exp_str_var(line);
+	if (!*exp)
+		*exp = NULL;
 }

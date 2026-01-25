@@ -6,7 +6,7 @@
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:23:38 by thde-sou          #+#    #+#             */
-/*   Updated: 2025/12/20 14:55:12 by thde-sou         ###   ########.fr       */
+/*   Updated: 2026/01/10 18:05:35 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+int					ft_isnumeric(char *str);
 int					ft_isprint(int c);
 int					ft_isdigit(int c);
 int					ft_isascii(int c);

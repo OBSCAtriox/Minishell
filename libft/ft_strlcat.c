@@ -19,7 +19,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	size_t	z_src;
 	size_t	z_sum;
 
-	if(!dst || !src)
+	if (!dst || !src)
 		return (0);
 	z_dst = ft_strlen(dst);
 	z_src = ft_strlen(src);

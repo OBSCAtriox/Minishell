@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tok_split.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tide-pau <tide-pau@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/12 18:36:41 by tide-pau          #+#    #+#             */
+/*   Updated: 2026/01/12 18:38:37 by tide-pau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
-static void	init_tok_split_list(t_per_cmd_tok **head, t_per_cmd_tok **tail,
-		t_tokens **t, t_tokens **p, t_tokens *tok)
+static void	init_tok_split_list(t_tok_split_vars *v, t_tokens *tok)
 {
-	*head = NULL;
-	*tail = NULL;
-	*t = tok;
-	*p = NULL;
+	v->head = NULL;
+	v->tail = NULL;
+	v->start = tok;
+	v->prev = NULL;
 }
 
 static t_per_cmd_tok	*new_cmd_list(t_tokens *tok_slice)
@@ -14,7 +25,7 @@ static t_per_cmd_tok	*new_cmd_list(t_tokens *tok_slice)
 	t_per_cmd_tok	*new;
 
 	if (!tok_slice)
-		return NULL;
+		return (NULL);
 	new = malloc(sizeof(t_per_cmd_tok));
 	if (!new)
 		free_all(MALLOC_FAIL, 1);
@@ -45,34 +56,31 @@ static void	add_list_to_list(t_per_cmd_tok **head, t_per_cmd_tok **tail,
 
 t_per_cmd_tok	*tok_split(t_tokens *t)
 {
-	t_per_cmd_tok	*head;
-	t_per_cmd_tok	*tail;
-	t_tokens		*start;
-	t_tokens		*prev;
-	t_tokens		*pipe;
+	t_tok_split_vars	v;
 
-	init_tok_split_list(&head, &tail, &start, &prev, t);
+	init_tok_split_list(&v, t);
 	while (t)
 	{
 		if (t->type == PPIPE)
 		{
-			if (prev)
+			if (v.prev)
 			{
-				prev->next = NULL;
-				add_list_to_list(&head, &tail, start);
+				v.prev->next = NULL;
+				add_list_to_list(&v.head, &v.tail, v.start);
 			}
-			aux_tok_split(&start, &pipe, &prev, &t);
-			continue;
+			aux_tok_split(&v.start, &v.pipe, &v.prev, &t);
+			continue ;
 		}
-		prev = t;
+		v.prev = t;
 		t = t->next;
 	}
-	if (start)
-		add_list_to_list(&head, &tail, start);
-	return (head);
+	if (v.start)
+		add_list_to_list(&v.head, &v.tail, v.start);
+	return (v.head);
 }
 
-void	aux_tok_split(t_tokens **start, t_tokens **pipe, t_tokens **prev, t_tokens **t)
+void	aux_tok_split(t_tokens **start, t_tokens **pipe, t_tokens **prev,
+		t_tokens **t)
 {
 	*pipe = *t;
 	*t = (*t)->next;

@@ -1,90 +1,108 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/11 20:17:24 by thde-sou          #+#    #+#             */
+/*   Updated: 2026/01/18 21:51:56 by thde-sou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
-int builtin_cd(char **arg)
+int	builtin_cd(char **arg)
 {
-    char    *target;
-    char    *old_pwd;
-    char    *new_pwd;
+	char	*target;
+	char	*old_pwd;
+	char	*new_pwd;
 
-    target = get_target(arg);
-    if(!target)
-        return (te()->exit_code = 1, FALSE);
-    old_pwd = getcwd(NULL, 0);
-    if (!old_pwd)
-        old_pwd = expand_variable("PWD", te()->envp);
-    if (chdir(target) == -1)
-        return (failed_cd(NULL, &target, &old_pwd), FALSE);
-    new_pwd = getcwd(NULL, 0);
-    if (!new_pwd)
-        return (failed_cd(&new_pwd, &target, &old_pwd), FALSE);
-    if (te()->oldpwd)
-        free(te()->oldpwd);
-    te()->oldpwd = old_pwd;
-    free(te()->cwd);
-    te()->cwd = join3(new_pwd, NULL, NULL);
-    env_set("PWD", new_pwd, te()->envp);
-    env_set("OLDPWD", old_pwd, te()->envp);
-    free_cd(&new_pwd, &target, &old_pwd, 0);
-    te()->exit_code = 0;
-    return (TRUE);
+	target = get_target(arg);
+	if (!target)
+		return (FALSE);
+	if (target[0] == '\0')
+		return (free(target), TRUE);
+	old_pwd = getcwd(NULL, 0);
+	if (!old_pwd)
+	{
+		old_pwd = expand_variable("PWD", te()->envp);
+		if (!old_pwd)
+			return (cons_err("cd"), FALSE);
+	}
+	if (chdir(target) == -1)
+		return (failed_cd(NULL, &target, &old_pwd), FALSE);
+	new_pwd = getcwd(NULL, 0);
+	if (!new_pwd)
+		return (failed_cd(&new_pwd, &target, &old_pwd), FALSE);
+	print_cd_back(arg, target);
+	if (!aux_cd(new_pwd, old_pwd, target))
+		return (FALSE);
+	return (TRUE);
 }
 
-char    *get_target(char **arg)
+char	*get_target(char **arg)
 {
-    char    *target;
+	char	*target;
 
-    target = NULL;
-    if (arg[1] && arg[2])
-        return (print_error("cd", "too many arguments"), NULL);
-    if (arg[1])
-    {
-        target = ft_strdup(arg[1]);
-        if (!target)
-            return (print_error("cd", "allocation failed"), NULL);
-    }
-    else
-    {
-        target = expand_variable("HOME", te()->envp);
-        if (!target)
-            return (print_error("cd", "HOME not set"), NULL);
-    }
-    return (target);
+	target = NULL;
+	if (arg[1] && arg[2])
+		return (print_error("cd", "too many arguments"), NULL);
+	if (!arg[1] || (arg[1][0] == '~' && arg[1][1] == '\0'))
+	{
+		target = expand_variable("HOME", te()->envp);
+		if (!target)
+			return (print_error("cd", "HOME not set"), NULL);
+	}
+	else if (arg[1] && arg[1][0] == '-' && arg[1][1] == '\0')
+	{
+		target = expand_variable("OLDPWD", te()->envp);
+		if (!target && find_variable("OLDPWD", te()->envp) == -1)
+			return (print_error("cd", "OLDPWD not defined"), NULL);
+	}
+	else if (arg[1])
+	{
+		target = ft_strdup(arg[1]);
+		if (!target)
+			return (print_error("cd", "allocation failed"), NULL);
+	}
+	return (target);
 }
 
-void    free_cd(char **new_pwd, char **target, char **old_pwd, int err)
+void	free_cd(char **new_pwd, char **target, char **old_pwd, int err)
 {
-    if (err && target && *target)
-        error_cd(*target);
-    if (new_pwd && *new_pwd)
-    {
-        free(*new_pwd);
-        *new_pwd = NULL;
-    }
-    if (target && *target)
-    {
-        free(*target);
-        *target = NULL;
-    }
-    if (old_pwd && *old_pwd)
-    {
-        if (err)
-            free(*old_pwd);
-        *old_pwd = NULL;
-    }
+	if (err && target && *target)
+		error_cd(*target);
+	if (new_pwd && *new_pwd)
+	{
+		free(*new_pwd);
+		*new_pwd = NULL;
+	}
+	if (target && *target)
+	{
+		free(*target);
+		*target = NULL;
+	}
+	if (old_pwd && *old_pwd)
+	{
+		if (err)
+			free(*old_pwd);
+		*old_pwd = NULL;
+	}
 }
 
-void    failed_cd(char **new_pwd, char **target, char **old_pwd)
+void	failed_cd(char **new_pwd, char **target, char **old_pwd)
 {
-    free_cd(new_pwd, target, old_pwd, 1);
-    te()->exit_code = 1;
+	free_cd(new_pwd, target, old_pwd, 1);
+	te()->exit_code = 1;
 }
 
-void set_cwd(void)
+void	set_cwd(void)
 {
-    te()->cwd = getcwd(NULL, 0);
-    if(!te()->cwd)
-    {
-        te()->cwd = NULL;
-        return;
-    }
+	te()->cwd = getcwd(NULL, 0);
+	if (!te()->cwd)
+	{
+		te()->cwd = NULL;
+		return ;
+	}
 }

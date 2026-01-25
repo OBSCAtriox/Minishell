@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   verifications.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tide-pau <tide-pau@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/12 18:37:08 by tide-pau          #+#    #+#             */
+/*   Updated: 2026/01/12 18:38:37 by tide-pau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-int verify_whitespaces(char *line)
+int	verify_whitespaces(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])
@@ -46,7 +58,8 @@ int	verifications(const char *line)
 		return (te()->exit_code = 2, 0);
 	num_pipes(line);
 	token_list(line);
-	ver_to_expand(ps()->tok);
+	ver_to_expand(&ps()->tok);
+	remove_empty_tokens(&ps()->tok);
 	malloc_struct();
 	verifications_after_malloc_struct(ps()->tok);
 	return (1);

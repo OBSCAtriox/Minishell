@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokens.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tide-pau <tide-pau@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/12 18:36:52 by tide-pau          #+#    #+#             */
+/*   Updated: 2026/01/12 18:38:37 by tide-pau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
 void	create_token(t_tokens **head, t_tokens **tail, char *buffer, int buf_i)
@@ -54,21 +66,24 @@ static void	add_token(t_tokens **head, t_tokens **tail, char *sym,
 	}
 }
 
-static void	handle_symbols(t_tokens **head, t_tokens **tail, const char *li, int *i)
+static void	handle_symbols(t_tokens **head, t_tokens **tail, const char *li,
+		int *i)
 {
 	if (li[*i] == '|')
 		return (add_token(head, tail, "|", PPIPE), (*i)++, (void)(0));
 	else if (li[*i] == '<')
 	{
 		if (li[*i + 1] == '<')
-			return (add_token(head, tail, "<<", PR_HDOC), inc_i(i, 1), (void)(0));
+			return (add_token(head, tail, "<<", PR_HDOC), inc_i(i, 1),
+				(void)(0));
 		else
 			return (add_token(head, tail, "<", PR_IN), inc_i(i, 0), (void)(0));
 	}
 	else if (li[*i] == '>')
 	{
 		if (li[*i + 1] == '>')
-			return (add_token(head, tail, ">>", PR_APP), inc_i(i, 1), (void)(0));
+			return (add_token(head, tail, ">>", PR_APP), inc_i(i, 1),
+				(void)(0));
 		else
 			return (add_token(head, tail, ">", PR_OUT), inc_i(i, 0), (void)(0));
 	}
@@ -76,31 +91,27 @@ static void	handle_symbols(t_tokens **head, t_tokens **tail, const char *li, int
 
 static void	token_help(t_tokens **head, t_tokens **tail, const char *li)
 {
-	char	buf[BUF_SIZE];
-	int		i;
-	int		buf_i;
-	bool	d_quotes;
-	bool	s_quotes;
+	t_vars	v;
 
-	init_token(&i, &buf_i, &d_quotes, &s_quotes);
-	while (li[i])
+	init_token(&v);
+	while (li[v.i])
 	{
-		quotes_ver(&d_quotes, &s_quotes, li[i]);
-		if (isspace(li[i]) && !d_quotes && !s_quotes)
+		quotes_ver(&v.d_q, &v.s_q, li[v.i]);
+		if (isspace(li[v.i]) && !v.d_q && !v.s_q)
 		{
-			buf_i_ver(head, tail, buf, &buf_i, true);
-			i++;
+			buf_i_ver(head, tail, &v, true);
+			v.i++;
 		}
-		else if ((ft_strchr("><|", li[i])) && !d_quotes && !s_quotes)
+		else if ((ft_strchr("><|", li[v.i])) && !v.d_q && !v.s_q)
 		{
-			buf_i_ver(head, tail, buf, &buf_i, true);
-			handle_symbols(head, tail, li, &i);
+			buf_i_ver(head, tail, &v, true);
+			handle_symbols(head, tail, li, &v.i);
 		}
 		else
-			buf[buf_i++] = li[i++];
+			v.buf[v.buf_i++] = li[v.i++];
 	}
-	buf_i_ver(head, tail, buf, &buf_i, false);
-	ft_bzero(buf, ft_strlen(buf));
+	buf_i_ver(head, tail, &v, false);
+	ft_bzero(v.buf, ft_strlen(v.buf));
 }
 
 void	token_list(const char *li)

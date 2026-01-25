@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   utils_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thde-sou <thde-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/15 15:56:26 by tide-pau          #+#    #+#             */
-/*   Updated: 2026/01/18 23:40:20 by thde-sou         ###   ########.fr       */
+/*   Created: 2026/01/11 20:31:00 by thde-sou          #+#    #+#             */
+/*   Updated: 2026/01/11 20:31:26 by thde-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	ps_error(char *msg)
+void	define_limits_exit(unsigned long long *limit, int sign)
 {
-	write(2, msg, ft_strlen(msg));
+	if (sign)
+		*limit = (unsigned long long)LLONG_MAX + 1;
+	else
+		*limit = (unsigned long long)LLONG_MAX;
 }
 
-void	basic_error(char *msg)
+void	print_exit(void)
 {
-	if (!ft_strcmp(MALLOC_FAIL, msg))
-		te()->exit_code = 1;
-	write(2, msg, ft_strlen(msg));
-	exit(1);
+	if (tc()->in_parent)
+		write(1, "exit\n", 5);
 }

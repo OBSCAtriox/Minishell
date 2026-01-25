@@ -1,6 +1,17 @@
-# ifndef COLORS_H
-# define COLORS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   colors.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tide-pau <tide-pau@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/12 18:40:25 by tide-pau          #+#    #+#             */
+/*   Updated: 2026/01/12 18:40:26 by tide-pau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#ifndef COLORS_H
+# define COLORS_H
 
 //Background colors
 
@@ -24,7 +35,7 @@
 
 //Foreground colors
 
-# define FGBLACK  "\033[30m"
+# define FGBLACK "\033[30m"
 # define FGRED "\033[31m"
 # define FGGREEN "\033[32m"
 # define FGYELLOW "\033[33m"
@@ -55,4 +66,10 @@
 # define HIDDEN "\033[8m"
 # define STRIKE "\033[9m"
 
-# endif
+// Readline-safe prompt colors
+# define RL_GREEN "\001\033[1m\033[32m\002"
+# define RL_CYAN "\001\033[36m\002"
+# define RL_WHITE "\001\033[37m\002"
+# define RL_RESET "\001\033[0m\002"
+
+#endif

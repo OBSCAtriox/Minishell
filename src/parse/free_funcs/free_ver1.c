@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_ver1.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tide-pau <tide-pau@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/12 18:36:13 by tide-pau          #+#    #+#             */
+/*   Updated: 2026/01/20 17:07:57 by tide-pau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../../includes/minishell.h"
 
-void free_tokens()
+static void	free_tokens(void)
 {
-	t_tokens *head;
-	t_tokens *tmp;
+	t_tokens	*head;
+	t_tokens	*tmp;
 
 	head = ps()->tok;
 	while (head)
@@ -22,9 +34,9 @@ void free_tokens()
 
 void	free_split_list(t_quote_split **head)
 {
-	t_quote_split *tmp;
+	t_quote_split	*tmp;
 
-	while(*head)
+	while (*head)
 	{
 		tmp = (*head)->next;
 		if ((*head)->str)
@@ -35,9 +47,9 @@ void	free_split_list(t_quote_split **head)
 	*head = NULL;
 }
 
-void	free_double_pchar(char **arr)
+static void	free_double_pchar(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i])
@@ -83,5 +95,5 @@ void	free_all_kill(void)
 		free(te()->var_exp);
 	if (te()->cwd)
 		free(te()->cwd);
-	return(clear_history(), exit(0));
+	return (clear_history(), exit(0));
 }
